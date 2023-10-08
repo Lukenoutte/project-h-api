@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint \"src/**/*.js\"",
     "test": "jest",
-    "dev": "nodemon --exec babel-node src/main/server.js"
+    "dev": "nodemon --exec babel-node src/main/server.js",
+    "prepare": "husky install && chmod ug+x .husky/*"
   },
   "author": "Lukenoutte",
   "license": "ISC",
@@ -21,7 +22,9 @@
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jest": "^27.4.2",
     "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
     "jest": "^29.7.0",
+    "lint-staged": "^14.0.1",
     "nodemon": "^3.0.1",
     "supertest": "^6.3.3"
   },
