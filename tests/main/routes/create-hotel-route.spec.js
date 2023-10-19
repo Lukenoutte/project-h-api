@@ -9,7 +9,7 @@ describe("Testing create hotel route", () => {
       city: "São Paulo",
       country: "Brasil",
     });
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
   });
 
   it("should return 400 when create hotel with missing params", async () => {
