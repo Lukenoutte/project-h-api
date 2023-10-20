@@ -7,6 +7,7 @@ export default class CreateHotelUseCase {
 
   execute(params) {
     const hotelEntity = new HotelEntity(params);
+    this.createHotelRepository.execute(hotelEntity);
     return hotelEntity;
   }
 }

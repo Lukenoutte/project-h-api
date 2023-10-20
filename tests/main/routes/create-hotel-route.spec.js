@@ -2,7 +2,7 @@ import requestSuperTest from "supertest";
 import app from "../../../src/main/server";
 
 describe("Testing create hotel route", () => {
-  it("should return 200 when create hotel with correct params", async () => {
+  it("should return 201 when create hotel with correct params", async () => {
     const response = await requestSuperTest(app).post("/create/hotel", {
       name: "Dikaldas",
       address: "Rua das Flores",
