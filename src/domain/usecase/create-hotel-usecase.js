@@ -1,8 +1,8 @@
 import HotelEntity from "../entities/hotel-entity";
 
 export default class CreateHotelUseCase {
-  constructor({ hotelRepository }) {
-    this.hotelRepository = hotelRepository;
+  constructor({ createHotelRepository }) {
+    this.createHotelRepository = createHotelRepository;
   }
 
   execute(params) {
