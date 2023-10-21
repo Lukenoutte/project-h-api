@@ -5,7 +5,7 @@
   "main": "src/main/server.js",
   "scripts": {
     "lint": "eslint \"src/**/*.js\"",
-    "test": "jest",
+    "test": "jest --force-exit",
     "dev": "nodemon --exec babel-node src/main/server.js",
     "prepare": "husky install && chmod ug+x .husky/*"
   },
