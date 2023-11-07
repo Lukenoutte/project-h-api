@@ -1,6 +1,9 @@
+import PostgreHelper from "../helpers/postgre-helper";
+
 class CreateHotelRepository {
   async execute(query) {
-    console.log(query);
+    const postgreHelper = new PostgreHelper();
+    postgreHelper.connect("");
   }
 }
 
