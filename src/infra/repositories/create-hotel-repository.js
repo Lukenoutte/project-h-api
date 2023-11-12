@@ -2,8 +2,13 @@ import PostgreHelper from "../helpers/postgre-helper";
 
 class CreateHotelRepository {
   async execute(hotelEntity) {
-    PostgreHelper.query(
-      `INSERT INTO hotels (name, address, city, country) VALUES ($1, $2, $3, $4);`,
+    PostgreHelper.executeQuery(
+      `
+      INSERT INTO hotels
+        (name, address, city, country)
+      VALUES
+        ($1, $2, $3, $4);
+      `,
       hotelEntity.getArray(),
     );
   }
