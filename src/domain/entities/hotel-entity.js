@@ -5,4 +5,8 @@ export default class HotelEntity {
     this.city = city;
     this.country = country;
   }
+
+  getArray() {
+    return [this.name, this.address, this.city, this.country];
+  }
 }

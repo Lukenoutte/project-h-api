@@ -1,20 +1,18 @@
 import { Client } from "pg";
 
-class PostgreHelper {
-  #client;
-
-  constructor() {
-    this.#client = null;
-  }
-
+export default {
   async connect(uri) {
-    this.#client = new Client({ connectionString: uri });
-    await this.#client.connect();
-  }
+    this.uri = uri;
+    this.client = new Client(uri);
+    this.clientPromise = await this.client.connect();
+  },
 
   async disconnect() {
-    if (this.#client) await this.#client.end();
-  }
-}
+    await this.clientPromise.close();
+    this.clientPromise = null;
+  },
 
-export default PostgreHelper;
+  async query(query, values) {
+    await this.client.query(query, values);
+  },
+};

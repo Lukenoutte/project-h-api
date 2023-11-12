@@ -4,7 +4,7 @@ import { MissingParamError } from "../errors";
 class CreateHotelRouter {
   #createHotelUseCase;
 
-  #requiredFields = ["name"];
+  #requiredFields = ["name", "address", "city", "country"];
 
   constructor({ createHotelUseCase }) {
     this.#createHotelUseCase = createHotelUseCase;

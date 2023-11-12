@@ -1,9 +1,11 @@
 import PostgreHelper from "../helpers/postgre-helper";
 
 class CreateHotelRepository {
-  async execute(query) {
-    const postgreHelper = new PostgreHelper();
-    postgreHelper.connect("");
+  async execute(hotelEntity) {
+    PostgreHelper.query(
+      `INSERT INTO hotels (name, address, city, country) VALUES ($1, $2, $3, $4);`,
+      hotelEntity.getArray(),
+    );
   }
 }
 
