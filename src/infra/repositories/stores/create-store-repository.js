@@ -1,17 +1,17 @@
 import PostgreHelper from "../../helpers/postgre-helper";
 
-class CreateHotelRepository {
-  async execute(hotelEntity) {
+class CreateStoreRepository {
+  async execute(storeEntity) {
     PostgreHelper.executeQuery(
       `
-      INSERT INTO hotels
+      INSERT INTO stores
         (name, address, city, country)
       VALUES
         ($1, $2, $3, $4);
       `,
-      hotelEntity.getArray(),
+      storeEntity.getArray(),
     );
   }
 }
 
-export default CreateHotelRepository;
+export default CreateStoreRepository;

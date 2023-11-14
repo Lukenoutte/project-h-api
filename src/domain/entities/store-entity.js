@@ -1,4 +1,4 @@
-export default class HotelEntity {
+export default class StoreEntity {
   constructor({ name, address, city, country }) {
     this.name = name;
     this.address = address;

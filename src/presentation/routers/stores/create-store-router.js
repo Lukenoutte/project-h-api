@@ -1,13 +1,13 @@
 import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
 
-class CreateHotelRouter {
-  #createHotelUseCase;
+class CreateStoreRouter {
+  #createStoreUseCase;
 
   #requiredFields = ["name", "address", "city", "country"];
 
-  constructor({ createHotelUseCase }) {
-    this.#createHotelUseCase = createHotelUseCase;
+  constructor({ createStoreUseCase }) {
+    this.#createStoreUseCase = createStoreUseCase;
   }
 
   #validate(httpRequest) {
@@ -23,7 +23,7 @@ class CreateHotelRouter {
       const body = { ...httpRequest.body };
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
-      const result = await this.#createHotelUseCase.execute(body);
+      const result = await this.#createStoreUseCase.execute(body);
       return HttpResponse.created(result);
     } catch (error) {
       return HttpResponse.serverError(error);
@@ -31,4 +31,4 @@ class CreateHotelRouter {
   }
 }
 
-export default CreateHotelRouter;
+export default CreateStoreRouter;
