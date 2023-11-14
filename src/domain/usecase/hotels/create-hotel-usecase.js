@@ -1,4 +1,4 @@
-import HotelEntity from "../entities/hotel-entity";
+import HotelEntity from "../../entities/hotel-entity";
 
 export default class CreateHotelUseCase {
   constructor({ createHotelRepository }) {

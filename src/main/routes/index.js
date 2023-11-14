@@ -1,3 +1,3 @@
-import createHotelRoutes from "./create-hotel-route";
+import createHotelRoutes from "./hotels/create-hotel-route";
 
 export default [createHotelRoutes];

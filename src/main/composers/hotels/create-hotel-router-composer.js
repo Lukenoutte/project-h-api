@@ -1,6 +1,6 @@
-import CreateHotelUseCase from "../../domain/usecase/create-hotel-usecase";
-import CreateHotelRouter from "../../presentation/routers/create-hotel-router";
-import CreateHotelRepository from "../../infra/repositories/create-hotel-repository";
+import CreateHotelUseCase from "../../../domain/usecase/hotels/create-hotel-usecase";
+import CreateHotelRouter from "../../../presentation/routers/hotels/create-hotel-router";
+import CreateHotelRepository from "../../../infra/repositories/hotels/create-hotel-repository";
 
 class CreateHotelRouterComposer {
   static compose() {

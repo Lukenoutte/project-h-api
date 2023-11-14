@@ -1,4 +1,4 @@
-import PostgreHelper from "../helpers/postgre-helper";
+import PostgreHelper from "../../helpers/postgre-helper";
 
 class CreateHotelRepository {
   async execute(hotelEntity) {

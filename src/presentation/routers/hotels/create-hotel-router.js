@@ -1,5 +1,5 @@
-import HttpResponse from "../helpers/http-response";
-import { MissingParamError } from "../errors";
+import HttpResponse from "../../helpers/http-response";
+import { MissingParamError } from "../../errors";
 
 class CreateHotelRouter {
   #createHotelUseCase;
