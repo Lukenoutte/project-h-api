@@ -1,4 +1,4 @@
-class ExpressRouterAdapter {
+export default class ExpressRouterAdapter {
   static adapt(router) {
     return async (req, res) => {
       const httpRequest = {
@@ -12,5 +12,3 @@ class ExpressRouterAdapter {
     };
   }
 }
-
-export default ExpressRouterAdapter;

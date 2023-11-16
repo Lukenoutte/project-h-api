@@ -2,7 +2,7 @@ import CreateStoreUseCase from "../../../domain/usecase/stores/create-store-usec
 import CreateStoreRouter from "../../../presentation/routers/stores/create-store-router";
 import CreateStoreRepository from "../../../infra/repositories/stores/create-store-repository";
 
-class CreateStoreRouterComposer {
+export default class CreateStoreRouterComposer {
   static compose() {
     const createStoreUseCase = new CreateStoreUseCase({
       createStoreRepository: new CreateStoreRepository(),
@@ -10,4 +10,3 @@ class CreateStoreRouterComposer {
     return new CreateStoreRouter({ createStoreUseCase });
   }
 }
-export default CreateStoreRouterComposer;

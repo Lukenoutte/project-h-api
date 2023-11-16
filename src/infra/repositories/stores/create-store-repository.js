@@ -1,6 +1,6 @@
 import PostgreHelper from "../../helpers/postgre-helper";
 
-class CreateStoreRepository {
+export default class CreateStoreRepository {
   async execute(storeEntity) {
     PostgreHelper.executeQuery(
       `
@@ -13,5 +13,3 @@ class CreateStoreRepository {
     );
   }
 }
-
-export default CreateStoreRepository;

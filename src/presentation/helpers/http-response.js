@@ -1,6 +1,6 @@
 import { ServerError } from "../errors";
 
-class HttpResponse {
+export default class HttpResponse {
   static ok(body) {
     return {
       statusCode: 200,
@@ -57,5 +57,3 @@ class HttpResponse {
     };
   }
 }
-
-export default HttpResponse;

@@ -1,6 +1,6 @@
 import PostgreHelper from "../../helpers/postgre-helper";
 
-class CreateUserRepository {
+export default class CreateUserRepository {
   async execute(userEntity) {
     PostgreHelper.executeQuery(
       `
@@ -13,5 +13,3 @@ class CreateUserRepository {
     );
   }
 }
-
-export default CreateUserRepository;

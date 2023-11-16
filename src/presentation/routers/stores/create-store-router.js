@@ -1,7 +1,7 @@
 import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
 
-class CreateStoreRouter {
+export default class CreateStoreRouter {
   #createStoreUseCase;
 
   #requiredFields = ["name", "address", "city", "country"];
@@ -30,5 +30,3 @@ class CreateStoreRouter {
     }
   }
 }
-
-export default CreateStoreRouter;
