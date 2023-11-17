@@ -8,7 +8,6 @@ export default class FindUserRepository {
       `,
       [email],
     );
-    if (!rows.length) return false;
     return rows[0];
   }
 }

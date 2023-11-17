@@ -1,17 +1,17 @@
 export default class LoginUseCase {
-  constructor({ findUserRepository, bcryptHelper }) {
+  constructor({ findUserRepository, bcryptHelper, UnauthorizedError }) {
     this.findUserRepository = findUserRepository;
     this.bcryptHelper = bcryptHelper;
+    this.UnauthorizedError = UnauthorizedError;
   }
 
   async execute(params) {
-    const user = await this.findUserRepository.execute(params);
-    if (!user) return false;
+    const userOnDatabase = await this.findUserRepository.execute(params);
+    if (!userOnDatabase) throw new this.UnauthorizedError();
     const correctPass = await this.bcryptHelper.comparePassword(
       params.password,
-      user.password,
+      userOnDatabase.password,
     );
-    if (!correctPass) return false;
-    return true;
+    if (!correctPass) throw new this.UnauthorizedError();
   }
 }
