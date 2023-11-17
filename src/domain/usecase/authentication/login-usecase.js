@@ -1,5 +1,10 @@
 export default class LoginUseCase {
-  constructor({ findUserRepository, bcryptHelper, UnauthorizedError, jwtHelper }) {
+  constructor({
+    findUserRepository,
+    bcryptHelper,
+    UnauthorizedError,
+    jwtHelper,
+  }) {
     this.findUserRepository = findUserRepository;
     this.bcryptHelper = bcryptHelper;
     this.UnauthorizedError = UnauthorizedError;

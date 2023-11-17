@@ -1,9 +1,13 @@
 import { UnauthorizedError } from "../../presentation/errors";
 import JwtHelper from "../../infra/helpers/jwt-helper";
 import { accessTokenSecret } from "../config/env";
+import publicRoutes from "../config/public-routes";
+
+const isPublicRoute = (path) => publicRoutes.includes(path);
 
 export default async (req, res, next) => {
   try {
+    if (isPublicRoute(req.path)) return next();
     const { authorization } = req.headers;
     if (!authorization) throw new UnauthorizedError();
     const [, token] = authorization.split("Bearer: ");
