@@ -12,7 +12,7 @@ export default {
     this.clientPromise = null;
   },
 
-  async executeQuery(query, values) {
-    await this.client.query(query, values);
+  executeQuery(query, values) {
+    return this.client.query(query, values);
   },
 };

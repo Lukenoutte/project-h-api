@@ -1,4 +1,4 @@
-import auth from "./auth";
+import authorization from "./authorization";
 import jsonParse from "./json-parse";
 
-export { auth, jsonParse };
+export { authorization, jsonParse };

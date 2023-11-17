@@ -4,7 +4,7 @@ import { MissingParamError } from "../../errors";
 export default class CreateUserRouter {
   #createUserUseCase;
 
-  #requiredFields = ["name", "email", "password", "country"];
+  #requiredFields = ["name", "email", "password"];
 
   constructor({ createUserUseCase }) {
     this.#createUserUseCase = createUserUseCase;

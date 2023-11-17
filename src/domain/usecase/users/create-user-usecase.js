@@ -1,14 +1,16 @@
 import UserEntity from "../../entities/user-entity";
-import BcryptHelper from "../../../infra/helpers/bcrypt-helper";
 
 export default class CreateUserUseCase {
-  constructor({ createUserRepository }) {
+  constructor({ createUserRepository, bcryptHelper }) {
     this.createUserRepository = createUserRepository;
+    this.bcryptHelper = bcryptHelper;
   }
 
   async execute(params) {
-    const bcryptHelper = new BcryptHelper();
-    const userEntity = new UserEntity({ ...params, bcryptHelper });
+    const userEntity = new UserEntity({
+      ...params,
+      bcryptHelper: this.bcryptHelper,
+    });
     await userEntity.encryptPassword();
     this.createUserRepository.execute(userEntity);
   }

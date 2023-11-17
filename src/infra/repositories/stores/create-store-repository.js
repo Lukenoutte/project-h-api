@@ -2,7 +2,7 @@ import PostgreHelper from "../../helpers/postgre-helper";
 
 export default class CreateStoreRepository {
   async execute(storeEntity) {
-    PostgreHelper.executeQuery(
+    await PostgreHelper.executeQuery(
       `
       INSERT INTO stores
         (name, address, city, country)

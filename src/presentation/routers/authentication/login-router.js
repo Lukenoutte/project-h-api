@@ -24,10 +24,10 @@ export default class LoginRouter {
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
       const result = await this.#loginUseCase.execute(body);
-      if (!result) return new UnauthorizedError();
-      return HttpResponse.ok(result);
+      if (!result) throw new UnauthorizedError();
+      return HttpResponse.ok();
     } catch (error) {
-      return HttpResponse.serverError(error);
+      return HttpResponse.unauthorizedError(error);
     }
   }
 }

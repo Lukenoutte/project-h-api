@@ -2,12 +2,12 @@ import PostgreHelper from "../../helpers/postgre-helper";
 
 export default class CreateUserRepository {
   async execute(userEntity) {
-    PostgreHelper.executeQuery(
+    await PostgreHelper.executeQuery(
       `
       INSERT INTO users
-        (name, email, address, city, country)
+        (name, email, password, address, city, country)
       VALUES
-        ($1, $2, $3, $4, $5);
+        ($1, $2, $3, $4, $5, $6);
       `,
       userEntity.getArray(),
     );

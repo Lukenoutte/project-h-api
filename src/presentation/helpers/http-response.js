@@ -1,4 +1,4 @@
-import { ServerError } from "../errors";
+import { ServerError, UnauthorizedError } from "../errors";
 
 export default class HttpResponse {
   static ok(body) {
@@ -53,6 +53,15 @@ export default class HttpResponse {
       statusCode: 500,
       body: {
         error: new ServerError(error),
+      },
+    };
+  }
+
+  static unauthorizedError(error) {
+    return {
+      statusCode: 401,
+      body: {
+        error: new UnauthorizedError(error),
       },
     };
   }
