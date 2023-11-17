@@ -1,5 +1,5 @@
 import HttpResponse from "../../helpers/http-response";
-import { MissingParamError, UnauthorizedError } from "../../errors";
+import { MissingParamError } from "../../errors";
 
 export default class LoginRouter {
   #loginUseCase;
@@ -23,8 +23,8 @@ export default class LoginRouter {
       const body = { ...httpRequest.body };
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
-      await this.#loginUseCase.execute(body);
-      return HttpResponse.ok();
+      const accessToken = await this.#loginUseCase.execute(body);
+      return HttpResponse.ok({ accessToken });
     } catch (error) {
       return HttpResponse.unauthorizedError(error);
     }
