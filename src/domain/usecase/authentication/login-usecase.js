@@ -7,6 +7,7 @@ export default class LoginUseCase {
     jwtHelperRefreshToken,
     createRefreshTokenRepository,
     findRefreshTokenRepository,
+    updateRefreshTokenRepository,
   }) {
     this.findUserRepository = findUserRepository;
     this.bcryptHelper = bcryptHelper;
@@ -14,7 +15,8 @@ export default class LoginUseCase {
     this.jwtHelperAccessToken = jwtHelperAccessToken;
     this.jwtHelperRefreshToken = jwtHelperRefreshToken;
     this.createRefreshTokenRepository = createRefreshTokenRepository;
-    this.findRefreshTokenRepository = findRefreshTokenRepository
+    this.findRefreshTokenRepository = findRefreshTokenRepository;
+    this.updateRefreshTokenRepository = updateRefreshTokenRepository;
   }
 
   async execute(params) {
@@ -26,19 +28,27 @@ export default class LoginUseCase {
     );
     if (!isPassCorrect) throw this.unauthorizedError;
     const { id } = userOnDatabase;
-    await this.handleRefreshToken({ userId: id });
-    return this.jwtHelperAccessToken.generateToken({ userId: id });
+    const refreshToken = await this.handleRefreshToken({ userId: id });
+    const accessToken = this.jwtHelperAccessToken.generateToken({ userId: id });
+    return { refreshToken, accessToken };
   }
 
   async handleRefreshToken({ userId }) {
     const existTokenRefresh = await this.findRefreshTokenRepository.execute({
       userId,
     });
-    if (existTokenRefresh) return;
     const refreshToken = this.jwtHelperRefreshToken.generateToken({ userId });
+    if (existTokenRefresh) {
+      await this.updateRefreshTokenRepository.execute({
+        currentToken: existTokenRefresh.token,
+        newToken: refreshToken,
+      });
+      return refreshToken;
+    }
     await this.createRefreshTokenRepository.execute({
       userId,
       token: refreshToken,
     });
+    return refreshToken;
   }
 }

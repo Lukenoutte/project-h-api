@@ -3,7 +3,7 @@ export default class LogoutUseCase {
     this.deleteRefreshTokenRepository = deleteRefreshTokenRepository;
   }
 
-  async execute({ token }) {
-    await this.deleteRefreshTokenRepository.execute({ token });
+  async execute({ userId }) {
+    await this.deleteRefreshTokenRepository.execute({ userId });
   }
 }

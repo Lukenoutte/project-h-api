@@ -11,13 +11,14 @@ export default class RefreshTokenUseCase {
     this.unauthorizedError = unauthorizedError;
   }
 
-  async execute({ token, userId }) {
+  async execute({ refreshToken, userId }) {
     const refreshTokenExist = await this.findRefreshTokenRepository.execute({
-      token,
+      token: refreshToken,
     });
+    if (!refreshTokenExist) throw this.unauthorizedError;
     const isValidRefreshToken =
-      this.jwtHelperRefreshToken.verifyToken(refreshTokenExist);
-    if (!isValidRefreshToken) throw this.unauthorizedError();
+      this.jwtHelperRefreshToken.verifyToken(refreshToken);
+    if (!isValidRefreshToken) throw this.unauthorizedError;
     return this.jwtHelperAccessToken.generateToken({ userId });
   }
 }

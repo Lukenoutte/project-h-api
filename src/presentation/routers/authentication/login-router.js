@@ -24,8 +24,8 @@ export default class LoginRouter {
       const body = { ...httpRequest.body };
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
-      const accessToken = await this.#loginUseCase.execute(body);
-      return HttpResponse.ok({ accessToken });
+      const tokens = await this.#loginUseCase.execute(body);
+      return HttpResponse.ok(tokens);
     } catch (error) {
       if (error.name !== "UnauthorizedError") logger.error("LoginError", error);
       return HttpResponse.unauthorizedError(error);

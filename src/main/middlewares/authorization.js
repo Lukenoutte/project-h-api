@@ -13,8 +13,12 @@ export default async (req, res, next) => {
     if (!authorization) throw new UnauthorizedError();
     const [, token] = authorization.split("Bearer ");
     if (!token) throw new UnauthorizedError();
-    const jwtHelper = new JwtHelper(accessTokenSecret);
-    const decodedToken = await jwtHelper.verifyToken(token);
+    console.log("Test");
+    const jwtHelperAccessToken = new JwtHelper(accessTokenSecret);
+    console.log("Test2");
+    const decodedToken = jwtHelperAccessToken.verifyToken(token);
+    console.log("Test3", decodedToken);
+    if (!decodedToken) throw new UnauthorizedError();
     req.userId = decodedToken.userId;
     return next();
   } catch (error) {

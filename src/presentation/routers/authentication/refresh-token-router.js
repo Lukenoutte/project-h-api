@@ -5,7 +5,7 @@ import logger from "../../../main/config/logger";
 export default class RefreshTokenRouter {
   #refreshTokenUseCase;
 
-  #requiredFields = ["token"];
+  #requiredFields = ["refreshToken"];
 
   constructor({ refreshTokenUseCase }) {
     this.#refreshTokenUseCase = refreshTokenUseCase;
@@ -25,8 +25,8 @@ export default class RefreshTokenRouter {
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
       const accessToken = await this.#refreshTokenUseCase.execute({
-        token: body.token,
         userId: httpRequest.userId,
+        refreshToken: body.refreshToken,
       });
       return HttpResponse.ok({ accessToken });
     } catch (error) {

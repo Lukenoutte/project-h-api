@@ -6,7 +6,7 @@ export default class JwtHelper {
   }
 
   generateToken(payload) {
-    return jwt.sign(payload, this.secret, { expiresIn: "30m" });
+    return jwt.sign(payload, this.secret, { expiresIn: "15m" });
   }
 
   verifyToken(token) {
