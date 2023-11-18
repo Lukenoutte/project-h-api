@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 export default class JwtHelper {
   constructor(secret) {
@@ -6,7 +6,7 @@ export default class JwtHelper {
   }
 
   generateToken(payload) {
-    return jwt.sign(payload, this.secret, { expiresIn: "1h" });
+    return jwt.sign(payload, this.secret, { expiresIn: "30m" });
   }
 
   verifyToken(token) {

@@ -15,7 +15,7 @@ export default async (req, res, next) => {
     if (!token) throw new UnauthorizedError();
     const jwtHelper = new JwtHelper(accessTokenSecret);
     const decodedToken = await jwtHelper.verifyToken(token);
-    req.userId = decodedToken.id;
+    req.userId = decodedToken.userId;
     return next();
   } catch (error) {
     return HttpResponse.unauthorizedError(error);

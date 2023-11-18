@@ -3,12 +3,18 @@ export default class LoginUseCase {
     findUserRepository,
     bcryptHelper,
     unauthorizedError,
-    jwtHelper,
+    jwtHelperAccessToken,
+    jwtHelperRefreshToken,
+    createRefreshTokenRepository,
+    findRefreshTokenRepository,
   }) {
     this.findUserRepository = findUserRepository;
     this.bcryptHelper = bcryptHelper;
     this.unauthorizedError = unauthorizedError;
-    this.jwtHelper = jwtHelper;
+    this.jwtHelperAccessToken = jwtHelperAccessToken;
+    this.jwtHelperRefreshToken = jwtHelperRefreshToken;
+    this.createRefreshTokenRepository = createRefreshTokenRepository;
+    this.findRefreshTokenRepository = findRefreshTokenRepository
   }
 
   async execute(params) {
@@ -19,6 +25,20 @@ export default class LoginUseCase {
       userOnDatabase.password,
     );
     if (!isPassCorrect) throw this.unauthorizedError;
-    return this.jwtHelper.generateToken(userOnDatabase);
+    const { id } = userOnDatabase;
+    await this.handleRefreshToken({ userId: id });
+    return this.jwtHelperAccessToken.generateToken({ userId: id });
+  }
+
+  async handleRefreshToken({ userId }) {
+    const existTokenRefresh = await this.findRefreshTokenRepository.execute({
+      userId,
+    });
+    if (existTokenRefresh) return;
+    const refreshToken = this.jwtHelperRefreshToken.generateToken({ userId });
+    await this.createRefreshTokenRepository.execute({
+      userId,
+      token: refreshToken,
+    });
   }
 }

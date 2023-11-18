@@ -2,13 +2,13 @@ import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
 import logger from "../../../main/config/logger";
 
-export default class LoginRouter {
-  #loginUseCase;
+export default class RefreshTokenRouter {
+  #refreshTokenUseCase;
 
-  #requiredFields = ["email", "password"];
+  #requiredFields = ["token"];
 
-  constructor({ loginUseCase }) {
-    this.#loginUseCase = loginUseCase;
+  constructor({ refreshTokenUseCase }) {
+    this.#refreshTokenUseCase = refreshTokenUseCase;
   }
 
   #validate(httpRequest) {
@@ -24,11 +24,14 @@ export default class LoginRouter {
       const body = { ...httpRequest.body };
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
-      const accessToken = await this.#loginUseCase.execute(body);
+      const accessToken = await this.#refreshTokenUseCase.execute({
+        token: body.token,
+        userId: httpRequest.userId,
+      });
       return HttpResponse.ok({ accessToken });
     } catch (error) {
-      if (error.name !== "UnauthorizedError") logger.error("LoginError", error);
-      return HttpResponse.unauthorizedError(error);
+      logger.error("RefreshTokenError", error);
+      return HttpResponse.serverError(error);
     }
   }
 }
