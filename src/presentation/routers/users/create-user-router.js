@@ -1,5 +1,6 @@
 import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
+import logger from "../../../main/config/logger";
 
 export default class CreateUserRouter {
   #createUserUseCase;
@@ -26,6 +27,7 @@ export default class CreateUserRouter {
       const result = await this.#createUserUseCase.execute(body);
       return HttpResponse.created(result);
     } catch (error) {
+      logger.error("CreateUserError", error);
       return HttpResponse.serverError(error);
     }
   }

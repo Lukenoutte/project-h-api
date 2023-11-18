@@ -5,9 +5,9 @@ export default class CreateStoreUseCase {
     this.createStoreRepository = createStoreRepository;
   }
 
-  execute(params) {
+  async execute(params) {
     const storeEntity = new StoreEntity(params);
-    this.createStoreRepository.execute(storeEntity);
+    await this.createStoreRepository.execute(storeEntity);
     return storeEntity;
   }
 }

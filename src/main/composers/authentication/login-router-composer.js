@@ -11,10 +11,11 @@ export default class LoginRouterComposer {
     const bcryptHelper = new BcryptHelper();
     const findUserRepository = new FindUserRepository();
     const jwtHelper = new JwtHelper(accessTokenSecret);
+    const unauthorizedError = new UnauthorizedError();
     const loginUseCase = new LoginUseCase({
       bcryptHelper,
       findUserRepository,
-      UnauthorizedError,
+      unauthorizedError,
       jwtHelper,
     });
     return new LoginRouter({ loginUseCase });

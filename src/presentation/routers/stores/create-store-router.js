@@ -1,5 +1,6 @@
 import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
+import logger from "../../../main/config/logger";
 
 export default class CreateStoreRouter {
   #createStoreUseCase;
@@ -26,6 +27,7 @@ export default class CreateStoreRouter {
       const result = await this.#createStoreUseCase.execute(body);
       return HttpResponse.created(result);
     } catch (error) {
+      logger.error("CreateStoreError", error);
       return HttpResponse.serverError(error);
     }
   }

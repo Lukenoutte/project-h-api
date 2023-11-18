@@ -12,6 +12,6 @@ export default class CreateUserUseCase {
       bcryptHelper: this.bcryptHelper,
     });
     await userEntity.encryptPassword();
-    this.createUserRepository.execute(userEntity);
+    await this.createUserRepository.execute(userEntity);
   }
 }

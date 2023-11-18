@@ -10,7 +10,7 @@ async function execute() {
       logger.info(`Server running at http://localhost:${serverPort}`);
     });
   } catch (error) {
-    logger.info(error);
+    logger.error(error);
   }
 }
 
