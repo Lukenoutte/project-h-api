@@ -27,7 +27,8 @@ export default class LoginRouter {
       const tokens = await this.#loginUseCase.execute(body);
       return HttpResponse.ok(tokens);
     } catch (error) {
-      if (error.name !== "UnauthorizedError") logger.error("LoginError", error);
+      if (error.name !== "WrongCredentialsError")
+        logger.error("LoginError", error);
       return HttpResponse.unauthorizedError(error);
     }
   }

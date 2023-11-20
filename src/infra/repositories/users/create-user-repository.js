@@ -1,8 +1,8 @@
 import PostgreHelper from "../../helpers/postgre-helper";
 
 export default class CreateUserRepository {
-  async execute(userEntity) {
-    await PostgreHelper.executeQuery(
+  execute(userEntity) {
+    return PostgreHelper.executeQuery(
       `
       INSERT INTO users
         (name, email, password, address, city, country)

@@ -61,7 +61,7 @@ export default class HttpResponse {
     return {
       statusCode: 401,
       body: {
-        error: new UnauthorizedError(error),
+        error,
       },
     };
   }
