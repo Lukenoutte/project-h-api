@@ -1,4 +1,4 @@
-import { ServerError, UnauthorizedError } from "../errors";
+import { ServerError } from "../errors";
 
 export default class HttpResponse {
   static ok(body) {

@@ -8,7 +8,9 @@ export default {
   },
 
   async disconnect() {
-    await this.clientPromise.close();
+    if (!this.client) return;
+    await this.client.end();
+    this.client = null;
     this.clientPromise = null;
   },
 

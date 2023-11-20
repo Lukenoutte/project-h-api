@@ -5,10 +5,7 @@ import FindUserRepository from "../../../infra/repositories/users/find-user-repo
 import CreateRefreshTokenRepository from "../../../infra/repositories/authentication/create-refresh-token-repository";
 import FindRefreshTokenRepository from "../../../infra/repositories/authentication/find-refresh-token-repository";
 import UpdateRefreshTokenRepository from "../../../infra/repositories/authentication/update-refresh-token-repository";
-import {
-  UnauthorizedError,
-  WrongCredentialsError,
-} from "../../../presentation/errors";
+import { WrongCredentialsError } from "../../../presentation/errors";
 import JwtHelper from "../../../infra/helpers/jwt-helper";
 import { accessTokenSecret, refreshTokenSecret } from "../../config/env";
 
