@@ -1,5 +1,5 @@
 import HttpResponse from "../../helpers/http-response";
-import logger from "../../../main/config/logger";
+import logger from "../../../main/configs/logger";
 
 export default class LogoutRouter {
   #logoutUseCase;

@@ -1,6 +1,6 @@
 import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
-import logger from "../../../main/config/logger";
+import logger from "../../../main/configs/logger";
 
 export default class CreateStoreRouter {
   #createStoreUseCase;

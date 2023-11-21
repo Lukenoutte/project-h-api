@@ -7,7 +7,7 @@ import FindRefreshTokenRepository from "../../../infra/repositories/authenticati
 import UpdateRefreshTokenRepository from "../../../infra/repositories/authentication/update-refresh-token-repository";
 import { WrongCredentialsError } from "../../../presentation/errors";
 import JwtHelper from "../../../infra/helpers/jwt-helper";
-import { accessTokenSecret, refreshTokenSecret } from "../../config/env";
+import { accessTokenSecret, refreshTokenSecret } from "../../configs/env";
 
 export default class LoginRouterComposer {
   static compose() {

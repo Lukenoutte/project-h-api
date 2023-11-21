@@ -2,7 +2,7 @@ import JwtHelper from "../../../src/infra/helpers/jwt-helper";
 import {
   accessTokenSecret,
   refreshTokenSecret,
-} from "../../../src/main/config/env";
+} from "../../../src/main/configs/env";
 
 describe("JWT Helper", () => {
   const accessJwtHelper = new JwtHelper(accessTokenSecret);

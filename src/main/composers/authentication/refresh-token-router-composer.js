@@ -2,7 +2,7 @@ import RefreshTokenUseCase from "../../../domain/usecases/authentication/refresh
 import RefreshTokenRouter from "../../../presentation/routers/authentication/refresh-token-router";
 import FindRefreshTokenRepository from "../../../infra/repositories/authentication/find-refresh-token-repository";
 import JwtHelper from "../../../infra/helpers/jwt-helper";
-import { accessTokenSecret, refreshTokenSecret } from "../../config/env";
+import { accessTokenSecret, refreshTokenSecret } from "../../configs/env";
 import { UnauthorizedError } from "../../../presentation/errors";
 
 export default class RefreshTokenRouterComposer {

@@ -1,7 +1,7 @@
 import PostgreHelper from "../infra/helpers/postgre-helper";
-import app from "./config/app";
-import logger from "./config/logger";
-import { postgreUrl, serverPort } from "./config/env";
+import app from "./configs/app";
+import logger from "./configs/logger";
+import { postgreUrl, serverPort } from "./configs/env";
 
 async function execute() {
   try {
