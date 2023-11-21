@@ -1,4 +1,4 @@
-import LogoutUseCase from "../../../domain/usecase/authentication/logout-usecase";
+import LogoutUseCase from "../../../domain/usecases/authentication/logout-usecase";
 import LogoutRouter from "../../../presentation/routers/authentication/logout-router";
 import DeleteRefreshTokenRepository from "../../../infra/repositories/authentication/delete-refresh-token-repository";
 

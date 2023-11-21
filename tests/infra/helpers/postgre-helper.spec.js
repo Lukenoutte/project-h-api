@@ -1,49 +1,49 @@
-import sut from "../../../src/infra/helpers/postgre-helper";
+import PostgreHelper from "../../../src/infra/helpers/postgre-helper";
 import { postgreUrl } from "../../../src/main/config/env";
 
 describe("Postgre Helper", () => {
   afterAll(async () => {
-    await sut.disconnect();
+    await PostgreHelper.disconnect();
   });
   test("Should connect", async () => {
-    await sut.connect(postgreUrl);
-    expect(sut.client._connected).toBeTruthy();
+    await PostgreHelper.connect(postgreUrl);
+    expect(PostgreHelper.client._connected).toBeTruthy();
   });
 
   test("Should disconnect", async () => {
-    await sut.connect(postgreUrl);
-    expect(sut.client._connected).toBeTruthy();
-    await sut.disconnect();
-    expect(sut.client).toBeFalsy();
+    await PostgreHelper.connect(postgreUrl);
+    expect(PostgreHelper.client._connected).toBeTruthy();
+    await PostgreHelper.disconnect();
+    expect(PostgreHelper.client).toBeFalsy();
   });
 
   test("Should execute SQL query", async () => {
-    await sut.connect(postgreUrl);
-    const result = await sut.executeQuery("SELECT CURRENT_DATE");
+    await PostgreHelper.connect(postgreUrl);
+    const result = await PostgreHelper.executeQuery("SELECT CURRENT_DATE");
     expect(result).toBeDefined();
-    await sut.disconnect();
+    await PostgreHelper.disconnect();
   });
 
   test("Should handle errors during connection", async () => {
     jest.setTimeout(20000);
-    await expect(sut.connect("invalid-url")).rejects.toThrow();
+    await expect(PostgreHelper.connect("invalid-url")).rejects.toThrow();
   }, 20000);
 
   test("Should handle errors during disconnection", async () => {
     jest.setTimeout(20000);
-    await sut.connect(postgreUrl);
-    await expect(sut.disconnect()).resolves.not.toThrow();
+    await PostgreHelper.connect(postgreUrl);
+    await expect(PostgreHelper.disconnect()).resolves.not.toThrow();
   }, 20000);
 
   test("Should handle errors during SQL query execution", async () => {
     jest.setTimeout(20000);
-    await sut.connect(postgreUrl);
-    await expect(sut.executeQuery("INVALID SQL")).rejects.toThrow();
-    await sut.disconnect();
+    await PostgreHelper.connect(postgreUrl);
+    await expect(PostgreHelper.executeQuery("INVALID SQL")).rejects.toThrow();
+    await PostgreHelper.disconnect();
   }, 20000);
 
   test("Should handle executing multiple SQL queries", async () => {
-    await sut.connect(postgreUrl);
+    await PostgreHelper.connect(postgreUrl);
     const createTableQuery =
       "CREATE TABLE test_table (id SERIAL PRIMARY KEY, name VARCHAR(255));";
     const insertDataQuery =
@@ -51,14 +51,14 @@ describe("Postgre Helper", () => {
     const selectDataQuery = "SELECT * FROM test_table;";
 
     try {
-      await sut.executeQuery(createTableQuery);
-      await sut.executeQuery(insertDataQuery);
-      const result = await sut.executeQuery(selectDataQuery);
+      await PostgreHelper.executeQuery(createTableQuery);
+      await PostgreHelper.executeQuery(insertDataQuery);
+      const result = await PostgreHelper.executeQuery(selectDataQuery);
       expect(result.rows.length).toBe(1);
       expect(result.rows[0].name).toBe("John Doe");
     } finally {
-      await sut.executeQuery("DROP TABLE IF EXISTS test_table;");
-      await sut.disconnect();
+      await PostgreHelper.executeQuery("DROP TABLE IF EXISTS test_table;");
+      await PostgreHelper.disconnect();
     }
   });
 });

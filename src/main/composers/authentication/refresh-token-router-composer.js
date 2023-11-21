@@ -1,4 +1,4 @@
-import RefreshTokenUseCase from "../../../domain/usecase/authentication/refresh-token-usecase";
+import RefreshTokenUseCase from "../../../domain/usecases/authentication/refresh-token-usecase";
 import RefreshTokenRouter from "../../../presentation/routers/authentication/refresh-token-router";
 import FindRefreshTokenRepository from "../../../infra/repositories/authentication/find-refresh-token-repository";
 import JwtHelper from "../../../infra/helpers/jwt-helper";

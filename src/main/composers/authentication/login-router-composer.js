@@ -1,4 +1,4 @@
-import LoginUseCase from "../../../domain/usecase/authentication/login-usecase";
+import LoginUseCase from "../../../domain/usecases/authentication/login-usecase";
 import LoginRouter from "../../../presentation/routers/authentication/login-router";
 import BcryptHelper from "../../../infra/helpers/bcrypt-helper";
 import FindUserRepository from "../../../infra/repositories/users/find-user-repository";

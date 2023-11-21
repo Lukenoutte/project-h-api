@@ -1,4 +1,4 @@
-import CreateStoreUseCase from "../../../domain/usecase/stores/create-store-usecase";
+import CreateStoreUseCase from "../../../domain/usecases/stores/create-store-usecase";
 import CreateStoreRouter from "../../../presentation/routers/stores/create-store-router";
 import CreateStoreRepository from "../../../infra/repositories/stores/create-store-repository";
 
