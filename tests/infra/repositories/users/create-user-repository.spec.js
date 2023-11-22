@@ -1,7 +1,7 @@
-import PostgreHelper from "../../../src/infra/helpers/postgre-helper";
-import CreateUserRepository from "../../../src/infra/repositories/users/create-user-repository";
-import DeleteUserRepository from "../../../src/infra/repositories/users/delete-user-repository";
-import { postgreUrl } from "../../../src/main/configs/env";
+import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
+import CreateUserRepository from "../../../../src/infra/repositories/users/create-user-repository";
+import DeleteUserRepository from "../../../../src/infra/repositories/users/delete-user-repository";
+import { postgreUrl } from "../../../../src/main/configs/env";
 
 const createUserRepository = () => new CreateUserRepository();
 const deleteUSerRepository = () => new DeleteUserRepository();

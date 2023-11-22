@@ -23,7 +23,6 @@ describe("Bcrypt Helper", () => {
     expect(isValid).toBeTruthy();
   });
 
-
   test("Should be able to compare hashed password and return false", async () => {
     const password = "12345678";
     const hashedPass = await bcryptHelper.hashPassword(password);
