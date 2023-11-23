@@ -40,6 +40,9 @@ module.exports = {
   settings: {
     "import/resolver": {
       "babel-module": {},
+      jest: {
+        jestConfigFile: "./jest.config.js",
+      },
     },
   },
 };

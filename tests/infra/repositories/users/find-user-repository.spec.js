@@ -1,7 +1,7 @@
-import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
-import FindUserRepository from "../../../../src/infra/repositories/users/find-user-repository";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
+import FindUserRepository from "src/infra/repositories/users/find-user-repository";
 
-jest.mock("../../../../src/infra/helpers/postgre-helper");
+jest.mock("src/infra/helpers/postgre-helper");
 
 describe("FindUserRepository", () => {
   const email = "test@example.com";

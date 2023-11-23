@@ -1,7 +1,7 @@
-import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
-import UpdateRefreshTokenRepository from "../../../../src/infra/repositories/authentication/update-refresh-token-repository";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
+import UpdateRefreshTokenRepository from "src/infra/repositories/authentication/update-refresh-token-repository";
 
-jest.mock("../../../../src/infra/helpers/postgre-helper");
+jest.mock("src/infra/helpers/postgre-helper");
 
 describe("UpdateRefreshTokenRepository", () => {
   const executeQuerySpy = jest.spyOn(PostgreHelper, "executeQuery");

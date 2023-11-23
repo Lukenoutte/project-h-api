@@ -1,4 +1,4 @@
-import StoreEntity from "../../../src/domain/entities/store-entity";
+import StoreEntity from "src/domain/entities/store-entity";
 
 describe("StoreEntity", () => {
   test("should return an array with the store details", () => {

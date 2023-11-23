@@ -1,7 +1,7 @@
 import express from "express";
-import JwtHelper from "../../../src/infra/helpers/jwt-helper";
-import authorization from "../../../src/main/middlewares/authorization";
-import { accessTokenSecret } from "../../../src/main/configs/env";
+import JwtHelper from "src/infra/helpers/jwt-helper";
+import authorization from "src/main/middlewares/authorization";
+import { accessTokenSecret } from "src/main/configs/env";
 
 const app = express();
 app.use(authorization);

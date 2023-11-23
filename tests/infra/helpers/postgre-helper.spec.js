@@ -1,5 +1,5 @@
-import PostgreHelper from "../../../src/infra/helpers/postgre-helper";
-import { postgreUrl } from "../../../src/main/configs/env";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
+import { postgreUrl } from "src/main/configs/env";
 
 describe("Postgre Helper", () => {
   afterAll(async () => {

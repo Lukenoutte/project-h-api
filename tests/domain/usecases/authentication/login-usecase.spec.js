@@ -1,5 +1,5 @@
-import { WrongCredentialsError } from "../../../../src/presentation/errors";
-import LoginUseCase from "../../../../src/domain/usecases/authentication/login-usecase";
+import { WrongCredentialsError } from "src/presentation/errors";
+import LoginUseCase from "src/domain/usecases/authentication/login-usecase";
 
 describe("LoginUseCase", () => {
   const findUserRepositoryMock = {

@@ -1,5 +1,5 @@
-import { UnauthorizedError } from "../../../../src/presentation/errors";
-import RefreshTokenUseCase from "../../../../src/domain/usecases/authentication/refresh-token-usecase";
+import { UnauthorizedError } from "src/presentation/errors";
+import RefreshTokenUseCase from "src/domain/usecases/authentication/refresh-token-usecase";
 
 describe("RefreshTokenUseCase", () => {
   const findRefreshTokenRepositoryMock = {

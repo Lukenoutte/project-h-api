@@ -1,4 +1,4 @@
-import CreateUserUseCase from "../../../../src/domain/usecases/users/create-user-usecase";
+import CreateUserUseCase from "src/domain/usecases/users/create-user-usecase";
 
 describe("CreateUserUseCase", () => {
   const mockBcryptHelper = {

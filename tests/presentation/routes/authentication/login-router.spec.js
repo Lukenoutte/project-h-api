@@ -1,6 +1,6 @@
-import LoginRouter from "../../../../src/presentation/routers/authentication/login-router";
-import { MissingParamError } from "../../../../src/presentation/errors";
-import HttpResponse from "../../../../src/presentation/helpers/http-response";
+import LoginRouter from "src/presentation/routers/authentication/login-router";
+import { MissingParamError } from "src/presentation/errors";
+import HttpResponse from "src/presentation/helpers/http-response";
 
 describe("LoginRouter", () => {
   const loginUseCaseMock = {

@@ -1,5 +1,5 @@
-import StoreEntity from "../../../../src/domain/entities/store-entity";
-import CreateStoreUseCase from "../../../../src/domain/usecases/stores/create-store-usecase";
+import StoreEntity from "src/domain/entities/store-entity";
+import CreateStoreUseCase from "src/domain/usecases/stores/create-store-usecase";
 
 describe("CreateStoreUseCase", () => {
   const createStoreRepositoryMock = {

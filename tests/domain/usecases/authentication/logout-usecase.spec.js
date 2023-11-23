@@ -1,4 +1,4 @@
-import LogoutUseCase from "../../../../src/domain/usecases/authentication/logout-usecase";
+import LogoutUseCase from "src/domain/usecases/authentication/logout-usecase";
 
 describe("LogoutUseCase", () => {
   const deleteRefreshTokenRepositoryMock = {

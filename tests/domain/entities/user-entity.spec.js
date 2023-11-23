@@ -1,4 +1,4 @@
-import UserEntity from "../../../src/domain/entities/user-entity";
+import UserEntity from "src/domain/entities/user-entity";
 
 const mockBcryptHelper = {
   hashPassword: jest.fn(async (password) => `hashed_${password}`),

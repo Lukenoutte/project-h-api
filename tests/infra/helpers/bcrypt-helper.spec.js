@@ -1,4 +1,4 @@
-import BcryptHelper from "../../../src/infra/helpers/bcrypt-helper";
+import BcryptHelper from "src/infra/helpers/bcrypt-helper";
 
 describe("Bcrypt Helper", () => {
   const bcryptHelper = new BcryptHelper();

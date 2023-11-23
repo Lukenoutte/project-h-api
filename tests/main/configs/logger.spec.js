@@ -1,4 +1,4 @@
-import logger from "../../../src/main/configs/logger";
+import logger from "src/main/configs/logger";
 
 jest.mock("winston", () => {
   const mFormat = {

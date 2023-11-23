@@ -1,7 +1,7 @@
-import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
-import DeleteRefreshTokenRepository from "../../../../src/infra/repositories/authentication/delete-refresh-token-repository";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
+import DeleteRefreshTokenRepository from "src/infra/repositories/authentication/delete-refresh-token-repository";
 
-jest.mock("../../../../src/infra/helpers/postgre-helper", () => ({
+jest.mock("src/infra/helpers/postgre-helper", () => ({
   executeQuery: jest.fn(),
 }));
 

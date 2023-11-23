@@ -1,7 +1,7 @@
-import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
-import CreateStoreRepository from "../../../../src/infra/repositories/stores/create-store-repository";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
+import CreateStoreRepository from "src/infra/repositories/stores/create-store-repository";
 
-jest.mock("../../../../src/infra/helpers/postgre-helper");
+jest.mock("src/infra/helpers/postgre-helper");
 
 describe("CreateStoreRepository", () => {
   let createStoreRepository;

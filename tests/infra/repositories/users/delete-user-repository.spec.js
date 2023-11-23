@@ -1,7 +1,7 @@
-import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
-import DeleteUserRepository from "../../../../src/infra/repositories/users/delete-user-repository";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
+import DeleteUserRepository from "src/infra/repositories/users/delete-user-repository";
 
-jest.mock("../../../../src/infra/helpers/postgre-helper");
+jest.mock("src/infra/helpers/postgre-helper");
 
 describe("DeleteUserRepository", () => {
   let deleteUserRepository;

@@ -1,4 +1,4 @@
-import ExpressRouterAdapter from "../../../src/main/adapters/express-router-adapter";
+import ExpressRouterAdapter from "src/main/adapters/express-router-adapter";
 
 describe("ExpressRouterAdapter", () => {
   const req = {

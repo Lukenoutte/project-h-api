@@ -1,7 +1,7 @@
-import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
-import CreateRefreshTokenRepository from "../../../../src/infra/repositories/authentication/create-refresh-token-repository";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
+import CreateRefreshTokenRepository from "src/infra/repositories/authentication/create-refresh-token-repository";
 
-jest.mock("../../../../src/infra/helpers/postgre-helper");
+jest.mock("src/infra/helpers/postgre-helper");
 
 describe("CreateRefreshTokenRepository", () => {
   const sut = new CreateRefreshTokenRepository();
