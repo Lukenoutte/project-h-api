@@ -1,44 +1,80 @@
 import PostgreHelper from "../../../../src/infra/helpers/postgre-helper";
 import CreateUserRepository from "../../../../src/infra/repositories/users/create-user-repository";
-import DeleteUserRepository from "../../../../src/infra/repositories/users/delete-user-repository";
-import { postgreUrl } from "../../../../src/main/configs/env";
 
-const createUserRepository = () => new CreateUserRepository();
-const deleteUSerRepository = () => new DeleteUserRepository();
+jest.mock("../../../../src/infra/helpers/postgre-helper");
 
-const fakeParams = () => ({
-  name: "User Test",
-  email: "userTest@gmail.com",
-  password: "123456TestPass",
-  address: "Test Adress",
-  city: "Test City",
-  country: "Test Country",
-});
+describe("CreateUserRepository", () => {
+  let createUserRepository;
 
-const userEntityMock = (userParams) => ({
-  getArray: () => {
-    const { name, email, password, address, city, country } = userParams;
-    return [name, email, password, address, city, country];
-  },
-});
-
-describe("Create User Repository", () => {
-  const userFakeParams = fakeParams();
-  const userEntityMocked = userEntityMock(userFakeParams);
-
-  beforeAll(async () => {
-    await PostgreHelper.connect(postgreUrl);
+  beforeEach(() => {
+    createUserRepository = new CreateUserRepository();
   });
 
-  afterAll(async () => {
-    const sutDeleteUser = deleteUSerRepository();
-    await sutDeleteUser.execute({ email: userFakeParams.email });
-    await PostgreHelper.disconnect();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test("Should be able to create a new user", async () => {
-    const sutCreateUser = createUserRepository();
-    const { rowCount } = await sutCreateUser.execute(userEntityMocked);
-    expect(rowCount).toBe(1);
+  it("should execute a query to insert a user", async () => {
+    const userEntity = {
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
+      address: "123 Test St",
+      city: "Test City",
+      country: "Test Country",
+      getArray: jest
+        .fn()
+        .mockReturnValue([
+          "Test User",
+          "test@example.com",
+          "password123",
+          "123 Test St",
+          "Test City",
+          "Test Country",
+        ]),
+    };
+
+    await createUserRepository.execute(userEntity);
+
+    expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
+      `
+      INSERT INTO users
+        (name, email, password, address, city, country)
+      VALUES
+        ($1, $2, $3, $4, $5, $6);
+      `,
+      userEntity.getArray(),
+    );
+  });
+
+  it("should throw an error if executeQuery fails", async () => {
+    const userEntity = {
+      name: "Test User",
+      email: "test@example.com",
+      password: "password123",
+      address: "123 Test St",
+      city: "Test City",
+      country: "Test Country",
+      getArray: jest
+        .fn()
+        .mockReturnValue([
+          "Test User",
+          "test@example.com",
+          "password123",
+          "123 Test St",
+          "Test City",
+          "Test Country",
+        ]),
+    };
+
+    PostgreHelper.executeQuery.mockImplementationOnce(() => {
+      throw new Error("Database error");
+    });
+
+    try {
+      await createUserRepository.execute(userEntity);
+    } catch (error) {
+      expect(error).toEqual(new Error("Database error"));
+    }
   });
 });
