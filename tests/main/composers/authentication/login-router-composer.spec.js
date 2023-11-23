@@ -53,13 +53,4 @@ describe("LoginRouterComposer", () => {
     expect(LoginRouterComposer.compose()).toBe(loginRouter);
   });
 
-  // it("Should throw error when credentials are wrong", () => {
-  //   const wrongCredentialsError = new WrongCredentialsError();
-  //   jest.spyOn(LoginUseCase.prototype, "execute").mockImplementation(() => {
-  //     throw wrongCredentialsError;
-  //   });
-  //   expect(() => LoginRouterComposer.compose().loginUseCase.execute()).toThrow(
-  //     wrongCredentialsError,
-  //   );
-  // });
 });
