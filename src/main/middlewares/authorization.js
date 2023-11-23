@@ -1,7 +1,7 @@
-import { UnauthorizedError } from "../../presentation/errors";
-import JwtHelper from "../../infra/helpers/jwt-helper";
+import { UnauthorizedError } from "src/presentation/errors";
+import JwtHelper from "src/infra/helpers/jwt-helper";
+import publicRoutes from "src/main/configs/public-routes";
 import { accessTokenSecret } from "../configs/env";
-import publicRoutes from "../configs/public-routes";
 
 const isPublicRoute = (path) => publicRoutes.includes(path);
 

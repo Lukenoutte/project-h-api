@@ -1,4 +1,4 @@
-import UserEntity from "../../entities/user-entity";
+import UserEntity from "src/domain/entities/user-entity";
 
 export default class CreateUserUseCase {
   constructor({

@@ -1,4 +1,4 @@
-import PostgreHelper from "../../helpers/postgre-helper";
+import PostgreHelper from "src/infra/helpers/postgre-helper";
 
 export default class FindRefreshTokenRepository {
   async execute({ userId, token }) {

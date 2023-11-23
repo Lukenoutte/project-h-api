@@ -1,4 +1,4 @@
-import StoreEntity from "../../entities/store-entity";
+import StoreEntity from "src/domain/entities/store-entity";
 
 export default class CreateStoreUseCase {
   constructor({ createStoreRepository }) {

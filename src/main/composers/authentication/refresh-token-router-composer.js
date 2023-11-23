@@ -1,9 +1,9 @@
-import RefreshTokenUseCase from "../../../domain/usecases/authentication/refresh-token-usecase";
-import RefreshTokenRouter from "../../../presentation/routers/authentication/refresh-token-router";
-import FindRefreshTokenRepository from "../../../infra/repositories/authentication/find-refresh-token-repository";
-import JwtHelper from "../../../infra/helpers/jwt-helper";
+import RefreshTokenUseCase from "src/domain/usecases/authentication/refresh-token-usecase";
+import RefreshTokenRouter from "src/presentation/routers/authentication/refresh-token-router";
+import FindRefreshTokenRepository from "src/infra/repositories/authentication/find-refresh-token-repository";
+import JwtHelper from "src/infra/helpers/jwt-helper";
 import { accessTokenSecret, refreshTokenSecret } from "../../configs/env";
-import { UnauthorizedError } from "../../../presentation/errors";
+import { UnauthorizedError } from "src/presentation/errors";
 
 export default class RefreshTokenRouterComposer {
   static compose() {

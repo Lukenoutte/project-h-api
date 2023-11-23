@@ -1,9 +1,9 @@
-import CreateUserUseCase from "../../../domain/usecases/users/create-user-usecase";
-import CreateUserRouter from "../../../presentation/routers/users/create-user-router";
-import CreateUserRepository from "../../../infra/repositories/users/create-user-repository";
-import BcryptHelper from "../../../infra/helpers/bcrypt-helper";
-import FindUserRepository from "../../../infra/repositories/users/find-user-repository";
-import { AlreadyExistsError } from "../../../presentation/errors";
+import CreateUserUseCase from "src/domain/usecases/users/create-user-usecase";
+import CreateUserRouter from "src/presentation/routers/users/create-user-router";
+import CreateUserRepository from "src/infra/repositories/users/create-user-repository";
+import BcryptHelper from "src/infra/helpers/bcrypt-helper";
+import FindUserRepository from "src/infra/repositories/users/find-user-repository";
+import { AlreadyExistsError } from "src/presentation/errors";
 
 export default class CreateUserRouterComposer {
   static compose() {

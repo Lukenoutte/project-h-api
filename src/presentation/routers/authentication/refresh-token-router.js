@@ -1,6 +1,6 @@
+import logger from "src/main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
-import logger from "../../../main/configs/logger";
 
 export default class RefreshTokenRouter {
   #refreshTokenUseCase;
