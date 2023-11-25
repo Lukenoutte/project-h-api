@@ -1,10 +1,10 @@
-import LogoutUseCase from "src/domain/usecases/authentication/logout-usecase";
+import SignOutUseCase from "src/domain/usecases/authentication/signout-usecase";
 
-describe("LogoutUseCase", () => {
+describe("SignOutUseCase", () => {
   const deleteRefreshTokenRepositoryMock = {
     execute: jest.fn(),
   };
-  const sut = new LogoutUseCase({
+  const sut = new SignOutUseCase({
     deleteRefreshTokenRepository: deleteRefreshTokenRepositoryMock,
   });
 

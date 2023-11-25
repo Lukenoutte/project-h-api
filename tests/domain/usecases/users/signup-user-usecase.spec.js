@@ -1,11 +1,11 @@
-import CreateUserUseCase from "src/domain/usecases/users/create-user-usecase";
+import SignUpUserUseCase from "src/domain/usecases/users/signup-user-usecase";
 
-describe("CreateUserUseCase", () => {
+describe("SignUpUserUseCase", () => {
   const mockBcryptHelper = {
     hashPassword: jest.fn(async (password) => `hashed_${password}`),
   };
 
-  const createUserRepositoryMock = {
+  const signUpUserRepositoryMock = {
     execute: jest.fn().mockResolvedValue(null),
   };
 
@@ -28,13 +28,13 @@ describe("CreateUserUseCase", () => {
     const findUserRepositoryMock = {
       execute: jest.fn().mockResolvedValue({}),
     };
-    const createUserUseCase = new CreateUserUseCase({
+    const signUpUserUseCase = new SignUpUserUseCase({
       findUserRepository: findUserRepositoryMock,
-      createUserRepository: createUserRepositoryMock,
+      signUpUserRepository: signUpUserRepositoryMock,
       bcryptHelper: mockBcryptHelper,
       alreadyExistsError: AlreadyExistsErrorMock(),
     });
-    await expect(createUserUseCase.execute(fakeUser())).rejects.toThrowError(
+    await expect(signUpUserUseCase.execute(fakeUser())).rejects.toThrowError(
       AlreadyExistsErrorMock(),
     );
   });
@@ -44,16 +44,16 @@ describe("CreateUserUseCase", () => {
       execute: jest.fn().mockResolvedValue(null),
     };
 
-    const createUserUseCase = new CreateUserUseCase({
+    const signUpUserUseCase = new SignUpUserUseCase({
       findUserRepository: findUserRepositoryMock,
-      createUserRepository: createUserRepositoryMock,
+      signUpUserRepository: signUpUserRepositoryMock,
       bcryptHelper: mockBcryptHelper,
       alreadyExistsError: AlreadyExistsErrorMock(),
     });
 
-    await createUserUseCase.execute(fakeUser());
+    await signUpUserUseCase.execute(fakeUser());
 
     expect(findUserRepositoryMock.execute).toHaveBeenCalled();
-    expect(createUserRepositoryMock.execute).toHaveBeenCalled();
+    expect(signUpUserRepositoryMock.execute).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-export default class LoginUseCase {
+export default class SignInUseCase {
   constructor({
     findUserRepository,
     bcryptHelper,

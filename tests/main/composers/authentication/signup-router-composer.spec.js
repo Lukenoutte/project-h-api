@@ -1,5 +1,6 @@
-import LoginUseCase from "src/domain/usecases/authentication/login-usecase";
-import LoginRouter from "src/presentation/routers/authentication/login-router";
+import SignInRouterComposer from "src/main/composers/authentication/signin-router-composer";
+import SignInUseCase from "src/domain/usecases/authentication/signin-usecase";
+import SignInRouter from "src/presentation/routers/authentication/signin-router";
 import BcryptHelper from "src/infra/helpers/bcrypt-helper";
 import FindUserRepository from "src/infra/repositories/users/find-user-repository";
 import CreateRefreshTokenRepository from "src/infra/repositories/authentication/create-refresh-token-repository";
@@ -9,8 +10,24 @@ import { WrongCredentialsError } from "src/presentation/errors";
 import JwtHelper from "src/infra/helpers/jwt-helper";
 import { accessTokenSecret, refreshTokenSecret } from "src/main/configs/env";
 
-export default class LoginRouterComposer {
-  static compose() {
+jest.mock("src/domain/usecases/authentication/signin-usecase");
+jest.mock("src/presentation/routers/authentication/signin-router");
+jest.mock("src/infra/helpers/bcrypt-helper");
+jest.mock("src/infra/repositories/users/find-user-repository");
+jest.mock(
+  "src/infra/repositories/authentication/create-refresh-token-repository",
+);
+jest.mock(
+  "src/infra/repositories/authentication/find-refresh-token-repository",
+);
+jest.mock(
+  "src/infra/repositories/authentication/update-refresh-token-repository",
+);
+jest.mock("src/presentation/errors");
+jest.mock("src/infra/helpers/jwt-helper");
+
+describe("SignInRouterComposer", () => {
+  it("Should compose a Sign in router", () => {
     const bcryptHelper = new BcryptHelper();
     const findUserRepository = new FindUserRepository();
     const createRefreshTokenRepository = new CreateRefreshTokenRepository();
@@ -19,7 +36,7 @@ export default class LoginRouterComposer {
     const jwtHelperAccessToken = new JwtHelper(accessTokenSecret);
     const jwtHelperRefreshToken = new JwtHelper(refreshTokenSecret);
     const wrongCredentialsError = new WrongCredentialsError();
-    const loginUseCase = new LoginUseCase({
+    const signinUseCase = new SignInUseCase({
       bcryptHelper,
       findUserRepository,
       jwtHelperAccessToken,
@@ -29,6 +46,11 @@ export default class LoginRouterComposer {
       updateRefreshTokenRepository,
       wrongCredentialsError,
     });
-    return new LoginRouter({ loginUseCase });
-  }
-}
+    const signinRouter = new SignInRouter({ signinUseCase });
+    jest
+      .spyOn(SignInRouterComposer, "compose")
+      .mockImplementation(() => signinRouter);
+    expect(SignInRouterComposer.compose()).toBe(signinRouter);
+  });
+
+});

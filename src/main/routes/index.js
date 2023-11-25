@@ -1,13 +1,13 @@
-import createHotelRoute from "./stores/create-store-route";
-import createUserRoute from "./users/create-user-route";
-import loginRoute from "./authentication/login-route";
-import logoutRoute from "./authentication/logout-route";
+import signUpStoreRoute from "./stores/signup-store-route";
+import signUpUserRoute from "./users/signup-user-route";
+import signinRoute from "./authentication/signin-route";
+import signoutRoute from "./authentication/signout-route";
 import refreshTokenRoute from "./authentication/refesh-token-route";
 
 export default [
-  createHotelRoute,
-  createUserRoute,
-  loginRoute,
-  logoutRoute,
+  signUpStoreRoute,
+  signUpUserRoute,
+  signinRoute,
+  signoutRoute,
   refreshTokenRoute,
 ];

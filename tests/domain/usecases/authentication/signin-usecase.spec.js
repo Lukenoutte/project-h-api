@@ -1,7 +1,7 @@
 import { WrongCredentialsError } from "src/presentation/errors";
-import LoginUseCase from "src/domain/usecases/authentication/login-usecase";
+import SignInUseCase from "src/domain/usecases/authentication/signin-usecase";
 
-describe("LoginUseCase", () => {
+describe("SignInUseCase", () => {
   const findUserRepositoryMock = {
     execute: jest.fn(),
   };
@@ -24,7 +24,7 @@ describe("LoginUseCase", () => {
   const updateRefreshTokenRepositoryMock = {
     execute: jest.fn(),
   };
-  const sut = new LoginUseCase({
+  const sut = new SignInUseCase({
     findUserRepository: findUserRepositoryMock,
     bcryptHelper: bcryptHelperMock,
     wrongCredentialsError: wrongCredentialsErrorMock,

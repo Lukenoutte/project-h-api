@@ -1,4 +1,4 @@
-export default class LogoutUseCase {
+export default class SignOutUseCase {
   constructor({ deleteRefreshTokenRepository }) {
     this.deleteRefreshTokenRepository = deleteRefreshTokenRepository;
   }

@@ -1,1 +1,1 @@
-export default ["/login", "/create/user"];
+export default ["/signin", "/signup/user"];

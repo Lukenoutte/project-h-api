@@ -1,12 +1,12 @@
-import LoginRouter from "src/presentation/routers/authentication/login-router";
+import SignInRouter from "src/presentation/routers/authentication/signin-router";
 import { MissingParamError } from "src/presentation/errors";
 import HttpResponse from "src/presentation/helpers/http-response";
 
-describe("LoginRouter", () => {
-  const loginUseCaseMock = {
+describe("SignInRouter", () => {
+  const signinUseCaseMock = {
     execute: jest.fn(),
   };
-  const sut = new LoginRouter({ loginUseCase: loginUseCaseMock });
+  const sut = new SignInRouter({ signinUseCase: signinUseCaseMock });
 
   it("Should return MissingParamError if email is missing", async () => {
     const httpRequest = { password: "any_password" };
@@ -38,11 +38,11 @@ describe("LoginRouter", () => {
     );
   });
 
-  it("Should return UnauthorizedError if loginUseCase execute throws an error", async () => {
+  it("Should return UnauthorizedError if signinUseCase execute throws an error", async () => {
     const httpRequest = {
       body: { email: "any_email", password: "any_password" },
     };
-    loginUseCaseMock.execute.mockImplementationOnce(() => {
+    signinUseCaseMock.execute.mockImplementationOnce(() => {
       throw new Error("any_error");
     });
     const response = await sut.route(httpRequest);
@@ -51,11 +51,11 @@ describe("LoginRouter", () => {
     );
   });
 
-  it("Should return UnauthorizedError if loginUseCase execute throws WrongCredentialsError", async () => {
+  it("Should return UnauthorizedError if signinUseCase execute throws WrongCredentialsError", async () => {
     const httpRequest = {
       body: { email: "any_email", password: "any_password" },
     };
-    loginUseCaseMock.execute.mockImplementationOnce(() => {
+    signinUseCaseMock.execute.mockImplementationOnce(() => {
       throw new Error("WrongCredentialsError");
     });
     const response = await sut.route(httpRequest);
@@ -64,7 +64,7 @@ describe("LoginRouter", () => {
     );
   });
 
-  it("Should return Ok if loginUseCase execute returns tokens", async () => {
+  it("Should return Ok if signinUseCase execute returns tokens", async () => {
     const httpRequest = {
       body: { email: "any_email", password: "any_password" },
     };
@@ -72,7 +72,7 @@ describe("LoginRouter", () => {
       accessToken: "any_access_token",
       refreshToken: "any_refresh_token",
     };
-    loginUseCaseMock.execute.mockImplementationOnce(() => tokens);
+    signinUseCaseMock.execute.mockImplementationOnce(() => tokens);
     const response = await sut.route(httpRequest);
     expect(response).toEqual(HttpResponse.ok(tokens));
   });

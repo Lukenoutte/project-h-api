@@ -1,14 +1,14 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
-import CreateStoreRepository from "src/infra/repositories/stores/create-store-repository";
+import SignUpStoreRepository from "src/infra/repositories/stores/create-store-repository";
 
 jest.mock("src/infra/helpers/postgre-helper");
 
-describe("CreateStoreRepository", () => {
-  let createStoreRepository;
+describe("SignUpStoreRepository", () => {
+  let signUpStoreRepository;
   let mockStoreEntity;
 
   beforeEach(() => {
-    createStoreRepository = new CreateStoreRepository();
+    signUpStoreRepository = new SignUpStoreRepository();
     mockStoreEntity = {
       getArray: jest
         .fn()
@@ -21,7 +21,7 @@ describe("CreateStoreRepository", () => {
   });
 
   it("Should execute a query to insert a new store", async () => {
-    await createStoreRepository.execute(mockStoreEntity);
+    await signUpStoreRepository.execute(mockStoreEntity);
 
     expect(PostgreHelper.executeQuery).toBeCalledWith(
       `
@@ -35,13 +35,13 @@ describe("CreateStoreRepository", () => {
   });
 
   it("Should throw an error when storeEntity is not provided", async () => {
-    await expect(createStoreRepository.execute()).rejects.toThrow();
+    await expect(signUpStoreRepository.execute()).rejects.toThrow();
   });
 
   it("Should throw an error when storeEntity does not have a getArray method", async () => {
     const invalidStoreEntity = {};
     await expect(
-      createStoreRepository.execute(invalidStoreEntity),
+      signUpStoreRepository.execute(invalidStoreEntity),
     ).rejects.toThrow();
   });
 });

@@ -2,13 +2,13 @@ import logger from "src/main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
 
-export default class LoginRouter {
-  #loginUseCase;
+export default class SignUpUserRouter {
+  #signUpUserUseCase;
 
-  #requiredFields = ["email", "password"];
+  #requiredFields = ["name", "email", "password"];
 
-  constructor({ loginUseCase }) {
-    this.#loginUseCase = loginUseCase;
+  constructor({ signUpUserUseCase }) {
+    this.#signUpUserUseCase = signUpUserUseCase;
   }
 
   #validate(httpRequest) {
@@ -24,12 +24,11 @@ export default class LoginRouter {
       const body = { ...httpRequest.body };
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
-      const tokens = await this.#loginUseCase.execute(body);
-      return HttpResponse.ok(tokens);
+      const result = await this.#signUpUserUseCase.execute(body);
+      return HttpResponse.created(result);
     } catch (error) {
-      if (error.name !== "WrongCredentialsError")
-        logger.error("LoginError", error);
-      return HttpResponse.unauthorizedError(error);
+      logger.error("SignUpUserError", error);
+      return HttpResponse.serverError(error);
     }
   }
 }

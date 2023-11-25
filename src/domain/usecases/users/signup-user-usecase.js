@@ -1,13 +1,13 @@
 import UserEntity from "src/domain/entities/user-entity";
 
-export default class CreateUserUseCase {
+export default class SignUpUserUseCase {
   constructor({
-    createUserRepository,
+    signUpUserRepository,
     bcryptHelper,
     findUserRepository,
     alreadyExistsError,
   }) {
-    this.createUserRepository = createUserRepository;
+    this.signUpUserRepository = signUpUserRepository;
     this.bcryptHelper = bcryptHelper;
     this.findUserRepository = findUserRepository;
     this.alreadyExistsError = alreadyExistsError;
@@ -21,6 +21,6 @@ export default class CreateUserUseCase {
       bcryptHelper: this.bcryptHelper,
     });
     await userEntity.encryptPassword();
-    await this.createUserRepository.execute(userEntity);
+    await this.signUpUserRepository.execute(userEntity);
   }
 }

@@ -1,13 +1,13 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
-import CreateUserRepository from "src/infra/repositories/users/create-user-repository";
+import SignUpUserRepository from "src/infra/repositories/users/create-user-repository";
 
 jest.mock("src/infra/helpers/postgre-helper");
 
-describe("CreateUserRepository", () => {
-  let createUserRepository;
+describe("SignUpUserRepository", () => {
+  let signUpUserRepository;
 
   beforeEach(() => {
-    createUserRepository = new CreateUserRepository();
+    signUpUserRepository = new SignUpUserRepository();
   });
 
   afterEach(() => {
@@ -34,7 +34,7 @@ describe("CreateUserRepository", () => {
         ]),
     };
 
-    await createUserRepository.execute(userEntity);
+    await signUpUserRepository.execute(userEntity);
 
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
       `
@@ -72,7 +72,7 @@ describe("CreateUserRepository", () => {
     });
 
     try {
-      await createUserRepository.execute(userEntity);
+      await signUpUserRepository.execute(userEntity);
     } catch (error) {
       expect(error).toEqual(new Error("Database error"));
     }

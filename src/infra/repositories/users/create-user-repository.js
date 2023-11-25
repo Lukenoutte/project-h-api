@@ -1,6 +1,6 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
 
-export default class CreateUserRepository {
+export default class SignUpUserRepository {
   execute(userEntity) {
     return PostgreHelper.executeQuery(
       `
