@@ -5,9 +5,9 @@ import DeleteRefreshTokenRepository from "src/infra/repositories/authentication/
 export default class SignOutRouterComposer {
   static compose() {
     const deleteRefreshTokenRepository = new DeleteRefreshTokenRepository();
-    const signoutUseCase = new SignOutUseCase({
+    const signOutUseCase = new SignOutUseCase({
       deleteRefreshTokenRepository,
     });
-    return new SignOutRouter({ signoutUseCase });
+    return new SignOutRouter({ signOutUseCase });
   }
 }

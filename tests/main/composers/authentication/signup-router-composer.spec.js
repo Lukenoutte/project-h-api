@@ -36,7 +36,7 @@ describe("SignInRouterComposer", () => {
     const jwtHelperAccessToken = new JwtHelper(accessTokenSecret);
     const jwtHelperRefreshToken = new JwtHelper(refreshTokenSecret);
     const wrongCredentialsError = new WrongCredentialsError();
-    const signinUseCase = new SignInUseCase({
+    const signInUseCase = new SignInUseCase({
       bcryptHelper,
       findUserRepository,
       jwtHelperAccessToken,
@@ -46,11 +46,11 @@ describe("SignInRouterComposer", () => {
       updateRefreshTokenRepository,
       wrongCredentialsError,
     });
-    const signinRouter = new SignInRouter({ signinUseCase });
+    const signInRouter = new SignInRouter({ signInUseCase });
     jest
       .spyOn(SignInRouterComposer, "compose")
-      .mockImplementation(() => signinRouter);
-    expect(SignInRouterComposer.compose()).toBe(signinRouter);
+      .mockImplementation(() => signInRouter);
+    expect(SignInRouterComposer.compose()).toBe(signInRouter);
   });
 
 });

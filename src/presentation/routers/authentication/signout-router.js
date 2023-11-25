@@ -2,16 +2,16 @@ import logger from "src/main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 
 export default class SignOutRouter {
-  #signoutUseCase;
+  #signOutUseCase;
 
-  constructor({ signoutUseCase }) {
-    this.#signoutUseCase = signoutUseCase;
+  constructor({ signOutUseCase }) {
+    this.#signOutUseCase = signOutUseCase;
   }
 
   async route(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
-      await this.#signoutUseCase.execute({
+      await this.#signOutUseCase.execute({
         userId: httpRequest.userId,
       });
       return HttpResponse.ok();

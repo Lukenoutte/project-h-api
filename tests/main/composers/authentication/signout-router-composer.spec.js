@@ -10,15 +10,15 @@ jest.mock(
 );
 
 describe("SignOutRouterComposer", () => {
-  it("Should compose a signout router", () => {
+  it("Should compose a signOut router", () => {
     const deleteRefreshTokenRepository = new DeleteRefreshTokenRepository();
-    const signoutUseCase = new SignOutUseCase({
+    const signOutUseCase = new SignOutUseCase({
       deleteRefreshTokenRepository,
     });
-    const signoutRouter = new SignOutRouter({ signoutUseCase });
+    const signOutRouter = new SignOutRouter({ signOutUseCase });
     jest
       .spyOn(SignOutRouterComposer, "compose")
-      .mockImplementation(() => signoutRouter);
-    expect(SignOutRouterComposer.compose()).toBe(signoutRouter);
+      .mockImplementation(() => signOutRouter);
+    expect(SignOutRouterComposer.compose()).toBe(signOutRouter);
   });
 });

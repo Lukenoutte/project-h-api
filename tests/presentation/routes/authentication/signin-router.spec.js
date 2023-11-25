@@ -3,10 +3,10 @@ import { MissingParamError } from "src/presentation/errors";
 import HttpResponse from "src/presentation/helpers/http-response";
 
 describe("SignInRouter", () => {
-  const signinUseCaseMock = {
+  const signInUseCaseMock = {
     execute: jest.fn(),
   };
-  const sut = new SignInRouter({ signinUseCase: signinUseCaseMock });
+  const sut = new SignInRouter({ signInUseCase: signInUseCaseMock });
 
   it("Should return MissingParamError if email is missing", async () => {
     const httpRequest = { password: "any_password" };
@@ -38,11 +38,11 @@ describe("SignInRouter", () => {
     );
   });
 
-  it("Should return UnauthorizedError if signinUseCase execute throws an error", async () => {
+  it("Should return UnauthorizedError if signInUseCase execute throws an error", async () => {
     const httpRequest = {
       body: { email: "any_email", password: "any_password" },
     };
-    signinUseCaseMock.execute.mockImplementationOnce(() => {
+    signInUseCaseMock.execute.mockImplementationOnce(() => {
       throw new Error("any_error");
     });
     const response = await sut.route(httpRequest);
@@ -51,11 +51,11 @@ describe("SignInRouter", () => {
     );
   });
 
-  it("Should return UnauthorizedError if signinUseCase execute throws WrongCredentialsError", async () => {
+  it("Should return UnauthorizedError if signInUseCase execute throws WrongCredentialsError", async () => {
     const httpRequest = {
       body: { email: "any_email", password: "any_password" },
     };
-    signinUseCaseMock.execute.mockImplementationOnce(() => {
+    signInUseCaseMock.execute.mockImplementationOnce(() => {
       throw new Error("WrongCredentialsError");
     });
     const response = await sut.route(httpRequest);
@@ -64,7 +64,7 @@ describe("SignInRouter", () => {
     );
   });
 
-  it("Should return Ok if signinUseCase execute returns tokens", async () => {
+  it("Should return Ok if signInUseCase execute returns tokens", async () => {
     const httpRequest = {
       body: { email: "any_email", password: "any_password" },
     };
@@ -72,7 +72,7 @@ describe("SignInRouter", () => {
       accessToken: "any_access_token",
       refreshToken: "any_refresh_token",
     };
-    signinUseCaseMock.execute.mockImplementationOnce(() => tokens);
+    signInUseCaseMock.execute.mockImplementationOnce(() => tokens);
     const response = await sut.route(httpRequest);
     expect(response).toEqual(HttpResponse.ok(tokens));
   });

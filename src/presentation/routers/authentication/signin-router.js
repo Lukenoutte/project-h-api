@@ -3,12 +3,12 @@ import HttpResponse from "../../helpers/http-response";
 import { MissingParamError } from "../../errors";
 
 export default class SignInRouter {
-  #signinUseCase;
+  #signInUseCase;
 
   #requiredFields = ["email", "password"];
 
-  constructor({ signinUseCase }) {
-    this.#signinUseCase = signinUseCase;
+  constructor({ signInUseCase }) {
+    this.#signInUseCase = signInUseCase;
   }
 
   #validate(httpRequest) {
@@ -24,7 +24,7 @@ export default class SignInRouter {
       const body = { ...httpRequest.body };
       const error = this.#validate(body);
       if (error) return HttpResponse.badRequest(error);
-      const tokens = await this.#signinUseCase.execute(body);
+      const tokens = await this.#signInUseCase.execute(body);
       return HttpResponse.ok(tokens);
     } catch (error) {
       if (error.name !== "WrongCredentialsError")
