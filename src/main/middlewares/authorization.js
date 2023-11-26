@@ -7,6 +7,7 @@ const isPublicRoute = (path) => publicRoutes.includes(path);
 
 export default async (req, res, next) => {
   try {
+    if (req.method === "OPTIONS") return next();
     if (isPublicRoute(req.path)) return next();
     const { authorization } = req.headers;
     if (!authorization) throw new UnauthorizedError();

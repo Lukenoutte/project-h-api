@@ -3,7 +3,7 @@ import RefreshTokenRouterComposer from "../../composers/authentication/refresh-t
 
 export default (router) => {
   router.patch(
-    "/token",
+    "/token/refresh",
     ExpressRouterAdapter.adapt(RefreshTokenRouterComposer.compose()),
   );
 };
