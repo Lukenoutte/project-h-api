@@ -1,6 +1,12 @@
 import UserEntity from "src/domain/entities/user-entity";
 
 export default class SignUpUserUseCase {
+  /**
+   * @param {SignUpUserRepository} signUpUserRepository
+   * @param {BcryptHelper} bcryptHelper
+   * @param {FindUserRepository} findUserRepository
+   * @param {AlreadyExistsError} alreadyExistsError
+   */
   constructor({
     signUpUserRepository,
     bcryptHelper,
@@ -13,6 +19,16 @@ export default class SignUpUserUseCase {
     this.alreadyExistsError = alreadyExistsError;
   }
 
+  /**
+   * @typedef {object} ParamsSignUpUser
+   * @property {string} name
+   * @property {string} email
+   * @property {string} password
+   */
+
+  /**
+   * @param {ParamsSignUpUser} params
+   */
   async execute(params) {
     const userOnDatabase = await this.findUserRepository.execute(params);
     if (userOnDatabase) throw this.alreadyExistsError;

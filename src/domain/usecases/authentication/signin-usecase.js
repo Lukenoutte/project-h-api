@@ -1,4 +1,13 @@
 export default class SignInUseCase {
+  /**
+   * @param {FindUserRepository} findUserRepository
+   * @param {BcryptHelper} bcryptHelper
+   * @param {WrongCredentialsError} wrongCredentialsError
+   * @param {JwtHelperAccessToken} jwtHelperAccessToken
+   * @param {JwtHelperRefreshToken} jwtHelperRefreshToken
+   * @param {FindRefreshTokenRepository} findRefreshTokenRepository
+   * @param {UpdateRefreshTokenRepository} updateRefreshTokenRepository
+   */
   constructor({
     findUserRepository,
     bcryptHelper,
@@ -19,6 +28,16 @@ export default class SignInUseCase {
     this.updateRefreshTokenRepository = updateRefreshTokenRepository;
   }
 
+  /**
+   * @typedef {object} ParamsSignIn
+   * @property {string} email
+   * @property {string} password
+   */
+
+  /**
+   * @param {ParamsSignIn} params
+   * @returns {object}
+   */
   async execute(params) {
     const userOnDatabase = await this.findUserRepository.execute(params);
     if (!userOnDatabase) throw this.wrongCredentialsError;
@@ -33,6 +52,10 @@ export default class SignInUseCase {
     return { refreshToken, accessToken };
   }
 
+  /**
+   * @param {string} userId
+   * @returns {string}
+   */
   async handleRefreshToken({ userId }) {
     const existTokenRefresh = await this.findRefreshTokenRepository.execute({
       userId,

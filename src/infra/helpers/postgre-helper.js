@@ -1,6 +1,9 @@
 import { Client } from "pg";
 
 export default {
+  /**
+   * @param {string} uri
+   */
   async connect(uri) {
     this.uri = uri;
     this.client = new Client(uri);
@@ -14,6 +17,11 @@ export default {
     this.clientPromise = null;
   },
 
+  /**
+   * @param {string} query
+   * @param {Array} values
+   * @returns {object}
+   */
   executeQuery(query, values) {
     return this.client.query(query, values);
   },

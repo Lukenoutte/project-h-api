@@ -1,4 +1,13 @@
 export default class UserEntity {
+  /**
+   * @param {string} name
+   * @param {string} email
+   * @param {string} password
+   * @param {string} address
+   * @param {string} city
+   * @param {string} country
+   * @param {BcryptHelper} bcryptHelper
+   */
   constructor({ name, email, password, address, city, country, bcryptHelper }) {
     this.name = name;
     this.email = email;

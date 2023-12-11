@@ -1,4 +1,10 @@
 export default class RefreshTokenUseCase {
+  /**
+   * @param {FindRefreshTokenRepository} findRefreshTokenRepository
+   * @param {JwtHelperRefreshToken} jwtHelperRefreshToken
+   * @param {JwtHelperAccessToken} jwtHelperAccessToken
+   * @param {UnauthorizedError} unauthorizedError
+   */
   constructor({
     findRefreshTokenRepository,
     jwtHelperRefreshToken,
@@ -11,6 +17,11 @@ export default class RefreshTokenUseCase {
     this.unauthorizedError = unauthorizedError;
   }
 
+  /**
+   * @param {string} refreshToken
+   * @param {string} userId
+   * @returns {string}
+   */
   async execute({ refreshToken, userId }) {
     const refreshTokenExist = await this.findRefreshTokenRepository.execute({
       token: refreshToken,
