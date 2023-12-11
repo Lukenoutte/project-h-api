@@ -1,28 +1,51 @@
 import SignOutRouter from "src/presentation/routers/authentication/signout-router";
-import SignOutUseCase from "src/domain/usecases/authentication/signout-usecase";
-import HttpResponse from "src/presentation/helpers/http-response";
-
-jest.mock("src/main/configs/logger");
-jest.mock("src/presentation/helpers/http-response");
-jest.mock("src/domain/usecases/authentication/signout-usecase");
 
 describe("SignOutRouter", () => {
-  it("Should execute the signOut use case and return a ok response", async () => {
-    const signOutUseCase = new SignOutUseCase();
-    const signOutRouter = new SignOutRouter({ signOutUseCase });
-    const httpRequest = { userId: "123" };
-    signOutUseCase.execute = jest.fn().mockResolvedValue();
-    const response = await signOutRouter.route(httpRequest);
-    expect(response).toEqual(HttpResponse.ok());
+  let signOutRouter;
+  let signOutUseCaseMock;
+
+  beforeEach(() => {
+    signOutUseCaseMock = {
+      execute: jest.fn(),
+    };
+
+    signOutRouter = new SignOutRouter({
+      signOutUseCase: signOutUseCaseMock,
+    });
   });
 
-  it("Should log an error and return a server error response when an error occurs", async () => {
-    const signOutUseCase = new SignOutUseCase();
-    const signOutRouter = new SignOutRouter({ signOutUseCase });
-    const httpRequest = { userId: "123" };
-    const error = new Error("Test error");
-    signOutUseCase.execute = jest.fn().mockRejectedValue(error);
-    const response = await signOutRouter.route(httpRequest);
-    expect(response).toEqual(HttpResponse.serverError(error));
+  describe("#route", () => {
+    it("should return 500 Bad Request if the request is invalid", async () => {
+      const invalidHttpRequest = null;
+
+      const response = await signOutRouter.route(invalidHttpRequest);
+
+      expect(response.statusCode).toBe(500);
+    });
+
+    it("should return 200 OK if sign-out is successful", async () => {
+      const validHttpRequest = {
+        userId: "user123",
+        body: {},
+      };
+
+      signOutUseCaseMock.execute.mockResolvedValue();
+
+      const response = await signOutRouter.route(validHttpRequest);
+      expect(response.statusCode).toBe(200);
+    });
+
+    it("should return 500 Internal Server Error for other errors", async () => {
+      const validHttpRequest = {
+        userId: "user123",
+      };
+
+      signOutUseCaseMock.execute.mockRejectedValue(new Error("Some error"));
+
+      const response = await signOutRouter.route(validHttpRequest);
+
+      expect(response.statusCode).toBe(500);
+      expect(response.body).toHaveProperty("error");
+    });
   });
 });

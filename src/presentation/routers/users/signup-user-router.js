@@ -1,33 +1,41 @@
+import { string, object } from "yup";
 import logger from "src/main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
-import { MissingParamError } from "../../errors";
 
 export default class SignUpUserRouter {
   #signUpUserUseCase;
-
-  #requiredFields = ["name", "email", "password"];
 
   constructor({ signUpUserUseCase }) {
     this.#signUpUserUseCase = signUpUserUseCase;
   }
 
-  #validate(httpRequest) {
-    for (const field of this.#requiredFields) {
-      if (!httpRequest[field]) return new MissingParamError(field);
+  async validate(httpRequest) {
+    try {
+      const userSchema = object({
+        name: string().required(),
+        email: string().required().email(),
+        password: string().required().min(6),
+      });
+      await userSchema.validate(httpRequest);
+      return { isValid: true };
+    } catch (error) {
+      const { name, message } = error;
+      return { error: { name, message }, isValid: false };
     }
-    return false;
   }
 
   async route(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       const body = { ...httpRequest.body };
-      const error = this.#validate(body);
-      if (error) return HttpResponse.badRequest(error);
+      const { isValid, error } = await this.validate(body);
+      if (!isValid) return HttpResponse.badRequest(error);
       const result = await this.#signUpUserUseCase.execute(body);
       return HttpResponse.created(result);
     } catch (error) {
       logger.error("SignUpUserError", error);
+      if (error.name === "AlreadyExistsError")
+        return HttpResponse.conflict(error);
       return HttpResponse.serverError(error);
     }
   }

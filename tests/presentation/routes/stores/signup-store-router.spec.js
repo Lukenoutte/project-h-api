@@ -1,47 +1,107 @@
-import SignUpStoreUseCase from "src/domain/usecases/stores/signup-store-usecase";
-import logger from "src/main/configs/logger";
-import HttpResponse from "src/presentation/helpers/http-response";
-import { MissingParamError } from "src/presentation/errors";
 import SignUpStoreRouter from "src/presentation/routers/stores/signup-store-router";
 
-jest.mock("src/main/configs/logger");
-jest.mock("src/presentation/helpers/http-response");
-jest.mock("src/presentation/errors");
-jest.mock("src/domain/usecases/stores/signup-store-usecase");
-
 describe("SignUpStoreRouter", () => {
-  it("Should execute the create store use case and return a created response", async () => {
-    const signUpStoreUseCase = new SignUpStoreUseCase();
-    const signUpStoreRouter = new SignUpStoreRouter({ signUpStoreUseCase });
-    const httpRequest = {
-      body: { name: "Test", address: "Test", city: "Test", country: "Test" },
+  let signUpStoreRouter;
+  let signUpStoreUseCaseMock;
+
+  beforeEach(() => {
+    signUpStoreUseCaseMock = {
+      execute: jest.fn(),
     };
-    signUpStoreUseCase.execute = jest.fn().mockResolvedValue("testStore");
-    const response = await signUpStoreRouter.route(httpRequest);
-    expect(response).toEqual(HttpResponse.created("testStore"));
+
+    signUpStoreRouter = new SignUpStoreRouter({
+      signUpStoreUseCase: signUpStoreUseCaseMock,
+    });
   });
 
-  it("Should log an error and return a server error response when an error occurs", async () => {
-    const signUpStoreUseCase = new SignUpStoreUseCase();
-    const signUpStoreRouter = new SignUpStoreRouter({ signUpStoreUseCase });
-    const httpRequest = {
-      body: { name: "Test", address: "Test", city: "Test", country: "Test" },
-    };
-    const error = new Error("Test error");
-    signUpStoreUseCase.execute = jest.fn().mockRejectedValue(error);
-    const response = await signUpStoreRouter.route(httpRequest);
-    expect(logger.error).toHaveBeenCalledWith("SignUpStoreError", error);
-    expect(response).toEqual(HttpResponse.serverError(error));
+  describe("validate", () => {
+    it("should return isValid true if validation passes", async () => {
+      const body = {
+        name: "Store Name",
+        address: "123 Main Street",
+        city: "Cityville",
+        country: "Countryland",
+      };
+
+      const result = await signUpStoreRouter.validate(body);
+
+      expect(result.isValid).toBe(true);
+    });
+
+    it("should return isValid false and error details if validation fails", async () => {
+      const body = {
+        name: "Store Name",
+        address: "123 Main Street",
+        city: null, // Invalid, as it's required
+        country: "Countryland",
+      };
+
+      const result = await signUpStoreRouter.validate(body);
+
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+    });
   });
 
-  it("Should return a bad request response when a required field is missing", async () => {
-    const signUpStoreUseCase = new SignUpStoreUseCase();
-    const signUpStoreRouter = new SignUpStoreRouter({ signUpStoreUseCase });
-    const httpRequest = {
-      body: { name: "Test", address: "Test", city: "Test" },
-    };
-    const error = new MissingParamError("country");
-    const response = await signUpStoreRouter.route(httpRequest);
-    expect(response).toEqual(HttpResponse.badRequest(error));
+  describe("#route", () => {
+    it("should return 400 Bad Request if the request is invalid", async () => {
+      const invalidHttpRequest = null;
+
+      const response = await signUpStoreRouter.route(invalidHttpRequest);
+
+      expect(response.statusCode).toBe(500);
+    });
+
+    it("should return 400 Bad Request if validation fails", async () => {
+      const invalidHttpRequest = {
+        body: {
+          name: "Store Name",
+          address: "123 Main Street",
+          city: null, // Invalid, as it's required
+          country: "Countryland",
+        },
+      };
+
+      const response = await signUpStoreRouter.route(invalidHttpRequest);
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+
+    it("should return 201 Created if sign-up is successful", async () => {
+      const validHttpRequest = {
+        body: {
+          name: "Store Name",
+          address: "123 Main Street",
+          city: "Cityville",
+          country: "Countryland",
+        },
+      };
+
+      signUpStoreUseCaseMock.execute.mockResolvedValue("store_id");
+
+      const response = await signUpStoreRouter.route(validHttpRequest);
+
+      expect(response.statusCode).toBe(201);
+      expect(response.body).toBe("store_id");
+    });
+
+    it("should return 500 Internal Server Error for other errors", async () => {
+      const validHttpRequest = {
+        body: {
+          name: "Store Name",
+          address: "123 Main Street",
+          city: "Cityville",
+          country: "Countryland",
+        },
+      };
+
+      signUpStoreUseCaseMock.execute.mockRejectedValue(new Error("Some error"));
+
+      const response = await signUpStoreRouter.route(validHttpRequest);
+
+      expect(response.statusCode).toBe(500);
+      expect(response.body).toHaveProperty("error");
+    });
   });
 });

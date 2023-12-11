@@ -1,29 +1,36 @@
+import { string, object } from "yup";
 import logger from "src/main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
-import { MissingParamError } from "../../errors";
 
 export default class SignUpStoreRouter {
   #signUpStoreUseCase;
-
-  #requiredFields = ["name", "address", "city", "country"];
 
   constructor({ signUpStoreUseCase }) {
     this.#signUpStoreUseCase = signUpStoreUseCase;
   }
 
-  #validate(httpRequest) {
-    for (const field of this.#requiredFields) {
-      if (!httpRequest[field]) return new MissingParamError(field);
+  async validate(httpRequest) {
+    try {
+      const storeSchema = object({
+        name: string().required(),
+        address: string().required(),
+        city: string().required(),
+        country: string().required(),
+      });
+      await storeSchema.validate(httpRequest);
+      return { isValid: true };
+    } catch (error) {
+      const { name, message } = error;
+      return { error: { name, message }, isValid: false };
     }
-    return false;
   }
 
   async route(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       const body = { ...httpRequest.body };
-      const error = this.#validate(body);
-      if (error) return HttpResponse.badRequest(error);
+      const { isValid, error } = await this.validate(body);
+      if (!isValid) return HttpResponse.badRequest(error);
       const result = await this.#signUpStoreUseCase.execute(body);
       return HttpResponse.created(result);
     } catch (error) {

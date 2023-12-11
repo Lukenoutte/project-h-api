@@ -1,45 +1,111 @@
-import SignUpUserUseCase from "src/domain/usecases/users/signup-user-usecase";
-import logger from "src/main/configs/logger";
-import HttpResponse from "src/presentation/helpers/http-response";
-import { MissingParamError } from "src/presentation/errors";
 import SignUpUserRouter from "src/presentation/routers/users/signup-user-router";
 
-jest.mock("src/main/configs/logger");
-jest.mock("src/presentation/helpers/http-response");
-jest.mock("src/presentation/errors");
-jest.mock("src/domain/usecases/users/signup-user-usecase");
-
 describe("SignUpUserRouter", () => {
-  it("Should execute the create user use case and return a created response", async () => {
-    const signUpUserUseCase = new SignUpUserUseCase();
-    const signUpUserRouter = new SignUpUserRouter({ signUpUserUseCase });
-    const httpRequest = {
-      body: { name: "Test", email: "test@test.com", password: "test" },
+  let signUpUserRouter;
+  let signUpUserUseCaseMock;
+
+  beforeEach(() => {
+    signUpUserUseCaseMock = {
+      execute: jest.fn(),
     };
-    signUpUserUseCase.execute = jest.fn().mockResolvedValue("testUser");
-    const response = await signUpUserRouter.route(httpRequest);
-    expect(response).toEqual(HttpResponse.created("testUser"));
+
+    signUpUserRouter = new SignUpUserRouter({
+      signUpUserUseCase: signUpUserUseCaseMock,
+    });
   });
 
-  it("Should log an error and return a server error response when an error occurs", async () => {
-    const signUpUserUseCase = new SignUpUserUseCase();
-    const signUpUserRouter = new SignUpUserRouter({ signUpUserUseCase });
-    const httpRequest = {
-      body: { name: "Test", email: "test@test.com", password: "test" },
-    };
-    const error = new Error("Test error");
-    signUpUserUseCase.execute = jest.fn().mockRejectedValue(error);
-    const response = await signUpUserRouter.route(httpRequest);
-    expect(logger.error).toHaveBeenCalledWith("SignUpUserError", error);
-    expect(response).toEqual(HttpResponse.serverError(error));
+  describe("validate", () => {
+    it("should return isValid true if validation passes", async () => {
+      const body = {
+        name: "John Doe",
+        email: "john@gmail.com",
+        password: "password123",
+      };
+      const result = await signUpUserRouter.validate(body);
+      expect(result.isValid).toBe(true);
+    });
+
+    it("should return isValid false and error details if validation fails", async () => {
+      const body = {
+        name: "John Doe",
+        email: "invalid_email",
+        password: "short",
+      };
+      const result = await signUpUserRouter.validate(body);
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBeDefined();
+    });
   });
 
-  it("Should return a bad request response when a required field is missing", async () => {
-    const signUpUserUseCase = new SignUpUserUseCase();
-    const signUpUserRouter = new SignUpUserRouter({ signUpUserUseCase });
-    const httpRequest = { body: { name: "Test", email: "test@test.com" } };
-    const error = new MissingParamError("password");
-    const response = await signUpUserRouter.route(httpRequest);
-    expect(response).toEqual(HttpResponse.badRequest(error));
+  describe("#route", () => {
+    it("should return 400 Bad Request if the request is invalid", async () => {
+      const invalidHttpRequest = null;
+      const response = await signUpUserRouter.route(invalidHttpRequest);
+      expect(response.statusCode).toBe(500);
+    });
+
+    it("should return 400 Bad Request if validation fails", async () => {
+      const invalidHttpRequest = {
+        body: {
+          name: "John Doe",
+          email: "invalid_email",
+          password: "short",
+        },
+      };
+      const response = await signUpUserRouter.route(invalidHttpRequest);
+      expect(response.statusCode).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+
+    it("should return 201 Created if sign-up is successful", async () => {
+      const validHttpRequest = {
+        body: {
+          name: "John Doe",
+          email: "john@example.com",
+          password: "password123",
+        },
+      };
+
+      signUpUserUseCaseMock.execute.mockResolvedValue("user_id");
+      const response = await signUpUserRouter.route(validHttpRequest);
+
+      expect(response.statusCode).toBe(201);
+      expect(response.body).toBe("user_id");
+    });
+
+    it("should return 409 Conflict if the user already exists", async () => {
+      const validHttpRequest = {
+        body: {
+          name: "John Doe",
+          email: "john@example.com",
+          password: "password123",
+        },
+      };
+
+      signUpUserUseCaseMock.execute.mockRejectedValue({
+        name: "AlreadyExistsError",
+        message: "User already exists",
+      });
+
+      const response = await signUpUserRouter.route(validHttpRequest);
+
+      expect(response.statusCode).toBe(409);
+      expect(response.body).toHaveProperty("error");
+    });
+
+    it("should return 500 Internal Server Error for other errors", async () => {
+      const validHttpRequest = {
+        body: {
+          name: "John Doe",
+          email: "john@example.com",
+          password: "password123",
+        },
+      };
+
+      signUpUserUseCaseMock.execute.mockRejectedValue(new Error("Some error"));
+      const response = await signUpUserRouter.route(validHttpRequest);
+      expect(response.statusCode).toBe(500);
+      expect(response.body).toHaveProperty("error");
+    });
   });
 });

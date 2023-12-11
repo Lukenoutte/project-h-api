@@ -3,7 +3,7 @@ import SignUpUserRouterComposer from "../../composers/users/signup-user-router-c
 
 export default (router) => {
   router.post(
-    "/create/user",
+    "/signup/user",
     ExpressRouterAdapter.adapt(SignUpUserRouterComposer.compose()),
   );
 };

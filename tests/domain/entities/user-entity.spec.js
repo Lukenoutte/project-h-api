@@ -15,7 +15,6 @@ describe("UserEntity", () => {
       country: "Countryland",
       bcryptHelper: mockBcryptHelper,
     });
-
     expect(user).toBeInstanceOf(UserEntity);
   });
 
