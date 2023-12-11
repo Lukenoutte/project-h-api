@@ -17,7 +17,7 @@ export default class JwtHelper {
   }
 
   /**
-   * @param {object} payload
+   * @param {string} token
    * @returns {boolean}
    */
   verifyToken(token) {
