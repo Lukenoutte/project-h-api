@@ -1,6 +1,9 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
 
 export default class SignUpStoreRepository {
+  /**
+   * @param {StoreEntity} storeEntity
+   */
   async execute(storeEntity) {
     await PostgreHelper.executeQuery(
       `

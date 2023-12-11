@@ -1,6 +1,9 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
 
 export default class FindUserRepository {
+  /**
+   * @param {string} email
+   */
   async execute({ email }) {
     const { rows } = await PostgreHelper.executeQuery(
       `

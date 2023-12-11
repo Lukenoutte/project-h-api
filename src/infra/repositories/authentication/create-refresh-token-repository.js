@@ -1,6 +1,10 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
 
 export default class CreateRefreshTokenRepository {
+  /**
+   * @param {string} userId
+   * @param {string} token
+   */
   async execute({ userId, token }) {
     await PostgreHelper.executeQuery(
       `

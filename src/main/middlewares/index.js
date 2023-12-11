@@ -1,5 +1,5 @@
 import authorization from "./authorization";
 import jsonParse from "./json-parse";
-import limiter from "./rate-limit";
+import rateLimit from "./rate-limit";
 
-export { authorization, jsonParse, limiter };
+export { authorization, jsonParse, rateLimit };

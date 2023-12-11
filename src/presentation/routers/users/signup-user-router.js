@@ -9,14 +9,25 @@ export default class SignUpUserRouter {
     this.#signUpUserUseCase = signUpUserUseCase;
   }
 
-  async validate(httpRequest) {
+  /**
+   * @typedef {object} ParamsSignUpUser
+   * @property {string} name
+   * @property {string} email
+   * @property {string} password
+   */
+
+  /**
+   * @param {ParamsSignUpUser} params
+   * @returns {object}
+   */
+  async validate(params) {
     try {
       const userSchema = object({
         name: string().required(),
         email: string().required().email(),
         password: string().required().min(6),
       });
-      await userSchema.validate(httpRequest);
+      await userSchema.validate(params);
       return { isValid: true };
     } catch (error) {
       const { name, message } = error;
@@ -24,6 +35,9 @@ export default class SignUpUserRouter {
     }
   }
 
+  /**
+   * @param {HttpResponse} httpRequest
+   */
   async route(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");

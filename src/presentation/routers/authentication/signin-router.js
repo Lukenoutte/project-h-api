@@ -5,17 +5,30 @@ import HttpResponse from "../../helpers/http-response";
 export default class SignInRouter {
   #signInUseCase;
 
+  /**
+   * @param {SignInUseCase} signInUseCase
+   */
   constructor({ signInUseCase }) {
     this.#signInUseCase = signInUseCase;
   }
 
-  async validate(httpRequest) {
+  /**
+   * @typedef {object} ParamsSignIn
+   * @property {string} email
+   * @property {string} password
+   */
+
+  /**
+   * @param {ParamsSignIn} params
+   * @returns {object}
+   */
+  async validate(params) {
     try {
       const userSchema = object({
         email: string().required().email(),
         password: string().required().min(6),
       });
-      await userSchema.validate(httpRequest);
+      await userSchema.validate(params);
       return { isValid: true };
     } catch (error) {
       const { name, message } = error;
@@ -23,6 +36,11 @@ export default class SignInRouter {
     }
   }
 
+  /**
+   *
+   * @param {HttpResponse} httpRequest
+   * @returns {object}
+   */
   async route(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");

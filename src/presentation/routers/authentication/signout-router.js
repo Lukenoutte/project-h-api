@@ -4,10 +4,16 @@ import HttpResponse from "../../helpers/http-response";
 export default class SignOutRouter {
   #signOutUseCase;
 
+  /**
+   * @param {SignOutUseCase} signOutUseCase
+   */
   constructor({ signOutUseCase }) {
     this.#signOutUseCase = signOutUseCase;
   }
 
+  /**
+   * @param {HttpResponse} httpRequest
+   */
   async route(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");

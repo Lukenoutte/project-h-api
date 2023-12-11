@@ -5,16 +5,28 @@ import HttpResponse from "../../helpers/http-response";
 export default class RefreshTokenRouter {
   #refreshTokenUseCase;
 
+  /**
+   * @param {RefreshTokenUseCase} refreshTokenUseCase
+   */
   constructor({ refreshTokenUseCase }) {
     this.#refreshTokenUseCase = refreshTokenUseCase;
   }
 
-  async validate(httpRequest) {
+  /**
+   * @typedef {object} ParamsRefreshToken
+   * @property {string} refreshToken
+   */
+
+  /**
+   * @param {ParamsRefreshToken} params
+   * @returns {object}
+   */
+  async validate(params) {
     try {
       const tokenSchema = object({
         refreshToken: string().required(),
       });
-      await tokenSchema.validate(httpRequest);
+      await tokenSchema.validate(params);
       return { isValid: true };
     } catch (error) {
       const { name, message } = error;
@@ -22,6 +34,11 @@ export default class RefreshTokenRouter {
     }
   }
 
+  /**
+   *
+   * @param {HttpResponse} httpRequest
+   * @returns {object}
+   */
   async route(httpRequest) {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");

@@ -1,6 +1,11 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
 
 export default class FindRefreshTokenRepository {
+  /**
+   * @param {string} userId
+   * @param {string} token
+   * @returns {object}
+   */
   async execute({ userId, token }) {
     let query;
     let queryParams;

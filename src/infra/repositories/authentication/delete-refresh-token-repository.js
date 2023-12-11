@@ -1,6 +1,9 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
 
 export default class DeleteRefreshTokenRepository {
+  /**
+   * @param {string} userId
+   */
   async execute({ userId }) {
     await PostgreHelper.executeQuery(
       `

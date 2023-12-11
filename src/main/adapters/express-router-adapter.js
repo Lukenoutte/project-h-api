@@ -1,4 +1,11 @@
 export default class ExpressRouterAdapter {
+  /**
+   * @typedef {Object} PresentationRouter
+   */
+
+  /**
+   * @param {PresentationRouter} router
+   */
   static adapt(router) {
     return async (req, res) => {
       const httpRequest = {
