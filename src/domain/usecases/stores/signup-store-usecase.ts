@@ -1,11 +1,20 @@
-import StoreEntity from "src/domain/entities/store-entity";
+import StoreEntity from "domain/entities/store-entity";
+import { ISignUpStoreRepository } from "infra/repositories/@interfaces/stores-repository.interfaces";
+
+interface ISignUpStoreUseCaseParams {
+  name: string;
+  address: string;
+  city: string;
+  country: string;
+}
 
 export default class SignUpStoreUseCase {
-  constructor({ signUpStoreRepository }) {
+  signUpStoreRepository: ISignUpStoreRepository
+  constructor({ signUpStoreRepository }: { signUpStoreRepository: ISignUpStoreRepository }) {
     this.signUpStoreRepository = signUpStoreRepository;
   }
 
-  async execute(params) {
+  async execute(params: ISignUpStoreUseCaseParams) {
     const storeEntity = new StoreEntity(params);
     await this.signUpStoreRepository.execute(storeEntity);
     return storeEntity;

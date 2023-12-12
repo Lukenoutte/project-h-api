@@ -1,4 +1,21 @@
+import { IFindUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
+import { 
+  ICreateRefreshTokenRepository, 
+  IFindRefreshTokenRepository,
+  IUpdateRefreshTokenRepository
+} from "infra/repositories/@interfaces/authentication-repository.interfaces";
+import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
+// Rever
 export default class SignInUseCase {
+  findUserRepository: IFindUserRepository;
+  bcryptHelper: IBcryptHelper;
+  wrongCredentialsError: Error;
+  jwtHelperAccessToken: IJwtHelper;
+  jwtHelperRefreshToken: IJwtHelper;
+  createRefreshTokenRepository: ICreateRefreshTokenRepository;
+  findRefreshTokenRepository: IFindRefreshTokenRepository;
+  updateRefreshTokenRepository: IUpdateRefreshTokenRepository;
+  
   constructor({
     findUserRepository,
     bcryptHelper,
@@ -8,7 +25,7 @@ export default class SignInUseCase {
     createRefreshTokenRepository,
     findRefreshTokenRepository,
     updateRefreshTokenRepository,
-  }) {
+  }: ISignInUseCaseConstructor) {
     this.findUserRepository = findUserRepository;
     this.bcryptHelper = bcryptHelper;
     this.wrongCredentialsError = wrongCredentialsError;
@@ -19,7 +36,7 @@ export default class SignInUseCase {
     this.updateRefreshTokenRepository = updateRefreshTokenRepository;
   }
 
-  async execute(params) {
+  async execute(params: { email: string, password: string }) {
     const userOnDatabase = await this.findUserRepository.execute(params);
     if (!userOnDatabase) throw this.wrongCredentialsError;
     const isPassCorrect = await this.bcryptHelper.comparePassword(
@@ -33,9 +50,10 @@ export default class SignInUseCase {
     return { refreshToken, accessToken };
   }
 
-  async handleRefreshToken({ userId }) {
+  async handleRefreshToken({ userId }: { userId: string }) {
     const existTokenRefresh = await this.findRefreshTokenRepository.execute({
       userId,
+      token: ""
     });
     const refreshToken = this.jwtHelperRefreshToken.generateToken({ userId });
     if (existTokenRefresh) {
@@ -51,4 +69,15 @@ export default class SignInUseCase {
     });
     return refreshToken;
   }
+}
+
+interface ISignInUseCaseConstructor {
+  findUserRepository: IFindUserRepository,
+  bcryptHelper: IBcryptHelper,
+  wrongCredentialsError: Error,
+  jwtHelperAccessToken: IJwtHelper,
+  jwtHelperRefreshToken: IJwtHelper,
+  createRefreshTokenRepository: ICreateRefreshTokenRepository,
+  findRefreshTokenRepository: IFindRefreshTokenRepository,
+  updateRefreshTokenRepository: IUpdateRefreshTokenRepository
 }

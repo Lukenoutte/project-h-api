@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { IBcryptHelper } from "./interfaces/bcrypt-helper.interface";
+import { IBcryptHelper } from "./@interfaces/helper.interfaces";
 
 export default class BcryptHelper implements IBcryptHelper{
   async hashPassword(password: string) {

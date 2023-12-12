@@ -1,6 +1,7 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
+import { IJwtHelper } from "./@interfaces/helper.interfaces"
 
-export default class JwtHelper {
+export default class JwtHelper implements IJwtHelper {
   secret: string;
 
   constructor(secret: string) {

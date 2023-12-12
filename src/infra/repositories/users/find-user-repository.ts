@@ -1,6 +1,7 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
+import { IFindUserRepository } from "../@interfaces/users-respository.interfaces";
 
-export default class FindUserRepository {
+export default class FindUserRepository implements IFindUserRepository {
   async execute({ email }: { email: string }) {
     const { rows } = await PostgreHelper.executeQuery(
       `

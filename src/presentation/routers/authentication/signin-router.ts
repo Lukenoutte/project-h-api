@@ -1,5 +1,5 @@
 import { string, object } from "yup";
-import logger from "src/main/configs/logger";
+import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 
 export default class SignInRouter {

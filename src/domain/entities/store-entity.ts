@@ -1,6 +1,6 @@
-import IStoreEntity from "./interfaces/store-entity.interface"
+import IStoreEntity from "./@interfaces/store-entity.interfaces"
 
-interface IStore {
+interface IStoreConstructor {
   name: string;
   address: string;
   city: string;
@@ -13,7 +13,7 @@ export default class StoreEntity implements IStoreEntity {
   city: string;
   country: string;
 
-  constructor({ name, address, city, country }: IStore) {
+  constructor({ name, address, city, country }: IStoreConstructor) {
     this.name = name;
     this.address = address;
     this.city = city;

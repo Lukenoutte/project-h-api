@@ -1,6 +1,6 @@
-import SignOutUseCase from "src/domain/usecases/authentication/signout-usecase";
-import SignOutRouter from "src/presentation/routers/authentication/signout-router";
-import DeleteRefreshTokenRepository from "src/infra/repositories/authentication/delete-refresh-token-repository";
+import SignOutUseCase from "domain/usecases/authentication/signout-usecase";
+import SignOutRouter from "presentation/routers/authentication/signout-router";
+import DeleteRefreshTokenRepository from "infra/repositories/authentication/delete-refresh-token-repository";
 
 export default class SignOutRouterComposer {
   static compose() {

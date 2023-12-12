@@ -1,6 +1,6 @@
-import { UnauthorizedError } from "src/presentation/errors";
-import JwtHelper from "src/infra/helpers/jwt-helper";
-import publicRoutes from "src/main/configs/public-routes";
+import { UnauthorizedError } from "presentation/errors";
+import JwtHelper from "infra/helpers/jwt-helper";
+import publicRoutes from "main/configs/public-routes";
 import { accessTokenSecret } from "../configs/env";
 import { Request, Response, NextFunction } from 'express';
 

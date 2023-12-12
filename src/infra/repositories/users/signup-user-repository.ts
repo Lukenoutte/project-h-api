@@ -1,7 +1,8 @@
 import PostgreHelper from "src/infra/helpers/postgre-helper";
-import IUserEntity from "../../../domain/entities/interfaces/user-entity.interface";
+import IUserEntity from "../../../domain/entities/@interfaces/user-entity.interfaces";
+import { ISignUpUserRepository } from "../@interfaces/users-respository.interfaces";
 
-export default class SignUpUserRepository {
+export default class SignUpUserRepository implements ISignUpUserRepository{
   execute(userEntity: IUserEntity) {
     return PostgreHelper.executeQuery(
       `
