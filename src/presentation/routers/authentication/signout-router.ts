@@ -1,10 +1,11 @@
 import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
+import { ISignOutUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
 
 export default class SignOutRouter {
   #signOutUseCase;
 
-  constructor({ signOutUseCase }) {
+  constructor({ signOutUseCase }: { signOutUseCase: ISignOutUseCase }) {
     this.#signOutUseCase = signOutUseCase;
   }
 

@@ -1,11 +1,12 @@
 import { string, object } from "yup";
 import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
+import { ISignUpUserUseCase } from "domain/usecases/@interfaces/users-usecases.interfaces";
 
 export default class SignInRouter {
   #signInUseCase;
 
-  constructor({ signInUseCase }) {
+  constructor({ signInUseCase }: { signInUseCase: ISignUpUserUseCase }) {
     this.#signInUseCase = signInUseCase;
   }
 

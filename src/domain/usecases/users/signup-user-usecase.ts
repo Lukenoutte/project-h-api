@@ -1,8 +1,9 @@
 import UserEntity from "domain/entities/user-entity";
 import { IFindUserRepository, ISignUpUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
 import { IBcryptHelper } from "infra/helpers/@interfaces/helper.interfaces";
+import { ISignUpUserUseCase } from "../@interfaces/users-usecases.interfaces";
 
-export default class SignUpUserUseCase {
+export default class SignUpUserUseCase implements ISignUpUserUseCase {
   signUpUserRepository: ISignUpUserRepository;
   bcryptHelper: IBcryptHelper;
   findUserRepository: IFindUserRepository;

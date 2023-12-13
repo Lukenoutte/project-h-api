@@ -5,8 +5,10 @@ import {
   IUpdateRefreshTokenRepository
 } from "infra/repositories/@interfaces/authentication-repository.interfaces";
 import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
+import { ISignInUseCase } from "../@interfaces/authentication-usecases.interfaces";
+
 // Rever
-export default class SignInUseCase {
+export default class SignInUseCase implements ISignInUseCase {
   findUserRepository: IFindUserRepository;
   bcryptHelper: IBcryptHelper;
   wrongCredentialsError: Error;
@@ -36,7 +38,7 @@ export default class SignInUseCase {
     this.updateRefreshTokenRepository = updateRefreshTokenRepository;
   }
 
-  async execute(params: { email: string, password: string }) {
+  async execute(params: { email: string, password: string }): Promise<object> {
     const userOnDatabase = await this.findUserRepository.execute(params);
     if (!userOnDatabase) throw this.wrongCredentialsError;
     const isPassCorrect = await this.bcryptHelper.comparePassword(
@@ -50,7 +52,7 @@ export default class SignInUseCase {
     return { refreshToken, accessToken };
   }
 
-  async handleRefreshToken({ userId }: { userId: string }) {
+  async handleRefreshToken({ userId }: { userId: string }): Promise<string> {
     const existTokenRefresh = await this.findRefreshTokenRepository.execute({
       userId,
       token: ""

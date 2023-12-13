@@ -1,6 +1,7 @@
 import { string, object } from "yup";
 import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
+import { IRefreshTokenUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
 
 interface IRefreshTokenParams {
   refreshToken: string;
@@ -13,7 +14,7 @@ export default class RefreshTokenRouter {
   /**
    * @param {RefreshTokenUseCase} refreshTokenUseCase
    */
-  constructor({ refreshTokenUseCase }) {
+  constructor({ refreshTokenUseCase }: { refreshTokenUseCase: IRefreshTokenUseCase }) {
     this.#refreshTokenUseCase = refreshTokenUseCase;
   }
 

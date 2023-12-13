@@ -1,6 +1,7 @@
 import { IDeleteRefreshTokenRepository } from "infra/repositories/@interfaces/authentication-repository.interfaces";
+import { ISignOutUseCase } from "../@interfaces/authentication-usecases.interfaces";
 
-export default class SignOutUseCase {
+export default class SignOutUseCase implements ISignOutUseCase{
   deleteRefreshTokenRepository: IDeleteRefreshTokenRepository
   constructor({ deleteRefreshTokenRepository }:
      { deleteRefreshTokenRepository: IDeleteRefreshTokenRepository}) {
