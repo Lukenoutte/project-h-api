@@ -1,7 +1,6 @@
 import PostgreHelper from "infra/helpers/postgre-helper";
 import { IUpdateRefreshTokenRepository } from "../@interfaces/authentication-repository.interfaces"
 
-
 interface IRefreshTokenParams {
   currentToken: string;
   newToken: string;

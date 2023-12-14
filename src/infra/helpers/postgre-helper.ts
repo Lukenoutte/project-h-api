@@ -1,6 +1,6 @@
 import { Client } from "pg";
 import { IPostgreHelper } from "./@interfaces/helper.interfaces"; 
-// Rever
+
 const postgreHelper: IPostgreHelper = {
   uri: "",
   client: null,

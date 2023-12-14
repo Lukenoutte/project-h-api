@@ -3,7 +3,8 @@ import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 import { IRefreshTokenUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
 import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
-import { IRouter } from "express";
+import { IRouter } from "../@interfaces/router.interfaces";
+import { Request } from "express";
 
 interface IRefreshTokenParams {
   refreshToken: string;
@@ -12,29 +13,36 @@ interface IRefreshTokenParams {
 export default class RefreshTokenRouter implements IRouter {
   #refreshTokenUseCase;
 
-  /**
-   * @param {RefreshTokenUseCase} refreshTokenUseCase
-   */
   constructor({ refreshTokenUseCase }: { refreshTokenUseCase: IRefreshTokenUseCase }) {
     this.#refreshTokenUseCase = refreshTokenUseCase;
   }
 
-  async validate(params: IRefreshTokenParams): Promise<object> {
+  async validate(params: IRefreshTokenParams): Promise<{ isValid: boolean, error: object }> {
     try {
       const tokenSchema = object({
         refreshToken: string().required(),
       });
       await tokenSchema.validate(params);
-      return { isValid: true };
+      return { isValid: true, error: {} };
     } catch (error) {
-      const { name, message } = error;
-      return { error: { name, message }, isValid: false };
+      if (error instanceof Error) {
+        const { name, message } = error;
+        return { error: { name, message }, isValid: false };
+      }
+      return { error: { 
+        name: 'ValidationError', 
+        message: 'Something went wrong!' 
+      }, 
+        isValid: false 
+      };
     }
   }
 
-  async route(httpRequest): Promise<IHttpResponse> {
+  async route(httpRequest: Request): Promise<IHttpResponse> {
     try {
-      if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
+      if (!httpRequest || !httpRequest.body) {
+        return HttpResponse.badRequest(new Error('InvalidRequestError'));
+      }
       const body = { ...httpRequest.body };
       const { isValid, error } = await this.validate(body);
       if (!isValid) return HttpResponse.badRequest(error);
@@ -45,7 +53,8 @@ export default class RefreshTokenRouter implements IRouter {
       return HttpResponse.ok({ accessToken });
     } catch (error) {
       logger.error("RefreshTokenError", error);
-      return HttpResponse.serverError(error);
+      if (error instanceof Error) return HttpResponse.serverError(error);
+      return HttpResponse.serverError(new Error('RefreshTokenError'));
     }
   }
 }

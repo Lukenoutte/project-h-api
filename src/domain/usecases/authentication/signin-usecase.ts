@@ -7,7 +7,6 @@ import {
 import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
 import { ISignInUseCase } from "../@interfaces/authentication-usecases.interfaces";
 
-// Rever
 export default class SignInUseCase implements ISignInUseCase {
   findUserRepository: IFindUserRepository;
   bcryptHelper: IBcryptHelper;

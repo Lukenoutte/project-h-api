@@ -1,5 +1,5 @@
 import PostgreHelper from "infra/helpers/postgre-helper";
-import IStoreEntity from "domain/entities/@interfaces/store-entity.interfaces"
+import { IStoreEntity } from "domain/entities/@interfaces/store-entity.interfaces"
 import { ISignUpStoreRepository } from "../@interfaces/stores-repository.interfaces";
 
 export default class SignUpStoreRepository implements ISignUpStoreRepository {

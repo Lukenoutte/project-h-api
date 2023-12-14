@@ -3,6 +3,13 @@ import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 import { ISignUpUserUseCase } from "domain/usecases/@interfaces/users-usecases.interfaces";
 import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
+import { Request } from "express";
+
+interface ISignUpUserParams {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export default class SignUpUserRouter {
   #signUpUserUseCase;
@@ -11,7 +18,7 @@ export default class SignUpUserRouter {
     this.#signUpUserUseCase = signUpUserUseCase;
   }
 
-  async validate(params) {
+  async validate(params: ISignUpUserParams): Promise<{ isValid: boolean, error: object }> {
     try {
       const userSchema = object({
         name: string().required(),
@@ -19,26 +26,36 @@ export default class SignUpUserRouter {
         password: string().required().min(6),
       });
       await userSchema.validate(params);
-      return { isValid: true };
+      return { isValid: true, error: {} };
     } catch (error) {
-      const { name, message } = error;
-      return { error: { name, message }, isValid: false };
+      if (error instanceof Error) {
+        const { name, message } = error;
+        return { error: { name, message }, isValid: false };
+      }
+      return { error: { 
+        name: 'ValidationError', 
+        message: 'Something went wrong!' 
+      }, 
+        isValid: false 
+      };
     }
   }
 
-  async route(httpRequest): Promise<IHttpResponse> {
+  async route(httpRequest: Request): Promise<IHttpResponse> {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       const body = { ...httpRequest.body };
       const { isValid, error } = await this.validate(body);
       if (!isValid) return HttpResponse.badRequest(error);
-      const result = await this.#signUpUserUseCase.execute(body);
-      return HttpResponse.created(result);
+      await this.#signUpUserUseCase.execute(body);
+      return HttpResponse.created({});
     } catch (error) {
       logger.error("SignUpUserError", error);
-      if (error.name === "AlreadyExistsError")
-        return HttpResponse.conflict(error);
-      return HttpResponse.serverError(error);
+      if (error instanceof Error) {
+        if (error.name === "AlreadyExistsError") return HttpResponse.conflict(error);
+        return HttpResponse.serverError(error);
+      }
+      return HttpResponse.serverError(new Error('SignUpUserError'));
     }
   }
 }

@@ -7,7 +7,7 @@ export interface IDeleteRefreshTokenRepository {
 }
 
 export interface IFindRefreshTokenRepository {
-  execute: (params: { userId: string, token: string }) => Promise<object[]>;
+  execute: (params: { userId: string, token: string }) => Promise<{ userId: string, token: string }>;
 }
 
 export interface IUpdateRefreshTokenRepository {

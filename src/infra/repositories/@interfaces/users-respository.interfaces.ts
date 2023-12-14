@@ -4,8 +4,10 @@ export interface IDeleteUserRepository {
   execute: ({ email }: { email: string }) => Promise<void>;
 }
 
+export interface IUser { email: string, password: string, id: string }
+
 export interface IFindUserRepository {
-  execute: ({ email }: { email: string }) => Promise<object>;
+  execute: ({ email }: { email: string }) => Promise<IUser>;
 }
 
 export interface ISignUpUserRepository {

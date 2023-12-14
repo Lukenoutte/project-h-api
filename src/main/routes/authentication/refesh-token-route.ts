@@ -3,10 +3,8 @@ import RefreshTokenRouterComposer from "../../composers/authentication/refresh-t
 import { Router } from "express";
 
 export default (router: Router) => {
-  const compose = RefreshTokenRouterComposer.compose()
-  const adapt = ExpressRouterAdapter.adapt(compose)
   router.put(
     "/token/refresh",
-    ExpressRouterAdapter.adapt(adapt),
+    ExpressRouterAdapter.adapt(RefreshTokenRouterComposer.compose()),
   );
 };

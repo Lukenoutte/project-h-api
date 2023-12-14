@@ -1,4 +1,4 @@
-import IStoreEntity from "./@interfaces/store-entity.interfaces"
+import { IStoreEntity } from "./@interfaces/store-entity.interfaces"
 
 interface IStoreConstructor {
   name: string;

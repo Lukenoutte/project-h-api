@@ -2,12 +2,11 @@ import { UnauthorizedError } from "presentation/errors";
 import JwtHelper from "infra/helpers/jwt-helper";
 import publicRoutes from "main/configs/public-routes";
 import { accessTokenSecret } from "../configs/env";
-import { Response, NextFunction } from 'express';
-import { IRequest } from "main/adapters/@interfaces/express-router-adapter.interfaces";
+import { Response, NextFunction, Request } from 'express';
 
 const isPublicRoute = (path: string) => publicRoutes.includes(path);
 
-export default async (req: IRequest, res: Response, next: NextFunction) => {
+export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (req.method === "OPTIONS") return next();
     if (isPublicRoute(req.path)) return next();

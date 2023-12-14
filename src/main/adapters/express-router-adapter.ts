@@ -1,17 +1,12 @@
-import { Response } from 'express';
-import { IRequest } from './@interfaces/express-router-adapter.interfaces'
+import { Response, NextFunction, Request } from 'express';
 import { IRouter } from 'presentation/routers/@interfaces/router.interfaces';
 
+type adapterResponse = (req: Request, res: Response, next: NextFunction) => Promise<void>;
+
 export default class ExpressRouterAdapter {
-  static adapt(router: IRouter) {
-    return async (req: IRequest, res: Response): Promise<void> => {
-      const httpRequest = {
-        body: req.body,
-        query: req.query,
-        params: req.params,
-        userId: req.userId,
-      };
-      const httpResponse = await router.route(httpRequest);
+  static adapt(router: IRouter): adapterResponse {
+    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+      const httpResponse = await router.route(req);
       res.status(httpResponse.statusCode).json(httpResponse.body);
     };
   }

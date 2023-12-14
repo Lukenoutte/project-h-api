@@ -1,4 +1,3 @@
-import { JwtPayload } from "jsonwebtoken";
 import { Client } from "pg";
 
 export interface IBcryptHelper {
