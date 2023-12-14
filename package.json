@@ -6,22 +6,15 @@
   "scripts": {
     "lint": "eslint \"src/**/*.ts\"",
     "test": "jest --force-exit",
-    "dev": "nodemon --exec ts-node src/main/server.ts",
+    "dev": "nodemon -r tsconfig-paths/register src/main/server.ts",
     "prepare": "husky install && chmod ug+x .husky/*"
   },
   "author": "Lukenoutte",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.23.3",
-    "@babel/node": "^7.22.19",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-transform-runtime": "^7.23.4",
-    "@babel/preset-env": "^7.23.3",
-    "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.51.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-import-resolver-babel-module": "^5.3.2",
     "eslint-import-resolver-jest": "^3.0.2",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jest": "^27.4.2",
@@ -31,7 +24,8 @@
     "lint-staged": "^14.0.1",
     "nodemon": "^3.0.1",
     "supertest": "^6.3.3",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^3.15.0"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",

@@ -20,8 +20,8 @@ export default class SignOutRouter {
       return HttpResponse.ok({});
     } catch (error) {
       logger.error("SignOutError", error);
-      if (error instanceof Error) return HttpResponse.serverError(error);
-      return HttpResponse.serverError(new Error('SignOutError'));
+      if (error instanceof Error) return HttpResponse.serverError(error.message);
+      return HttpResponse.serverError('SignOutError');
     }
   }
 }

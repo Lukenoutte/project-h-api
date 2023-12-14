@@ -53,8 +53,8 @@ export default class RefreshTokenRouter implements IRouter {
       return HttpResponse.ok({ accessToken });
     } catch (error) {
       logger.error("RefreshTokenError", error);
-      if (error instanceof Error) return HttpResponse.serverError(error);
-      return HttpResponse.serverError(new Error('RefreshTokenError'));
+      if (error instanceof Error) return HttpResponse.serverError(error.message);
+      return HttpResponse.serverError('RefreshTokenError');
     }
   }
 }

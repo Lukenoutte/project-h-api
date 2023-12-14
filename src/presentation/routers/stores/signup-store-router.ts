@@ -28,7 +28,7 @@ export default class SignUpStoreRouter {
         country: string().required(),
       });
       await storeSchema.validate(params);
-      return { isValid: true };
+      return { isValid: true, error: {} };
     } catch (error) {
       if (error instanceof Error) {
         const { name, message } = error;
@@ -53,8 +53,8 @@ export default class SignUpStoreRouter {
       return HttpResponse.created(result);
     } catch (error) {
       logger.error("SignUpStoreError", error);
-      if (error instanceof Error) return HttpResponse.serverError(error);
-      return HttpResponse.serverError(new Error('SignUpStoreError'));
+      if (error instanceof Error) return HttpResponse.serverError(error.message);
+      return HttpResponse.serverError('SignUpStoreError');
     }
   }
 }

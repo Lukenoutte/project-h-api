@@ -53,9 +53,9 @@ export default class SignUpUserRouter {
       logger.error("SignUpUserError", error);
       if (error instanceof Error) {
         if (error.name === "AlreadyExistsError") return HttpResponse.conflict(error);
-        return HttpResponse.serverError(error);
+        return HttpResponse.serverError(error.message);
       }
-      return HttpResponse.serverError(new Error('SignUpUserError'));
+      return HttpResponse.serverError('SignUpUserError');
     }
   }
 }

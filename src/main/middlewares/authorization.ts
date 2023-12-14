@@ -1,5 +1,5 @@
-import { UnauthorizedError } from "presentation/errors";
 import JwtHelper from "infra/helpers/jwt-helper";
+import { UnauthorizedError } from "presentation/errors";
 import publicRoutes from "main/configs/public-routes";
 import { accessTokenSecret } from "../configs/env";
 import { Response, NextFunction, Request } from 'express';

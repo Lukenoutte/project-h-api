@@ -54,7 +54,7 @@ export default class SignInRouter {
         if (error.name !== "WrongCredentialsError")
         return HttpResponse.unauthorizedError(error);
       }
-      return HttpResponse.serverError(new Error('SignInError'));
+      return HttpResponse.serverError('SignInError');
     }
   }
 }

@@ -48,7 +48,7 @@ export default class HttpResponse {
     };
   }
 
-  static serverError(error: object) {
+  static serverError(error: string) {
     return {
       statusCode: 500,
       body: {
