@@ -30,7 +30,6 @@ describe("ExpressRouterAdapter", () => {
       body: req.body,
       query: req.query,
       params: req.params,
-      files: req.files,
       userId: req.userId,
     });
 
@@ -67,7 +66,6 @@ describe("ExpressRouterAdapter", () => {
       body: req.body,
       query: req.query,
       params: req.params,
-      files: req.files,
       userId: req.userId,
     });
   });

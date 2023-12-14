@@ -1,3 +1,3 @@
-export default interface IStoreEntity {
+export interface IStoreEntity {
   getArray: () => string[];
 }

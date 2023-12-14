@@ -1,12 +1,13 @@
 import { string, object } from "yup";
 import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
-import { ISignUpUserUseCase } from "domain/usecases/@interfaces/users-usecases.interfaces";
+import { ISignUpStoreUseCase } from "domain/usecases/@interfaces/stores-usecases.interfaces";
+import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
 
 export default class SignUpStoreRouter {
   #signUpStoreUseCase;
 
-  constructor({ signUpStoreUseCase }: { signUpStoreUseCase: ISignUpUserUseCase }) {
+  constructor({ signUpStoreUseCase }: { signUpStoreUseCase: ISignUpStoreUseCase }) {
     this.#signUpStoreUseCase = signUpStoreUseCase;
   }
 
@@ -26,7 +27,7 @@ export default class SignUpStoreRouter {
     }
   }
 
-  async route(httpRequest) {
+  async route(httpRequest): Promise<IHttpResponse> {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       const body = { ...httpRequest.body };

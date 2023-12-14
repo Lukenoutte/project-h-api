@@ -8,7 +8,7 @@ interface ISignUpStoreUseCaseParams {
   country: string;
 }
 
-export default class SignUpStoreUseCase {
+export default class ISignUpStoreUseCase {
   signUpStoreRepository: ISignUpStoreRepository
   constructor({ signUpStoreRepository }: { signUpStoreRepository: ISignUpStoreRepository }) {
     this.signUpStoreRepository = signUpStoreRepository;

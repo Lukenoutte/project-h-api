@@ -1,12 +1,13 @@
 import { string, object } from "yup";
 import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
-import { ISignUpUserUseCase } from "domain/usecases/@interfaces/users-usecases.interfaces";
+import { ISignInUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
+import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
 
 export default class SignInRouter {
   #signInUseCase;
 
-  constructor({ signInUseCase }: { signInUseCase: ISignUpUserUseCase }) {
+  constructor({ signInUseCase }: { signInUseCase: ISignInUseCase }) {
     this.#signInUseCase = signInUseCase;
   }
 
@@ -24,7 +25,7 @@ export default class SignInRouter {
     }
   }
 
-  async route(httpRequest) {
+  async route(httpRequest): Promise<IHttpResponse> {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       const body = { ...httpRequest.body };

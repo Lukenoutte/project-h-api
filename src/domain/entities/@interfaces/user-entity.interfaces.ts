@@ -1,4 +1,4 @@
-export default interface IUserEntity {
+export interface IUserEntity {
   getArray: () => string[];
   encryptPassword: () => void;
 }

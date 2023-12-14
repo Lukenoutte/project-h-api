@@ -1,4 +1,4 @@
-import IUserEntity from "../../../domain/entities/@interfaces/user-entity.interfaces";
+import { IUserEntity } from "../../../domain/entities/@interfaces/user-entity.interfaces";
 
 export interface IDeleteUserRepository {
   execute: ({ email }: { email: string }) => Promise<void>;
@@ -9,5 +9,5 @@ export interface IFindUserRepository {
 }
 
 export interface ISignUpUserRepository {
-  execute: (userEntity: IUserEntity) => Promise<object>;
+  execute: (userEntity: IUserEntity) => Promise<void>;
 }

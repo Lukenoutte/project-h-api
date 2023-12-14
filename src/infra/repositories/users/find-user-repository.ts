@@ -1,4 +1,4 @@
-import PostgreHelper from "src/infra/helpers/postgre-helper";
+import PostgreHelper from "infra/helpers/postgre-helper";
 import { IFindUserRepository } from "../@interfaces/users-respository.interfaces";
 
 export default class FindUserRepository implements IFindUserRepository {

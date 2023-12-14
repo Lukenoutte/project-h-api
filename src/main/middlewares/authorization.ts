@@ -2,11 +2,12 @@ import { UnauthorizedError } from "presentation/errors";
 import JwtHelper from "infra/helpers/jwt-helper";
 import publicRoutes from "main/configs/public-routes";
 import { accessTokenSecret } from "../configs/env";
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { IRequest } from "main/adapters/@interfaces/express-router-adapter.interfaces";
 
 const isPublicRoute = (path: string) => publicRoutes.includes(path);
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export default async (req: IRequest, res: Response, next: NextFunction) => {
   try {
     if (req.method === "OPTIONS") return next();
     if (isPublicRoute(req.path)) return next();
@@ -20,6 +21,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     req.userId = decodedToken.userId;
     return next();
   } catch (error) {
-    return res.status(401).json({ message: error.message });
+    let errorMessage = "UnauthorizedError";
+    if (error instanceof Error) errorMessage = error.message
+    return res.status(401).json({ message: errorMessage });
   }
 };

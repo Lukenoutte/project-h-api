@@ -4,9 +4,8 @@ import FindRefreshTokenRepository from "infra/repositories/authentication/find-r
 import JwtHelper from "infra/helpers/jwt-helper";
 import { UnauthorizedError } from "presentation/errors";
 import { accessTokenSecret, refreshTokenSecret } from "../../configs/env";
-import IComposer from "../@interfaces/composer.interfaces"
 
-export default class RefreshTokenRouterComposer implements IComposer {
+export default class RefreshTokenRouterComposer {
   static compose() {
     const findRefreshTokenRepository = new FindRefreshTokenRepository();
     const jwtHelperAccessToken = new JwtHelper(accessTokenSecret);

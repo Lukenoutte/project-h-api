@@ -1,7 +1,7 @@
 import { ISignUpStoreRepository } from "infra/repositories/@interfaces/stores-repository.interfaces";
 
 
-export interface IRefreshTokenUseCase {
+export interface ISignUpStoreUseCase {
   signUpStoreRepository: ISignUpStoreRepository;
   execute: (params: ISignUpStoreUseCaseParams) => Promise<object>;
 }

@@ -2,13 +2,14 @@ import { string, object } from "yup";
 import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 import { IRefreshTokenUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
+import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
+import { IRouter } from "express";
 
 interface IRefreshTokenParams {
   refreshToken: string;
  }
 
-
-export default class RefreshTokenRouter {
+export default class RefreshTokenRouter implements IRouter {
   #refreshTokenUseCase;
 
   /**
@@ -18,7 +19,7 @@ export default class RefreshTokenRouter {
     this.#refreshTokenUseCase = refreshTokenUseCase;
   }
 
-  async validate(params: IRefreshTokenParams) {
+  async validate(params: IRefreshTokenParams): Promise<object> {
     try {
       const tokenSchema = object({
         refreshToken: string().required(),
@@ -31,7 +32,7 @@ export default class RefreshTokenRouter {
     }
   }
 
-  async route(httpRequest) {
+  async route(httpRequest): Promise<IHttpResponse> {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       const body = { ...httpRequest.body };

@@ -1,6 +1,7 @@
 import logger from "main/configs/logger";
 import HttpResponse from "../../helpers/http-response";
 import { ISignOutUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
+import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
 
 export default class SignOutRouter {
   #signOutUseCase;
@@ -9,7 +10,7 @@ export default class SignOutRouter {
     this.#signOutUseCase = signOutUseCase;
   }
 
-  async route(httpRequest) {
+  async route(httpRequest): Promise<IHttpResponse> {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       await this.#signOutUseCase.execute({

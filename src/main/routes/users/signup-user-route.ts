@@ -1,16 +1,10 @@
 import ExpressRouterAdapter from "../../adapters/express-router-adapter";
 import SignUpUserRouterComposer from "../../composers/users/signup-user-router-composer";
+import { Router } from "express";
 
-/**
- * @typedef {object} ExpressRouter
- */
-
-/**
- * @param {ExpressRouter} router
- */
-export default (router) => {
+export default (router: Router) => {
   router.post(
     "/signup/user",
-    ExpressRouterAdapter.adapt(SignUpUserRouterComposer.compose()),
+    () => { ExpressRouterAdapter.adapt(SignUpUserRouterComposer.compose()) },
   );
 };

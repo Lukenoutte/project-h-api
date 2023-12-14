@@ -1,10 +1,10 @@
-import PostgreHelper from "src/infra/helpers/postgre-helper";
-import IUserEntity from "../../../domain/entities/@interfaces/user-entity.interfaces";
+import PostgreHelper from "infra/helpers/postgre-helper";
+import { IUserEntity } from "../../../domain/entities/@interfaces/user-entity.interfaces";
 import { ISignUpUserRepository } from "../@interfaces/users-respository.interfaces";
 
 export default class SignUpUserRepository implements ISignUpUserRepository{
-  execute(userEntity: IUserEntity) {
-    return PostgreHelper.executeQuery(
+  async execute(userEntity: IUserEntity) {
+    await PostgreHelper.executeQuery(
       `
       INSERT INTO users
         (name, email, password, address, city, country)

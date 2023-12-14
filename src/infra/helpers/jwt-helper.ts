@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { IJwtHelper } from "./@interfaces/helper.interfaces"
+import { IJwtHelper, VerifyResponse } from "./@interfaces/helper.interfaces"
 
 export default class JwtHelper implements IJwtHelper {
   secret: string;
@@ -13,6 +13,6 @@ export default class JwtHelper implements IJwtHelper {
   }
 
   verifyToken(token: string) {
-    return jwt.verify(token, this.secret);
+    return jwt.verify(token, this.secret) as VerifyResponse;
   }
 }

@@ -1,4 +1,4 @@
-import IStoreEntity from "src/domain/entities/interfaces/store-entity.interface"
+import IStoreEntity from "domain/entities/@interfaces/store-entity.interfaces"
 
 export interface ISignUpStoreRepository {
   execute: (storeEntity: IStoreEntity) => Promise<void>;

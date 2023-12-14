@@ -1,5 +1,5 @@
 import { IBcryptHelper } from "infra/helpers/@interfaces/helper.interfaces"
-import IUserEntity from "./@interfaces/user-entity.interfaces"
+import { IUserEntity } from "./@interfaces/user-entity.interfaces"
 
 interface IUserConstructor {
   name: string;

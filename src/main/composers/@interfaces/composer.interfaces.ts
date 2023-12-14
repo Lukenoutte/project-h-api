@@ -1,3 +1,3 @@
-export default interface IComposer {
+export interface IComposer {
   compose: () => any;
 }
