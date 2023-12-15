@@ -12,7 +12,7 @@ export default class JwtHelper implements IJwtHelper {
     return jwt.sign(payload, this.secret, { expiresIn: "15m" });
   }
 
-  verifyToken(token: string) {
+  verifyToken(token: string): VerifyResponse {
     return jwt.verify(token, this.secret) as VerifyResponse;
   }
 }
