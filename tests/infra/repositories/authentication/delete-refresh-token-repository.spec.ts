@@ -10,7 +10,7 @@ describe("DeleteRefreshTokenRepository", () => {
   const deleteRefreshTokenRepository = new DeleteRefreshTokenRepository();
 
   beforeEach(() => {
-    mockExecuteQuery.mockClear();
+    (mockExecuteQuery as jest.Mock).mockClear();
   });
 
   it("should execute query with correct parameters", async () => {
@@ -27,7 +27,7 @@ describe("DeleteRefreshTokenRepository", () => {
 
   it("should throw error if executeQuery fails", async () => {
     const error = new Error("Test error");
-    mockExecuteQuery.mockImplementationOnce(() => Promise.reject(error));
+    (mockExecuteQuery as jest.Mock).mockImplementationOnce(() => Promise.reject(error));
     const userId = "testUserId";
     await expect(
       deleteRefreshTokenRepository.execute({ userId }),

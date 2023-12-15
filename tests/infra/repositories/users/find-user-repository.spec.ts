@@ -8,11 +8,11 @@ describe("FindUserRepository", () => {
   const user = { id: 1, email: "test@example.com", name: "Test User" };
 
   beforeEach(() => {
-    PostgreHelper.executeQuery.mockClear();
+    (PostgreHelper.executeQuery as jest.Mock).mockClear();
   });
 
   it("Should execute a query with the provided email", async () => {
-    PostgreHelper.executeQuery.mockResolvedValue({ rows: [user] });
+    (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue({ rows: [user] });
 
     const repository = new FindUserRepository();
     const result = await repository.execute({ email });
@@ -27,7 +27,7 @@ describe("FindUserRepository", () => {
   });
 
   it("Should return null if no user is found", async () => {
-    PostgreHelper.executeQuery.mockResolvedValue({ rows: [] });
+    (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue({ rows: [] });
 
     const repository = new FindUserRepository();
     const result = await repository.execute({ email });
@@ -37,7 +37,7 @@ describe("FindUserRepository", () => {
 
   it("Should throw an error if the query execution fails", async () => {
     const error = new Error("Query execution failed");
-    PostgreHelper.executeQuery.mockRejectedValue(error);
+    (PostgreHelper.executeQuery as jest.Mock).mockRejectedValue(error);
 
     const repository = new FindUserRepository();
 

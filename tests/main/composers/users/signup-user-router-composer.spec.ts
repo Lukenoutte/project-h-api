@@ -1,6 +1,6 @@
 import SignUpUserRouter from "presentation/routers/users/signup-user-router";
 import SignUpUserUseCase from "domain/usecases/users/signup-user-usecase";
-import SignUpUserRepository from "infra/repositories/users/create-user-repository";
+import SignUpUserRepository from "infra/repositories/users/signup-user-repository";
 import BcryptHelper from "infra/helpers/bcrypt-helper";
 import FindUserRepository from "infra/repositories/users/find-user-repository";
 import { AlreadyExistsError } from "presentation/errors";
@@ -8,7 +8,7 @@ import SignUpUserRouterComposer from "main/composers/users/signup-user-router-co
 
 jest.mock("domain/usecases/users/signup-user-usecase");
 jest.mock("presentation/routers/users/signup-user-router");
-jest.mock("infra/repositories/users/create-user-repository");
+jest.mock("infra/repositories/users/signup-user-repository");
 jest.mock("infra/helpers/bcrypt-helper");
 jest.mock("infra/repositories/users/find-user-repository");
 jest.mock("presentation/errors");

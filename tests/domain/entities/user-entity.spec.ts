@@ -1,7 +1,9 @@
 import UserEntity from "domain/entities/user-entity";
+import { IBcryptHelper } from "infra/helpers/@interfaces/helper.interfaces";
 
-const mockBcryptHelper = {
+const mockBcryptHelper: IBcryptHelper = {
   hashPassword: jest.fn(async (password) => `hashed_${password}`),
+  comparePassword: jest.fn(async (plainPassword, hashedPassword) => true)
 };
 
 describe("UserEntity", () => {
@@ -10,9 +12,6 @@ describe("UserEntity", () => {
       name: "John Doe",
       email: "john.doe@example.com",
       password: "password123",
-      address: "123 Main St",
-      city: "Cityville",
-      country: "Countryland",
       bcryptHelper: mockBcryptHelper,
     });
     expect(user).toBeInstanceOf(UserEntity);
@@ -23,9 +22,6 @@ describe("UserEntity", () => {
       name: "John Doe",
       email: "john.doe@example.com",
       password: "password123",
-      address: "123 Main St",
-      city: "Cityville",
-      country: "Countryland",
       bcryptHelper: mockBcryptHelper,
     });
 
@@ -40,9 +36,6 @@ describe("UserEntity", () => {
       name: "John Doe",
       email: "john.doe@example.com",
       password: "password123",
-      address: "123 Main St",
-      city: "Cityville",
-      country: "Countryland",
       bcryptHelper: mockBcryptHelper,
     });
     await user.encryptPassword();
@@ -51,9 +44,6 @@ describe("UserEntity", () => {
       "John Doe",
       "john.doe@example.com",
       "hashed_password123",
-      "123 Main St",
-      "Cityville",
-      "Countryland",
     ]);
   });
 });

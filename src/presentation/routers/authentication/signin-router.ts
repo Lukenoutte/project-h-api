@@ -49,11 +49,11 @@ export default class SignInRouter {
       const tokens = await this.#signInUseCase.execute(body);
       return HttpResponse.ok(tokens);
     } catch (error) {
-      logger.error("SignInError", error);
       if (error instanceof Error){
-        if (error.name !== "WrongCredentialsError")
+        if (error.name !== "WrongCredentialsError") logger.error("SignInError", error);
         return HttpResponse.unauthorizedError(error);
       }
+      logger.error("SignInError", error);
       return HttpResponse.serverError('SignInError');
     }
   }

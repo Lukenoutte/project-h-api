@@ -1,21 +1,21 @@
 import { ServerError } from "../errors";
 
 export default class HttpResponse {
-  static ok(body: object) {
+  static ok(body: string) {
     return {
       statusCode: 200,
       body,
     };
   }
 
-  static created(body: object) {
+  static created(body: string) {
     return {
       statusCode: 201,
       body,
     };
   }
 
-  static conflict(error: object) {
+  static conflict(error: string) {
     return {
       statusCode: 409,
       body: {
@@ -30,7 +30,7 @@ export default class HttpResponse {
     };
   }
 
-  static notFound(error: object) {
+  static notFound(error: string) {
     return {
       statusCode: 404,
       body: {
@@ -39,7 +39,7 @@ export default class HttpResponse {
     };
   }
 
-  static badRequest(error: object) {
+  static badRequest(error: string) {
     return {
       statusCode: 400,
       body: {
@@ -57,7 +57,7 @@ export default class HttpResponse {
     };
   }
 
-  static unauthorizedError(error: object) {
+  static unauthorizedError(error: string) {
     return {
       statusCode: 401,
       body: {

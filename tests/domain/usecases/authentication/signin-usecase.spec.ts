@@ -6,13 +6,16 @@ describe("SignInUseCase", () => {
     execute: jest.fn(),
   };
   const bcryptHelperMock = {
-    comparePassword: jest.fn(),
+    hashPassword: jest.fn(async (password) => `hashed_${password}`),
+    comparePassword: jest.fn(async (plainPassword, hashedPassword) => true)
   };
   const wrongCredentialsErrorMock = new WrongCredentialsError();
   const jwtHelperAccessTokenMock = {
+    verifyToken: jest.fn(),
     generateToken: jest.fn(),
   };
   const jwtHelperRefreshTokenMock = {
+    verifyToken: jest.fn(),
     generateToken: jest.fn(),
   };
   const createRefreshTokenRepositoryMock = {

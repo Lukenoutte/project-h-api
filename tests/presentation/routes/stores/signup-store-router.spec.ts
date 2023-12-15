@@ -1,8 +1,10 @@
+import { ISignUpUserUseCase } from "domain/usecases/@interfaces/users-usecases.interfaces";
+import { IRouter } from "presentation/routers/@interfaces/router.interfaces";
 import SignUpStoreRouter from "presentation/routers/stores/signup-store-router";
 
 describe("SignUpStoreRouter", () => {
-  let signUpStoreRouter;
-  let signUpStoreUseCaseMock;
+  let signUpStoreRouter: IRouter;
+  let signUpStoreUseCaseMock: ISignUpUserUseCase;
 
   beforeEach(() => {
     signUpStoreUseCaseMock = {

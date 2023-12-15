@@ -3,6 +3,7 @@ import SignUpUserUseCase from "domain/usecases/users/signup-user-usecase";
 describe("SignUpUserUseCase", () => {
   const mockBcryptHelper = {
     hashPassword: jest.fn(async (password) => `hashed_${password}`),
+    comparePassword: jest.fn(async (plainPassword, hashedPassword) => true)
   };
 
   const signUpUserRepositoryMock = {

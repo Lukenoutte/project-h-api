@@ -1,14 +1,17 @@
 import { UnauthorizedError } from "presentation/errors";
 import RefreshTokenUseCase from "domain/usecases/authentication/refresh-token-usecase";
+import { IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
 
 describe("RefreshTokenUseCase", () => {
   const findRefreshTokenRepositoryMock = {
     execute: jest.fn(),
   };
-  const jwtHelperRefreshTokenMock = {
+  const jwtHelperRefreshTokenMock: IJwtHelper = {
     verifyToken: jest.fn(),
+    generateToken: jest.fn(),
   };
-  const jwtHelperAccessTokenMock = {
+  const jwtHelperAccessTokenMock: IJwtHelper  = {
+    verifyToken: jest.fn(),
     generateToken: jest.fn(),
   };
   const unauthorizedErrorMock = new UnauthorizedError();
@@ -30,7 +33,7 @@ describe("RefreshTokenUseCase", () => {
     findRefreshTokenRepositoryMock.execute.mockResolvedValueOnce(
       "any_refresh_token",
     );
-    jwtHelperRefreshTokenMock.verifyToken.mockReturnValueOnce(false);
+    (jwtHelperRefreshTokenMock.verifyToken as jest.Mock).mockReturnValueOnce(false);
     const params = { refreshToken: "any_refresh_token", userId: "any_id" };
     const promise = sut.execute(params);
     await expect(promise).rejects.toThrow(unauthorizedErrorMock);
@@ -40,8 +43,8 @@ describe("RefreshTokenUseCase", () => {
     const refreshToken = "any_refresh_token";
     const userId = "any_id";
     findRefreshTokenRepositoryMock.execute.mockResolvedValueOnce(refreshToken);
-    jwtHelperRefreshTokenMock.verifyToken.mockReturnValueOnce(true);
-    jwtHelperAccessTokenMock.generateToken.mockReturnValueOnce(
+    (jwtHelperRefreshTokenMock.verifyToken as jest.Mock).mockReturnValueOnce(true);
+    (jwtHelperAccessTokenMock.generateToken as jest.Mock).mockReturnValueOnce(
       "any_access_token",
     );
     const params = { refreshToken, userId };

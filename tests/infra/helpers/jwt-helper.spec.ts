@@ -24,7 +24,6 @@ describe("JWT Helper", () => {
     const token = accessJwtHelper.generateToken(payload);
     const decodedPayload = accessJwtHelper.verifyToken(
       token,
-      accessTokenSecret,
     );
     expect(decodedPayload.userId).toEqual(payload.userId);
   });
@@ -33,7 +32,7 @@ describe("JWT Helper", () => {
     const invalidToken = "invalidToken";
 
     expect(() =>
-      accessJwtHelper.verifyToken(invalidToken, accessTokenSecret),
-    ).toThrowError("jwt");
+      accessJwtHelper.verifyToken(invalidToken),
+    ).toThrow("jwt");
   });
 });

@@ -34,12 +34,12 @@ describe("Logger", () => {
       message: "haha",
     };
     logger.info(info.message);
-    expect(format.combine).toBeCalledTimes(1);
-    expect(format.timestamp).toBeCalledWith({ format: "DD/MM/YYYY HH:mm:ss" });
-    expect(format.colorize).toBeCalledTimes(1);
-    expect(format.printf).toBeCalledWith(expect.any(Function));
-    expect(transports.Console).toBeCalledWith({ level: "info" });
-    expect(createLogger).toBeCalledWith({
+    expect(format.combine).toHaveBeenCalledTimes(1);
+    expect(format.timestamp).toHaveBeenCalledWith({ format: "DD/MM/YYYY HH:mm:ss" });
+    expect(format.colorize).toHaveBeenCalledTimes(1);
+    expect(format.printf).toHaveBeenCalledWith(expect.any(Function));
+    expect(transports.Console).toHaveBeenCalledWith({ level: "info" });
+    expect(createLogger).toHaveBeenCalledWith({
       format: expect.any(Object),
       transports: expect.any(Array),
     });

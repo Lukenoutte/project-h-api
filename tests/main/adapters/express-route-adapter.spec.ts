@@ -1,19 +1,27 @@
 import ExpressRouterAdapter from "main/adapters/express-router-adapter";
+import { Request, Response } from "express";
 
 describe("ExpressRouterAdapter", () => {
-  const req = {
-    body: "body",
-    query: "query",
-    params: "params",
-    files: "files",
-    userId: "userId",
+  const mockRequest = (): Partial<Request> => {
+    const req: Partial<Request> = {
+      body: {},
+      params: {},
+      query: {},
+    };
+    return req;
   };
 
-  const res = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
+  const mockResponse = (): Partial<Response> => {
+    const res: Partial<Response> = {
+      send: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+      status: jest.fn().mockReturnThis(),
+    };
+    return res;
   };
-
+  
+  const req = mockRequest() as Request;
+  const res = mockResponse() as Response;
   it("Adapt should call the correct methods with the correct arguments", async () => {
     const router = {
       route: jest.fn().mockResolvedValue({
@@ -23,7 +31,6 @@ describe("ExpressRouterAdapter", () => {
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
-
     await adaptedRouter(req, res);
 
     expect(router.route).toHaveBeenCalledWith({
@@ -46,7 +53,6 @@ describe("ExpressRouterAdapter", () => {
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
-
     await adaptedRouter(req, res);
 
     expect(res.status).toHaveBeenCalledWith(404);
@@ -59,7 +65,6 @@ describe("ExpressRouterAdapter", () => {
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
-
     await expect(adaptedRouter(req, res)).rejects.toThrow("Network error");
 
     expect(router.route).toHaveBeenCalledWith({
@@ -79,7 +84,6 @@ describe("ExpressRouterAdapter", () => {
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
-
     await adaptedRouter(req, res);
 
     expect(res.status).toHaveBeenCalledWith(500);

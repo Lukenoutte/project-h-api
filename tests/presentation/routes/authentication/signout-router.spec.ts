@@ -1,8 +1,10 @@
+import { ISignOutUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
+import { IRouter } from "presentation/routers/@interfaces/router.interfaces";
 import SignOutRouter from "presentation/routers/authentication/signout-router";
 
 describe("SignOutRouter", () => {
-  let signOutRouter;
-  let signOutUseCaseMock;
+  let signOutRouter: IRouter;
+  let signOutUseCaseMock: ISignOutUseCase;
 
   beforeEach(() => {
     signOutUseCaseMock = {
