@@ -39,10 +39,10 @@ describe("SignUpStoreRouter", () => {
         city: "Cityville",
         country: "Countryland",
       };
-
-      const result = await signUpStoreRouter.validate(body);
-
-      expect(result.isValid).toBe(true);
+      if (signUpStoreRouter.validate) {
+        const result = await signUpStoreRouter.validate(body);
+        expect(result.isValid).toBe(true);
+      } else fail("validate is not defined on signUpStoreRouter")
     });
 
     it("should return isValid false and error details if validation fails", async () => {
@@ -52,11 +52,11 @@ describe("SignUpStoreRouter", () => {
         city: null, // Invalid, as it's required
         country: "Countryland",
       };
-
-      const result = await signUpStoreRouter.validate(body);
-
-      expect(result.isValid).toBe(false);
-      expect(result.error).toBeDefined();
+      if (signUpStoreRouter.validate) {
+        const result = await signUpStoreRouter.validate(body);
+        expect(result.isValid).toBe(false);
+        expect(result.error).toBeDefined();
+      } else fail("validate is not defined on signUpStoreRouter")
     });
   });
 

@@ -57,8 +57,10 @@ describe("SignUpUserRouter", () => {
         email: "john@gmail.com",
         password: "password123",
       };
-      const result = await signUpUserRouter.validate(body);
-      expect(result.isValid).toBe(true);
+      if (signUpUserRouter.validate) {
+        const result = await signUpUserRouter.validate(body);
+        expect(result.isValid).toBe(true);
+      } else fail("validate function is not defined on signUpUserRouter");
     });
 
     it("should return isValid false and error details if validation fails", async () => {
@@ -67,9 +69,11 @@ describe("SignUpUserRouter", () => {
         email: "invalid_email",
         password: "short",
       };
-      const result = await signUpUserRouter.validate(body);
-      expect(result.isValid).toBe(false);
-      expect(result.error).toBeDefined();
+      if (signUpUserRouter.validate) {
+        const result = await signUpUserRouter.validate(body);
+        expect(result.isValid).toBe(false);
+        expect(result.error).toBeDefined();
+      } else fail("validate function is not defined on signUpUserRouter");
     });
   });
 
