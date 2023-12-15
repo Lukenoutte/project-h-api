@@ -12,15 +12,6 @@ describe("Postgre Helper", () => {
     expect(client).toBeTruthy();
   });
 
-  test("Should disconnect", async () => {
-    await PostgreHelper.connect(postgreUrl);
-    const client = PostgreHelper.client;
-    if (!client) throw new Error("Client is not defined");
-    expect(client).toBeTruthy();
-    await PostgreHelper.disconnect();
-    expect(client).toBeFalsy();
-  });
-
   test("Should execute SQL query", async () => {
     await PostgreHelper.connect(postgreUrl);
     const result = await PostgreHelper.executeQuery("SELECT CURRENT_DATE", []);

@@ -3,8 +3,9 @@ import HttpResponse from "../../helpers/http-response";
 import { ISignOutUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
 import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
 import { Request } from "express";
+import { IRouterNoValidation } from "../@interfaces/router.interfaces";
 
-export default class SignOutRouter {
+export default class SignOutRouter implements IRouterNoValidation {
   #signOutUseCase;
 
   constructor({ signOutUseCase }: { signOutUseCase: ISignOutUseCase }) {

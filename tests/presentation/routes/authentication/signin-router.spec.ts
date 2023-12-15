@@ -1,100 +1,106 @@
 import SignInRouter from "presentation/routers/authentication/signin-router";
-import HttpResponse from "presentation/helpers/http-response";
+import { WrongCredentialsError } from "presentation/errors";
+import { ISignInUseCase } from 'domain/usecases/@interfaces/authentication-usecases.interfaces';
+import { Request } from 'express';
+import { IFindUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
+import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
+import { ICreateRefreshTokenRepository, IFindRefreshTokenRepository, IUpdateRefreshTokenRepository } from "infra/repositories/@interfaces/authentication-repository.interfaces";
 
-describe("SignInRouter", () => {
-  const signInUseCaseMock = {
+describe('SignInRouter', () => {
+  let signInRouter: SignInRouter;
+  let signInUseCaseMock: ISignInUseCase;
+  const findUserRepositoryMock: IFindUserRepository = {
+    execute: jest.fn()
+  };
+  const bcryptHelperMock: IBcryptHelper = {
+    hashPassword: jest.fn(async (password) => `hashed_${password}`),
+    comparePassword: jest.fn(async (plainPassword, hashedPassword) => true)
+  };
+  const wrongCredentialsErrorMock: Error = new WrongCredentialsError();
+  const jwtHelperAccessTokenMock: IJwtHelper = {
+    verifyToken: jest.fn(),
+    generateToken: jest.fn(),
+  };
+  const jwtHelperRefreshTokenMock: IJwtHelper = {
+    verifyToken: jest.fn(),
+    generateToken: jest.fn(),
+  };
+  const createRefreshTokenRepositoryMock: ICreateRefreshTokenRepository = {
     execute: jest.fn(),
   };
-  const sut = new SignInRouter({ signInUseCase: signInUseCaseMock });
-
-  it("Should return ValidationError if password has less then 6 caracters", async () => {
-    const body = {
-      email: "test@gmail.com",
-      password: "12345",
+  const findRefreshTokenRepositoryMock: IFindRefreshTokenRepository = {
+    execute: jest.fn(),
+  };
+  const updateRefreshTokenRepositoryMock: IUpdateRefreshTokenRepository = {
+    execute: jest.fn(),
+  };
+  beforeEach(() => {
+    signInUseCaseMock = {
+      findUserRepository: findUserRepositoryMock,
+      bcryptHelper: bcryptHelperMock,
+      wrongCredentialsError: wrongCredentialsErrorMock,
+      jwtHelperAccessToken: jwtHelperAccessTokenMock,
+      jwtHelperRefreshToken: jwtHelperRefreshTokenMock,
+      createRefreshTokenRepository: createRefreshTokenRepositoryMock,
+      findRefreshTokenRepository: findRefreshTokenRepositoryMock,
+      updateRefreshTokenRepository: updateRefreshTokenRepositoryMock,
+      execute: jest.fn(),
+      handleRefreshToken: jest.fn(),
     };
-    const {
-      body: { error },
-    } = await sut.route({ body });
-    const { name, message } = error;
-    expect(name).toEqual("ValidationError");
-    expect(message).toEqual("password must be at least 6 characters");
+    signInRouter = new SignInRouter({ signInUseCase: signInUseCaseMock });
   });
 
-  it("Should return ValidationError if email is wrong", async () => {
-    const body = {
-      email: "testgmail.com",
-      password: "123456",
-    };
-    const {
-      body: { error },
-    } = await sut.route({ body });
-    const { name, message } = error;
-    expect(name).toEqual("ValidationError");
-    expect(message).toEqual("email must be a valid email");
+  it('should return 200 for valid credentials', async () => {
+    const mockRequest = {
+      body: {
+        email: 'validemail@example.com',
+        password: 'validpassword',
+      },
+    } as Request;
+
+    (signInUseCaseMock.execute as jest.Mock).mockResolvedValue('valid tokens');
+    
+    const response = await signInRouter.route(mockRequest);
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toBe('valid tokens');
   });
 
-  it("Should return BadRequest if httpRequest is not provided", async () => {
-    const httpRequest = null;
-    const response = await sut.route(httpRequest);
-    expect(response).toEqual(
-      HttpResponse.unauthorizedError(new Error("Invalid Request")),
-    );
+  it('should return 400 for invalid credentials', async () => {
+    const mockRequest = {
+      body: {
+        email: 'invalidemail',
+        password: 'short',
+      },
+    } as Request;
+
+    const response = await signInRouter.route(mockRequest);
+    
+    expect(response.statusCode).toBe(400);
   });
 
-  it("Should return BadRequest if httpRequest body is not provided", async () => {
-    const httpRequest = {};
-    const response = await sut.route(httpRequest);
-    expect(response).toEqual(
-      HttpResponse.unauthorizedError(new Error("Invalid Request")),
-    );
+  it('should return 400 for missing credentials', async () => {
+    const mockRequest = {
+      body: {},
+    } as Request;
+
+    const response = await signInRouter.route(mockRequest);
+    
+    expect(response.statusCode).toBe(400);
   });
 
-  it("Should return ValidationError if httpRequest body is missing password", async () => {
-    const httpRequest = { body: { email: "any_email@gmail.com" } };
-    const {
-      body: { error },
-    } = await sut.route(httpRequest);
-    const { name, message } = error;
-    expect(name).toEqual("ValidationError");
-    expect(message).toEqual("password is a required field");
-  });
+  it('should handle unexpected errors', async () => {
+    const mockRequest = {
+      body: {
+        email: 'validemail@example.com',
+        password: 'validpassword',
+      },
+    } as Request;
 
-  it("Should return UnauthorizedError if signInUseCase execute throws an error", async () => {
-    const httpRequest = {
-      body: { email: "any_email@gmail.com", password: "any_password" },
-    };
-    signInUseCaseMock.execute.mockImplementationOnce(() => {
-      throw new Error("any_error");
-    });
-    const response = await sut.route(httpRequest);
-    expect(response).toEqual(
-      HttpResponse.unauthorizedError(new Error("any_error")),
-    );
-  });
-
-  it("Should return UnauthorizedError if signInUseCase execute throws WrongCredentialsError", async () => {
-    const httpRequest = {
-      body: { email: "any_email@gmail.com", password: "any_password" },
-    };
-    signInUseCaseMock.execute.mockImplementationOnce(() => {
-      throw new Error("WrongCredentialsError");
-    });
-    const response = await sut.route(httpRequest);
-    expect(response).toEqual(
-      HttpResponse.unauthorizedError(new Error("WrongCredentialsError")),
-    );
-  });
-
-  it("Should return Ok if signInUseCase execute returns tokens", async () => {
-    const httpRequest = {
-      body: { email: "any_email@gmail.com", password: "any_password" },
-    };
-    const tokens = {
-      accessToken: "any_access_token",
-      refreshToken: "any_refresh_token",
-    };
-    signInUseCaseMock.execute.mockImplementationOnce(() => tokens);
-    const response = await sut.route(httpRequest);
-    expect(response).toEqual(HttpResponse.ok(tokens));
+    (signInUseCaseMock.execute as jest.Mock).mockRejectedValue(new Error('Unexpected error'));
+    
+    const response = await signInRouter.route(mockRequest);
+    
+    expect(response.statusCode).toBe(401);
   });
 });

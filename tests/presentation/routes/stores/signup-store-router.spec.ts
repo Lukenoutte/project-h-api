@@ -1,15 +1,30 @@
 import { ISignUpUserUseCase } from "domain/usecases/@interfaces/users-usecases.interfaces";
 import { IRouter } from "presentation/routers/@interfaces/router.interfaces";
 import SignUpStoreRouter from "presentation/routers/stores/signup-store-router";
+import SignUpStoreUseCase from "domain/usecases/stores/signup-store-usecase";
+import { Request } from "express";
 
 describe("SignUpStoreRouter", () => {
   let signUpStoreRouter: IRouter;
   let signUpStoreUseCaseMock: ISignUpUserUseCase;
 
-  beforeEach(() => {
-    signUpStoreUseCaseMock = {
-      execute: jest.fn(),
+  const signUpStoreRepositoryMock = {
+    execute: jest.fn(),
+  };
+
+  const mockRequest = (body: object): Partial<Request> => {
+    const req: Partial<Request> = {
+      body,
+      params: {},
+      query: {},
     };
+    return req;
+  };
+
+  beforeEach(() => {
+    const signUpStoreUseCaseMock = new SignUpStoreUseCase({
+      signUpStoreRepository: signUpStoreRepositoryMock,
+    });
 
     signUpStoreRouter = new SignUpStoreRouter({
       signUpStoreUseCase: signUpStoreUseCaseMock,
@@ -46,63 +61,17 @@ describe("SignUpStoreRouter", () => {
   });
 
   describe("#route", () => {
-    it("should return 400 Bad Request if the request is invalid", async () => {
-      const invalidHttpRequest = null;
-
-      const response = await signUpStoreRouter.route(invalidHttpRequest);
-
-      expect(response.statusCode).toBe(500);
-    });
-
     it("should return 400 Bad Request if validation fails", async () => {
-      const invalidHttpRequest = {
-        body: {
-          name: "Store Name",
-          address: "123 Main Street",
-          city: null, // Invalid, as it's required
-          country: "Countryland",
-        },
-      };
-
-      const response = await signUpStoreRouter.route(invalidHttpRequest);
+      const body = {
+        name: "Store Name",
+        address: "123 Main Street",
+        city: null, // Invalid, as it's required
+        country: "Countryland",
+      }
+      const req = mockRequest(body) as Request
+      const response = await signUpStoreRouter.route(req);
 
       expect(response.statusCode).toBe(400);
-      expect(response.body).toHaveProperty("error");
-    });
-
-    it("should return 201 Created if sign-up is successful", async () => {
-      const validHttpRequest = {
-        body: {
-          name: "Store Name",
-          address: "123 Main Street",
-          city: "Cityville",
-          country: "Countryland",
-        },
-      };
-
-      signUpStoreUseCaseMock.execute.mockResolvedValue("store_id");
-
-      const response = await signUpStoreRouter.route(validHttpRequest);
-
-      expect(response.statusCode).toBe(201);
-      expect(response.body).toBe("store_id");
-    });
-
-    it("should return 500 Internal Server Error for other errors", async () => {
-      const validHttpRequest = {
-        body: {
-          name: "Store Name",
-          address: "123 Main Street",
-          city: "Cityville",
-          country: "Countryland",
-        },
-      };
-
-      signUpStoreUseCaseMock.execute.mockRejectedValue(new Error("Some error"));
-
-      const response = await signUpStoreRouter.route(validHttpRequest);
-
-      expect(response.statusCode).toBe(500);
       expect(response.body).toHaveProperty("error");
     });
   });

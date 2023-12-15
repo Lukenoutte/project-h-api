@@ -5,7 +5,7 @@ import SignUpStoreRouterComposer from "main/composers/stores/signup-store-router
 
 jest.mock("domain/usecases/stores/signup-store-usecase");
 jest.mock("presentation/routers/stores/signup-store-router");
-jest.mock("infra/repositories/stores/create-store-repository");
+jest.mock("infra/repositories/stores/signup-store-repository");
 
 describe("SignUpStoreRouterComposer", () => {
   it("Should compose a create store router", () => {

@@ -28,6 +28,7 @@ describe("ExpressRouterAdapter", () => {
         statusCode: 200,
         body: "body",
       }),
+      validate: jest.fn()
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
@@ -50,6 +51,7 @@ describe("ExpressRouterAdapter", () => {
         statusCode: 404,
         body: "Not found",
       }),
+      validate: jest.fn()
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
@@ -62,6 +64,7 @@ describe("ExpressRouterAdapter", () => {
   it("Adapt should handle rejected promise from router.route", async () => {
     const router = {
       route: jest.fn().mockRejectedValue(new Error("Network error")),
+      validate: jest.fn()
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
@@ -81,6 +84,7 @@ describe("ExpressRouterAdapter", () => {
         statusCode: 500,
         body: "Internal server error",
       }),
+      validate: jest.fn()
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);

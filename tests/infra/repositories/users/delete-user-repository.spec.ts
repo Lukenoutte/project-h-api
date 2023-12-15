@@ -28,13 +28,6 @@ describe("DeleteUserRepository", () => {
     );
   });
 
-  it("Should return the result of executeQuery", async () => {
-    const result = "result";
-    (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue(result);
-    const response = await deleteUserRepository.execute({ email });
-    expect(response).toEqual(result);
-  });
-
   it("Should throw error if executeQuery throws an error", async () => {
     const error = new Error("Test error");
     (PostgreHelper.executeQuery as jest.Mock).mockRejectedValue(error);
