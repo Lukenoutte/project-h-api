@@ -4,13 +4,7 @@ import HttpResponse from "../../helpers/http-response";
 import { ISignUpStoreUseCase } from "domain/usecases/@interfaces/stores-usecases.interfaces";
 import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
 import { Request } from "express";
-
-interface ISignUpStoreParams {
-  name: string;
-  address: string;
-  city: string;
-  country: string;
-}
+import { IStore } from "domain/entities/@interfaces/store-entity.interfaces";
 
 export default class SignUpStoreRouter {
   #signUpStoreUseCase;
@@ -19,13 +13,16 @@ export default class SignUpStoreRouter {
     this.#signUpStoreUseCase = signUpStoreUseCase;
   }
 
-  async validate(params: ISignUpStoreParams): Promise<{ isValid: boolean, error: object }> {
+  async validate(params: IStore): Promise<{ isValid: boolean, error: object }> {
     try {
       const storeSchema = object({
         name: string().required(),
         address: string().required(),
         city: string().required(),
         country: string().required(),
+        phone: string().required(),
+        category: string().required(),
+        subdomain: string().required(),
       });
       await storeSchema.validate(params);
       return { isValid: true, error: {} };

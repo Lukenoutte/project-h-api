@@ -7,9 +7,9 @@ export default class SignUpStoreRepository implements ISignUpStoreRepository {
     await PostgreHelper.executeQuery(
       `
       INSERT INTO stores
-        (name, address, city, country)
+        (name, address, city, country, phone, category, subdomain)
       VALUES
-        ($1, $2, $3, $4);
+        ($1, $2, $3, $4, $5, $6, $7);
       `,
       storeEntity.getArray(),
     );
