@@ -40,10 +40,10 @@ describe('SignUpStoreRepository', () => {
   it('Should execute a query to insert a new store', async () => {
     await signUpStoreRepository.execute(mockStoreEntity);
 
-    expect(PostgreHelper.executeQuery).toBeCalledWith(
+    expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
       `
       INSERT INTO stores
-        (name, address, city, country)
+        (name, address, city, country, phone, category, subdomain)
       VALUES
         ($1, $2, $3, $4, $5, $6, $7);
       `,
