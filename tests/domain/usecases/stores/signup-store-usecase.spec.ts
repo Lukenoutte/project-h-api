@@ -15,6 +15,9 @@ describe("SignUpStoreUseCase", () => {
       address: "Store Address",
       city: "Store City",
       country: "Store Country",
+      phone: '123',
+      category: 'TI',
+      subdomain: 'mystore',
     };
     const storeEntity = new StoreEntity(params);
     const result = await sut.execute(params);

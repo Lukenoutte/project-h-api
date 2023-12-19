@@ -38,6 +38,9 @@ describe("SignUpStoreRouter", () => {
         address: "123 Main Street",
         city: "Cityville",
         country: "Countryland",
+        phone: '123',
+        category: 'TI',
+        subdomain: 'mystore',
       };
       if (signUpStoreRouter.validate) {
         const result = await signUpStoreRouter.validate(body);
@@ -51,6 +54,9 @@ describe("SignUpStoreRouter", () => {
         address: "123 Main Street",
         city: null, // Invalid, as it's required
         country: "Countryland",
+        phone: '123',
+        category: 'TI',
+        subdomain: 'mystore',
       };
       if (signUpStoreRouter.validate) {
         const result = await signUpStoreRouter.validate(body);
@@ -67,6 +73,9 @@ describe("SignUpStoreRouter", () => {
         address: "123 Main Street",
         city: null, // Invalid, as it's required
         country: "Countryland",
+        phone: '123',
+        category: 'TI',
+        subdomain: 'mystore',
       }
       const req = mockRequest(body) as Request
       const response = await signUpStoreRouter.route(req);

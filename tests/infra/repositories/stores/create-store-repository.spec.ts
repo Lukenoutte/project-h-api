@@ -1,11 +1,11 @@
-import { IStoreEntity } from "domain/entities/@interfaces/store-entity.interfaces";
-import PostgreHelper from "infra/helpers/postgre-helper";
-import { ISignUpStoreRepository } from "infra/repositories/@interfaces/stores-repository.interfaces";
-import SignUpStoreRepository from "infra/repositories/stores/signup-store-repository";
+import { IStoreEntity } from 'domain/entities/@interfaces/store-entity.interfaces';
+import PostgreHelper from 'infra/helpers/postgre-helper';
+import { ISignUpStoreRepository } from 'infra/repositories/@interfaces/stores-repository.interfaces';
+import SignUpStoreRepository from 'infra/repositories/stores/signup-store-repository';
 
-jest.mock("infra/helpers/postgre-helper");
+jest.mock('infra/helpers/postgre-helper');
 
-describe("SignUpStoreRepository", () => {
+describe('SignUpStoreRepository', () => {
   let signUpStoreRepository: ISignUpStoreRepository;
   let mockStoreEntity: IStoreEntity;
 
@@ -16,9 +16,20 @@ describe("SignUpStoreRepository", () => {
       address: 'test',
       city: 'test',
       country: 'test',
+      phone: '123',
+      category: 'TI',
+      subdomain: 'mystore',
       getArray: jest
         .fn()
-        .mockReturnValue(["name", "address", "city", "country"]),
+        .mockReturnValue([
+          'name',
+          'address',
+          'city',
+          'country',
+          'phone',
+          'category',
+          'subdomain',
+        ]),
     };
   });
 
@@ -26,7 +37,7 @@ describe("SignUpStoreRepository", () => {
     jest.resetAllMocks();
   });
 
-  it("Should execute a query to insert a new store", async () => {
+  it('Should execute a query to insert a new store', async () => {
     await signUpStoreRepository.execute(mockStoreEntity);
 
     expect(PostgreHelper.executeQuery).toBeCalledWith(
@@ -34,9 +45,9 @@ describe("SignUpStoreRepository", () => {
       INSERT INTO stores
         (name, address, city, country)
       VALUES
-        ($1, $2, $3, $4);
+        ($1, $2, $3, $4, $5, $6, $7);
       `,
-      mockStoreEntity.getArray(),
+      mockStoreEntity.getArray()
     );
   });
 });
