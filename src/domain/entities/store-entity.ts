@@ -1,6 +1,7 @@
 import { IStore, IStoreEntity } from './@interfaces/store-entity.interfaces';
 
 export default class StoreEntity implements IStoreEntity {
+  userId: number;
   name: string;
   address: string;
   city: string;
@@ -10,6 +11,7 @@ export default class StoreEntity implements IStoreEntity {
   subdomain: string;
 
   constructor({
+    userId,
     name,
     address,
     city,
@@ -18,6 +20,7 @@ export default class StoreEntity implements IStoreEntity {
     category,
     subdomain,
   }: IStore) {
+    this.userId = userId;
     this.name = name;
     this.address = address;
     this.city = city;
@@ -27,8 +30,9 @@ export default class StoreEntity implements IStoreEntity {
     this.subdomain = subdomain;
   }
 
-  getArray(): string[] {
+  getArray(): any[] {
     return [
+      this.userId,
       this.name,
       this.address,
       this.city,

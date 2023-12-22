@@ -1,9 +1,12 @@
-import ExpressRouterAdapter from "main/adapters/express-router-adapter";
-import { Request, Response } from "express";
+import ExpressRouterAdapter from 'main/adapters/express-router-adapter';
+import {
+  IRequest,
+  IResponse,
+} from 'presentation/routers/@interfaces/router.interfaces';
 
-describe("ExpressRouterAdapter", () => {
-  const mockRequest = (): Partial<Request> => {
-    const req: Partial<Request> = {
+describe('ExpressRouterAdapter', () => {
+  const mockRequest = (): Partial<IRequest> => {
+    const req: Partial<IRequest> = {
       body: {},
       params: {},
       query: {},
@@ -11,24 +14,24 @@ describe("ExpressRouterAdapter", () => {
     return req;
   };
 
-  const mockResponse = (): Partial<Response> => {
-    const res: Partial<Response> = {
+  const mockResponse = (): Partial<IResponse> => {
+    const res: Partial<IResponse> = {
       send: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
       status: jest.fn().mockReturnThis(),
     };
     return res;
   };
-  
-  const req = mockRequest() as Request;
-  const res = mockResponse() as Response;
-  it("Adapt should call the correct methods with the correct arguments", async () => {
+
+  const req = mockRequest() as IRequest;
+  const res = mockResponse() as IResponse;
+  it('Adapt should call the correct methods with the correct arguments', async () => {
     const router = {
       route: jest.fn().mockResolvedValue({
         statusCode: 200,
-        body: "body",
+        body: 'body',
       }),
-      validate: jest.fn()
+      validate: jest.fn(),
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
@@ -42,33 +45,33 @@ describe("ExpressRouterAdapter", () => {
     });
 
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith("body");
+    expect(res.json).toHaveBeenCalledWith('body');
   });
 
-  it("Adapt should handle non-200 status codes", async () => {
+  it('Adapt should handle non-200 status codes', async () => {
     const router = {
       route: jest.fn().mockResolvedValue({
         statusCode: 404,
-        body: "Not found",
+        body: 'Not found',
       }),
-      validate: jest.fn()
+      validate: jest.fn(),
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
     await adaptedRouter(req, res);
 
     expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith("Not found");
+    expect(res.json).toHaveBeenCalledWith('Not found');
   });
 
-  it("Adapt should handle rejected promise from router.route", async () => {
+  it('Adapt should handle rejected promise from router.route', async () => {
     const router = {
-      route: jest.fn().mockRejectedValue(new Error("Network error")),
-      validate: jest.fn()
+      route: jest.fn().mockRejectedValue(new Error('Network error')),
+      validate: jest.fn(),
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
-    await expect(adaptedRouter(req, res)).rejects.toThrow("Network error");
+    await expect(adaptedRouter(req, res)).rejects.toThrow('Network error');
 
     expect(router.route).toHaveBeenCalledWith({
       body: req.body,
@@ -78,19 +81,19 @@ describe("ExpressRouterAdapter", () => {
     });
   });
 
-  it("Adapt should handle 500 status codes", async () => {
+  it('Adapt should handle 500 status codes', async () => {
     const router = {
       route: jest.fn().mockResolvedValue({
         statusCode: 500,
-        body: "Internal server error",
+        body: 'Internal server error',
       }),
-      validate: jest.fn()
+      validate: jest.fn(),
     };
 
     const adaptedRouter = ExpressRouterAdapter.adapt(router);
     await adaptedRouter(req, res);
 
     expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith("Internal server error");
+    expect(res.json).toHaveBeenCalledWith('Internal server error');
   });
 });

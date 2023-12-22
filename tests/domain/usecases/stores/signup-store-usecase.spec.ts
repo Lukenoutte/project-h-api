@@ -1,7 +1,7 @@
-import StoreEntity from "domain/entities/store-entity";
-import SignUpStoreUseCase from "domain/usecases/stores/signup-store-usecase";
+import StoreEntity from 'domain/entities/store-entity';
+import SignUpStoreUseCase from 'domain/usecases/stores/signup-store-usecase';
 
-describe("SignUpStoreUseCase", () => {
+describe('SignUpStoreUseCase', () => {
   const signUpStoreRepositoryMock = {
     execute: jest.fn(),
   };
@@ -9,12 +9,13 @@ describe("SignUpStoreUseCase", () => {
     signUpStoreRepository: signUpStoreRepositoryMock,
   });
 
-  test("Should create a new store and return it", async () => {
+  test('Should create a new store and return it', async () => {
     const params = {
-      name: "Store Name",
-      address: "Store Address",
-      city: "Store City",
-      country: "Store Country",
+      userId: 1,
+      name: 'Store Name',
+      address: 'Store Address',
+      city: 'Store City',
+      country: 'Store Country',
       phone: '123',
       category: 'TI',
       subdomain: 'mystore',

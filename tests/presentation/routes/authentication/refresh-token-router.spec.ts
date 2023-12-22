@@ -1,15 +1,15 @@
-import logger from "main/configs/logger";
-import RefreshTokenUseCase from "domain/usecases/authentication/refresh-token-usecase";
-import HttpResponse from "presentation/helpers/http-response";
-import { MissingParamError, UnauthorizedError } from "presentation/errors";
-import RefreshTokenRouter from "presentation/routers/authentication/refresh-token-router";
-import { IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
-import { Request } from "express";
+import logger from 'main/configs/logger';
+import RefreshTokenUseCase from 'domain/usecases/authentication/refresh-token-usecase';
+import HttpResponse from 'presentation/helpers/http-response';
+import { MissingParamError, UnauthorizedError } from 'presentation/errors';
+import RefreshTokenRouter from 'presentation/routers/authentication/refresh-token-router';
+import { IJwtHelper } from 'infra/helpers/@interfaces/helper.interfaces';
+import { IRequest } from 'presentation/routers/@interfaces/router.interfaces';
 
-jest.mock("main/configs/logger");
-jest.mock("presentation/helpers/http-response");
-jest.mock("presentation/errors");
-jest.mock("domain/usecases/authentication/refresh-token-usecase");
+jest.mock('main/configs/logger');
+jest.mock('presentation/helpers/http-response');
+jest.mock('presentation/errors');
+jest.mock('domain/usecases/authentication/refresh-token-usecase');
 
 const findRefreshTokenRepositoryMock = {
   execute: jest.fn(),
@@ -18,7 +18,7 @@ const jwtHelperRefreshTokenMock: IJwtHelper = {
   verifyToken: jest.fn(),
   generateToken: jest.fn(),
 };
-const jwtHelperAccessTokenMock: IJwtHelper  = {
+const jwtHelperAccessTokenMock: IJwtHelper = {
   verifyToken: jest.fn(),
   generateToken: jest.fn(),
 };
@@ -30,32 +30,39 @@ const sut = new RefreshTokenUseCase({
   unauthorizedError: unauthorizedErrorMock,
 });
 
-
-describe("RefreshTokenRouter", () => {
-  it("Should execute the refresh token use case and return a ok response", async () => {
-    const refreshTokenRouter = new RefreshTokenRouter({ refreshTokenUseCase: sut });
-    const httpRequest = { userId: "123", body: { refreshToken: "test" } } as Request;
-    sut.execute = jest.fn().mockResolvedValue("testToken");
+describe('RefreshTokenRouter', () => {
+  it('Should execute the refresh token use case and return a ok response', async () => {
+    const refreshTokenRouter = new RefreshTokenRouter({
+      refreshTokenUseCase: sut,
+    });
+    const httpRequest = {
+      userId: '123',
+      body: { refreshToken: 'test' },
+    } as IRequest;
+    sut.execute = jest.fn().mockResolvedValue('testToken');
     const response = await refreshTokenRouter.route(httpRequest);
-    expect(response).toEqual(HttpResponse.ok({ accessToken: "testToken" }));
+    expect(response).toEqual(HttpResponse.ok({ accessToken: 'testToken' }));
   });
 
-  it("Should log an error and return a server error response when an error occurs", async () => {
+  it('Should log an error and return a server error response when an error occurs', async () => {
     const refreshTokenUseCase = sut;
     const refreshTokenRouter = new RefreshTokenRouter({ refreshTokenUseCase });
-    const httpRequest = { userId: "123", body: { refreshToken: "test" } } as Request;
-    const error = new Error("Test error");
+    const httpRequest = {
+      userId: '123',
+      body: { refreshToken: 'test' },
+    } as IRequest;
+    const error = new Error('Test error');
     refreshTokenUseCase.execute = jest.fn().mockRejectedValue(error);
     const response = await refreshTokenRouter.route(httpRequest);
-    expect(logger.error).toHaveBeenCalledWith("RefreshTokenError", error);
+    expect(logger.error).toHaveBeenCalledWith('RefreshTokenError', error);
     expect(response).toEqual(HttpResponse.serverError(error.name));
   });
 
-  it("Should return a bad request response when a required field is missing", async () => {
+  it('Should return a bad request response when a required field is missing', async () => {
     const refreshTokenUseCase = sut;
     const refreshTokenRouter = new RefreshTokenRouter({ refreshTokenUseCase });
-    const httpRequest = { userId: "123" } as Request;
-    const error = new MissingParamError("refreshToken");
+    const httpRequest = { userId: '123' } as IRequest;
+    const error = new MissingParamError('refreshToken');
     const response = await refreshTokenRouter.route(httpRequest);
     expect(response).toEqual(HttpResponse.badRequest(error));
   });

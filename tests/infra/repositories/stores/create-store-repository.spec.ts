@@ -12,6 +12,7 @@ describe('SignUpStoreRepository', () => {
   beforeEach(() => {
     signUpStoreRepository = new SignUpStoreRepository();
     mockStoreEntity = {
+      userId: 1,
       name: 'test',
       address: 'test',
       city: 'test',

@@ -1,21 +1,26 @@
-import { string, object } from "yup";
-import logger from "main/configs/logger";
-import HttpResponse from "../../helpers/http-response";
-import { ISignUpStoreUseCase } from "domain/usecases/@interfaces/stores-usecases.interfaces";
-import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
-import { Request } from "express";
-import { IStore } from "domain/entities/@interfaces/store-entity.interfaces";
+import { string, object, number } from 'yup';
+import logger from 'main/configs/logger';
+import HttpResponse from '../../helpers/http-response';
+import { ISignUpStoreUseCase } from 'domain/usecases/@interfaces/stores-usecases.interfaces';
+import { IHttpResponse } from 'presentation/helpers/@interfaces/helper.interfaces';
+import { IStore } from 'domain/entities/@interfaces/store-entity.interfaces';
+import { IRequest } from '../@interfaces/router.interfaces';
 
 export default class SignUpStoreRouter {
   #signUpStoreUseCase;
 
-  constructor({ signUpStoreUseCase }: { signUpStoreUseCase: ISignUpStoreUseCase }) {
+  constructor({
+    signUpStoreUseCase,
+  }: {
+    signUpStoreUseCase: ISignUpStoreUseCase;
+  }) {
     this.#signUpStoreUseCase = signUpStoreUseCase;
   }
 
-  async validate(params: IStore): Promise<{ isValid: boolean, error: object }> {
+  async validate(params: IStore): Promise<{ isValid: boolean; error: object }> {
     try {
       const storeSchema = object({
+        userId: number().required(),
         name: string().required(),
         address: string().required(),
         city: string().required(),
@@ -31,26 +36,31 @@ export default class SignUpStoreRouter {
         const { name, message } = error;
         return { error: { name, message }, isValid: false };
       }
-      return { error: { 
-        name: 'ValidationError', 
-        message: 'Something went wrong!' 
-      }, 
-        isValid: false 
+      return {
+        error: {
+          name: 'ValidationError',
+          message: 'Something went wrong!',
+        },
+        isValid: false,
       };
     }
   }
 
-  async route(httpRequest: Request): Promise<IHttpResponse> {
+  async route(httpRequest: IRequest): Promise<IHttpResponse> {
     try {
-      if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
+      if (!httpRequest || !httpRequest.body)
+        throw new Error('InvalidRequestError');
       const body = { ...httpRequest.body };
-      const { isValid, error } = await this.validate(body);
+      const userId = parseInt(httpRequest.userId);
+      const storeData = { userId, ...body };
+      const { isValid, error } = await this.validate(storeData);
       if (!isValid) return HttpResponse.badRequest(error);
-      const result = await this.#signUpStoreUseCase.execute(body);
+      const result = await this.#signUpStoreUseCase.execute(storeData);
       return HttpResponse.created(result);
     } catch (error) {
-      logger.error("SignUpStoreError", error);
-      if (error instanceof Error) return HttpResponse.serverError(error.message);
+      logger.error('SignUpStoreError', error);
+      if (error instanceof Error)
+        return HttpResponse.serverError(error.message);
       return HttpResponse.serverError('SignUpStoreError');
     }
   }

@@ -1,23 +1,29 @@
-import { string, object } from "yup";
-import logger from "main/configs/logger";
-import HttpResponse from "../../helpers/http-response";
-import { IRefreshTokenUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
-import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
-import { IRouter } from "../@interfaces/router.interfaces";
-import { Request } from "express";
+import { string, object } from 'yup';
+import logger from 'main/configs/logger';
+import HttpResponse from '../../helpers/http-response';
+import { IRefreshTokenUseCase } from 'domain/usecases/@interfaces/authentication-usecases.interfaces';
+import { IHttpResponse } from 'presentation/helpers/@interfaces/helper.interfaces';
+import { IRouter } from '../@interfaces/router.interfaces';
+import { IRequest } from 'presentation/routers/@interfaces/router.interfaces';
 
 interface IRefreshTokenParams {
   refreshToken: string;
- }
+}
 
 export default class RefreshTokenRouter implements IRouter {
   #refreshTokenUseCase;
 
-  constructor({ refreshTokenUseCase }: { refreshTokenUseCase: IRefreshTokenUseCase }) {
+  constructor({
+    refreshTokenUseCase,
+  }: {
+    refreshTokenUseCase: IRefreshTokenUseCase;
+  }) {
     this.#refreshTokenUseCase = refreshTokenUseCase;
   }
 
-  async validate(params: IRefreshTokenParams): Promise<{ isValid: boolean, error: object }> {
+  async validate(
+    params: IRefreshTokenParams
+  ): Promise<{ isValid: boolean; error: object }> {
     try {
       const tokenSchema = object({
         refreshToken: string().required(),
@@ -29,16 +35,17 @@ export default class RefreshTokenRouter implements IRouter {
         const { name, message } = error;
         return { error: { name, message }, isValid: false };
       }
-      return { error: { 
-        name: 'ValidationError', 
-        message: 'Something went wrong!' 
-      }, 
-        isValid: false 
+      return {
+        error: {
+          name: 'ValidationError',
+          message: 'Something went wrong!',
+        },
+        isValid: false,
       };
     }
   }
 
-  async route(httpRequest: Request): Promise<IHttpResponse> {
+  async route(httpRequest: IRequest): Promise<IHttpResponse> {
     try {
       if (!httpRequest || !httpRequest.body) {
         return HttpResponse.badRequest(new Error('InvalidRequestError'));
@@ -52,8 +59,9 @@ export default class RefreshTokenRouter implements IRouter {
       });
       return HttpResponse.ok({ accessToken });
     } catch (error) {
-      logger.error("RefreshTokenError", error);
-      if (error instanceof Error) return HttpResponse.serverError(error.message);
+      logger.error('RefreshTokenError', error);
+      if (error instanceof Error)
+        return HttpResponse.serverError(error.message);
       return HttpResponse.serverError('RefreshTokenError');
     }
   }

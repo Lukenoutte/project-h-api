@@ -1,20 +1,27 @@
-import SignInRouter from "presentation/routers/authentication/signin-router";
-import { WrongCredentialsError } from "presentation/errors";
+import SignInRouter from 'presentation/routers/authentication/signin-router';
+import { WrongCredentialsError } from 'presentation/errors';
 import { ISignInUseCase } from 'domain/usecases/@interfaces/authentication-usecases.interfaces';
-import { Request } from 'express';
-import { IFindUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
-import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
-import { ICreateRefreshTokenRepository, IFindRefreshTokenRepository, IUpdateRefreshTokenRepository } from "infra/repositories/@interfaces/authentication-repository.interfaces";
+import { IFindUserRepository } from 'infra/repositories/@interfaces/users-respository.interfaces';
+import {
+  IBcryptHelper,
+  IJwtHelper,
+} from 'infra/helpers/@interfaces/helper.interfaces';
+import {
+  ICreateRefreshTokenRepository,
+  IFindRefreshTokenRepository,
+  IUpdateRefreshTokenRepository,
+} from 'infra/repositories/@interfaces/authentication-repository.interfaces';
+import { IRequest } from 'presentation/routers/@interfaces/router.interfaces';
 
 describe('SignInRouter', () => {
   let signInRouter: SignInRouter;
   let signInUseCaseMock: ISignInUseCase;
   const findUserRepositoryMock: IFindUserRepository = {
-    execute: jest.fn()
+    execute: jest.fn(),
   };
   const bcryptHelperMock: IBcryptHelper = {
     hashPassword: jest.fn(async (password) => `hashed_${password}`),
-    comparePassword: jest.fn(async (plainPassword, hashedPassword) => true)
+    comparePassword: jest.fn(async (plainPassword, hashedPassword) => true),
   };
   const wrongCredentialsErrorMock: Error = new WrongCredentialsError();
   const jwtHelperAccessTokenMock: IJwtHelper = {
@@ -56,12 +63,12 @@ describe('SignInRouter', () => {
         email: 'validemail@example.com',
         password: 'validpassword',
       },
-    } as Request;
+    } as IRequest;
 
     (signInUseCaseMock.execute as jest.Mock).mockResolvedValue('valid tokens');
-    
+
     const response = await signInRouter.route(mockRequest);
-    
+
     expect(response.statusCode).toBe(200);
     expect(response.body).toBe('valid tokens');
   });
@@ -72,20 +79,20 @@ describe('SignInRouter', () => {
         email: 'invalidemail',
         password: 'short',
       },
-    } as Request;
+    } as IRequest;
 
     const response = await signInRouter.route(mockRequest);
-    
+
     expect(response.statusCode).toBe(400);
   });
 
   it('should return 400 for missing credentials', async () => {
     const mockRequest = {
       body: {},
-    } as Request;
+    } as IRequest;
 
     const response = await signInRouter.route(mockRequest);
-    
+
     expect(response.statusCode).toBe(400);
   });
 
@@ -95,12 +102,14 @@ describe('SignInRouter', () => {
         email: 'validemail@example.com',
         password: 'validpassword',
       },
-    } as Request;
+    } as IRequest;
 
-    (signInUseCaseMock.execute as jest.Mock).mockRejectedValue(new Error('Unexpected error'));
-    
+    (signInUseCaseMock.execute as jest.Mock).mockRejectedValue(
+      new Error('Unexpected error')
+    );
+
     const response = await signInRouter.route(mockRequest);
-    
+
     expect(response.statusCode).toBe(401);
   });
 });

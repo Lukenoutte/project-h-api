@@ -3,6 +3,7 @@ import StoreEntity from 'domain/entities/store-entity';
 describe('StoreEntity', () => {
   test('should return an array with the store details', () => {
     const store = new StoreEntity({
+      userId: 1,
       name: 'Store Name',
       address: 'Store Address',
       city: 'Store City',
@@ -12,6 +13,7 @@ describe('StoreEntity', () => {
       subdomain: 'mystore',
     });
     const expectedArray = [
+      1,
       'Store Name',
       'Store Address',
       'Store City',
@@ -25,6 +27,7 @@ describe('StoreEntity', () => {
 
   test('should return an array with the store details when all fields are empty', () => {
     const store = new StoreEntity({
+      userId: 0,
       name: '',
       address: '',
       city: '',
@@ -33,12 +36,13 @@ describe('StoreEntity', () => {
       category: '',
       subdomain: '',
     });
-    const expectedArray = ['', '', '', '', '', '', ''];
+    const expectedArray = [0, '', '', '', '', '', '', ''];
     expect(store.getArray()).toEqual(expectedArray);
   });
 
   test('should return an array with the store details when some fields are empty', () => {
     const store = new StoreEntity({
+      userId: 1,
       name: 'Store Name',
       address: '',
       city: '',
@@ -48,6 +52,7 @@ describe('StoreEntity', () => {
       subdomain: 'mystore',
     });
     const expectedArray = [
+      1,
       'Store Name',
       '',
       '',

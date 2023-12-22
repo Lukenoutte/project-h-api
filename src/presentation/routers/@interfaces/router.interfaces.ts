@@ -1,11 +1,15 @@
-import { Request } from "express";
-import { IHttpResponse } from "presentation/helpers/@interfaces/helper.interfaces";
+import { Request, Response, NextFunction } from 'express';
+import { IHttpResponse } from 'presentation/helpers/@interfaces/helper.interfaces';
+
+export interface IRequest extends Request {}
+export interface IResponse extends Response {}
+export interface INextFunction extends NextFunction {}
 
 export interface IRouter {
-  validate?: (params: any) => Promise<{ isValid: boolean, error: object }>;
-  route: (httpRequest: Request) => Promise<IHttpResponse>
+  validate?: (params: any) => Promise<{ isValid: boolean; error: object }>;
+  route: (httpRequest: IRequest) => Promise<IHttpResponse>;
 }
 
 export interface IRouterNoValidation {
-  route: (httpRequest: Request) => Promise<IHttpResponse>
+  route: (httpRequest: IRequest) => Promise<IHttpResponse>;
 }

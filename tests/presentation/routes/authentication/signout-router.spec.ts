@@ -1,9 +1,11 @@
-import { ISignOutUseCase } from "domain/usecases/@interfaces/authentication-usecases.interfaces";
-import { IRouterNoValidation } from "presentation/routers/@interfaces/router.interfaces";
-import SignOutRouter from "presentation/routers/authentication/signout-router";
-import { Request } from "express";
+import { ISignOutUseCase } from 'domain/usecases/@interfaces/authentication-usecases.interfaces';
+import {
+  IRequest,
+  IRouterNoValidation,
+} from 'presentation/routers/@interfaces/router.interfaces';
+import SignOutRouter from 'presentation/routers/authentication/signout-router';
 
-describe("SignOutRouter", () => {
+describe('SignOutRouter', () => {
   let signOutRouter: IRouterNoValidation;
   let signOutUseCaseMock: ISignOutUseCase;
   const deleteRefreshTokenRepositoryMock = {
@@ -21,31 +23,33 @@ describe("SignOutRouter", () => {
     });
   });
 
-  const mockRequest = (userId: string): Partial<Request> => {
-    const req: Partial<Request> = {
+  const mockRequest = (userId: string): Partial<IRequest> => {
+    const req: Partial<IRequest> = {
       body: {},
       params: {},
       query: {},
-      userId
+      userId,
     };
     return req;
   };
 
-  describe("#route", () => {
-    it("should return 200 OK if sign-out is successful", async () => {
-      const validHttpRequest = mockRequest("user123") as Request;
+  describe('#route', () => {
+    it('should return 200 OK if sign-out is successful', async () => {
+      const validHttpRequest = mockRequest('user123') as IRequest;
       const response = await signOutRouter.route(validHttpRequest);
       expect(response.statusCode).toBe(200);
     });
 
-    it("should return 500 Internal Server Error for other errors", async () => {
-      const validHttpRequest = mockRequest("user123") as Request;
-      (signOutUseCaseMock.execute as jest.Mock).mockRejectedValue(new Error("Some error"));
+    it('should return 500 Internal Server Error for other errors', async () => {
+      const validHttpRequest = mockRequest('user123') as IRequest;
+      (signOutUseCaseMock.execute as jest.Mock).mockRejectedValue(
+        new Error('Some error')
+      );
 
       const response = await signOutRouter.route(validHttpRequest);
 
       expect(response.statusCode).toBe(500);
-      expect(response.body).toHaveProperty("error");
+      expect(response.body).toHaveProperty('error');
     });
   });
 });

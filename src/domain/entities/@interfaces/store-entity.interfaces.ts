@@ -1,4 +1,5 @@
 export interface IStoreEntity {
+  userId: number;
   name: string;
   address: string;
   city: string;
@@ -6,10 +7,11 @@ export interface IStoreEntity {
   phone: string;
   category: string;
   subdomain: string;
-  getArray: () => string[];
+  getArray: () => any[];
 }
 
 export interface IStore {
+  userId: number;
   name: string;
   address: string;
   city: string;
