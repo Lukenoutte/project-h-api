@@ -7,6 +7,7 @@ import {
   IRequest,
   IResponse,
 } from 'presentation/routers/@interfaces/router.interfaces';
+import logger from 'main/configs/logger';
 
 const isPublicRoute = (path: string) => publicRoutes.includes(path);
 
@@ -24,6 +25,7 @@ export default async (req: IRequest, res: IResponse, next: INextFunction) => {
     req.userId = decodedToken.userId;
     return next();
   } catch (error) {
+    logger.error('AuthMiddlewareError', error);
     let errorMessage = 'UnauthorizedError';
     if (error instanceof Error) errorMessage = error.message;
     return res.status(401).json({ message: errorMessage });

@@ -1,4 +1,5 @@
 import FindStoreBySubdomainRepository from 'infra/repositories/stores/find-store-by-subdomain-repository';
+import logger from 'main/configs/logger';
 import {
   INextFunction,
   IRequest,
@@ -9,10 +10,12 @@ export default async (req: IRequest, res: IResponse, next: INextFunction) => {
   try {
     const subdomain = getSubdomain(req);
     if (!subdomain) return next();
-    if (!subdomainIsValid(subdomain)) throw new Error('InvalidStoreError');
+    const isValid = await subdomainIsValid(subdomain)
+    if (!isValid) throw new Error('InvalidStoreError');
     req.subdomain = subdomain;
     return next();
   } catch (error) {
+    logger.error('SubdomainMiddlewareError', error);
     let errorMessage = 'UnauthorizedError';
     if (error instanceof Error) errorMessage = error.message;
     return res.status(401).json({ message: errorMessage });

@@ -5,5 +5,5 @@ export interface ISignUpStoreRepository {
 }
 
 export interface IFindStoreBySubdomainRepository {
-  execute: (storeEntity: IStoreEntity) => Promise<IStore>;
+  execute: (params: { subdomain: string }) => Promise<IStore>;
 }

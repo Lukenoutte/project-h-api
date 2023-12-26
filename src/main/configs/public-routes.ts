@@ -1,1 +1,1 @@
-export default ["/signin", "/signup/user"];
+export default ["/signin", "/signup/user", "/store/show"];

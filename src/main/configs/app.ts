@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(xss());
 app.use(authorization);
 app.use(subdomain);
-app.use(cors({ origin: 'http://dikarts.vendur.com.br:3000' }));
+app.use(cors());
 
 setupRoutes(app);
 
