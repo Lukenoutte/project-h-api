@@ -17,12 +17,10 @@ describe("SignUpUserUseCase", () => {
   });
 
   const fakeUser = () => ({
+    level: 1,
     name: "John Doe",
     email: "john.doe@example.com",
     password: "password123",
-    address: "123 Main St",
-    city: "Cityville",
-    country: "Countryland",
   });
 
   it("Should throw an error if user already exists", async () => {

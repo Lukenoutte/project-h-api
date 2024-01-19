@@ -22,10 +22,6 @@ export default class SignUpStoreRouter {
       const storeSchema = object({
         userId: number().required(),
         name: string().required(),
-        address: string().required(),
-        city: string().required(),
-        country: string().required(),
-        phone: string().required(),
         category: string().required(),
         subdomain: string().required(),
       });
@@ -55,8 +51,8 @@ export default class SignUpStoreRouter {
       const storeData = { userId, ...body };
       const { isValid, error } = await this.validate(storeData);
       if (!isValid) return HttpResponse.badRequest(error);
-      const result = await this.#signUpStoreUseCase.execute(storeData);
-      return HttpResponse.created(result);
+      await this.#signUpStoreUseCase.execute(storeData);
+      return HttpResponse.created({});
     } catch (error) {
       logger.error('SignUpStoreError', error);
       if (error instanceof Error)

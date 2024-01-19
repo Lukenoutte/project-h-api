@@ -15,12 +15,10 @@ describe("FindUserRepository", () => {
     (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue({ rows: [user] });
 
     const repository = new FindUserRepository();
-    const result = await repository.execute({ email });
+    const result = await repository.execute({ email, userId: '' });
 
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
-      `
-      SELECT * FROM users WHERE email = $1;
-      `,
+      `SELECT * FROM users WHERE email = $1;`,
       [email],
     );
     expect(result).toEqual(user);
@@ -30,7 +28,7 @@ describe("FindUserRepository", () => {
     (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue({ rows: [] });
 
     const repository = new FindUserRepository();
-    const result = await repository.execute({ email });
+    const result = await repository.execute({ email, userId: '' });
 
     expect(result).toBeFalsy();
   });
@@ -41,6 +39,6 @@ describe("FindUserRepository", () => {
 
     const repository = new FindUserRepository();
 
-    await expect(repository.execute({ email })).rejects.toThrow(error);
+    await expect(repository.execute({ email, userId: '' })).rejects.toThrow(error);
   });
 });

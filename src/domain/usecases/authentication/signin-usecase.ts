@@ -1,11 +1,14 @@
-import { IFindUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
-import { 
-  ICreateRefreshTokenRepository, 
+import { IFindUserRepository } from 'infra/repositories/@interfaces/users-respository.interfaces';
+import {
+  ICreateRefreshTokenRepository,
   IFindRefreshTokenRepository,
-  IUpdateRefreshTokenRepository
-} from "infra/repositories/@interfaces/authentication-repository.interfaces";
-import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
-import { ISignInUseCase } from "../@interfaces/authentication-usecases.interfaces";
+  IUpdateRefreshTokenRepository,
+} from 'infra/repositories/@interfaces/authentication-repository.interfaces';
+import {
+  IBcryptHelper,
+  IJwtHelper,
+} from 'infra/helpers/@interfaces/helper.interfaces';
+import { ISignInUseCase } from '../@interfaces/authentication-usecases.interfaces';
 
 export default class SignInUseCase implements ISignInUseCase {
   findUserRepository: IFindUserRepository;
@@ -16,7 +19,7 @@ export default class SignInUseCase implements ISignInUseCase {
   createRefreshTokenRepository: ICreateRefreshTokenRepository;
   findRefreshTokenRepository: IFindRefreshTokenRepository;
   updateRefreshTokenRepository: IUpdateRefreshTokenRepository;
-  
+
   constructor({
     findUserRepository,
     bcryptHelper,
@@ -37,12 +40,15 @@ export default class SignInUseCase implements ISignInUseCase {
     this.updateRefreshTokenRepository = updateRefreshTokenRepository;
   }
 
-  async execute(params: { email: string, password: string }): Promise<object> {
-    const userOnDatabase = await this.findUserRepository.execute(params);
-    if (!userOnDatabase) throw this.wrongCredentialsError;
+  async execute(params: { email: string; password: string }): Promise<object> {
+    const userOnDatabase = await this.findUserRepository.execute({
+      email: params.email,
+      userId: '',
+    });
+    if (!userOnDatabase || !userOnDatabase.password) throw this.wrongCredentialsError;
     const isPassCorrect = await this.bcryptHelper.comparePassword(
       params.password,
-      userOnDatabase.password,
+      userOnDatabase.password
     );
     if (!isPassCorrect) throw this.wrongCredentialsError;
     const { id } = userOnDatabase;
@@ -54,7 +60,7 @@ export default class SignInUseCase implements ISignInUseCase {
   async handleRefreshToken({ userId }: { userId: string }): Promise<string> {
     const existTokenRefresh = await this.findRefreshTokenRepository.execute({
       userId,
-      token: ""
+      token: '',
     });
     const refreshToken = this.jwtHelperRefreshToken.generateToken({ userId });
     if (existTokenRefresh) {
@@ -73,12 +79,12 @@ export default class SignInUseCase implements ISignInUseCase {
 }
 
 interface ISignInUseCaseConstructor {
-  findUserRepository: IFindUserRepository,
-  bcryptHelper: IBcryptHelper,
-  wrongCredentialsError: Error,
-  jwtHelperAccessToken: IJwtHelper,
-  jwtHelperRefreshToken: IJwtHelper,
-  createRefreshTokenRepository: ICreateRefreshTokenRepository,
-  findRefreshTokenRepository: IFindRefreshTokenRepository,
-  updateRefreshTokenRepository: IUpdateRefreshTokenRepository
+  findUserRepository: IFindUserRepository;
+  bcryptHelper: IBcryptHelper;
+  wrongCredentialsError: Error;
+  jwtHelperAccessToken: IJwtHelper;
+  jwtHelperRefreshToken: IJwtHelper;
+  createRefreshTokenRepository: ICreateRefreshTokenRepository;
+  findRefreshTokenRepository: IFindRefreshTokenRepository;
+  updateRefreshTokenRepository: IUpdateRefreshTokenRepository;
 }

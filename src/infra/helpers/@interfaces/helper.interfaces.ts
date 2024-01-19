@@ -1,4 +1,4 @@
-import { Client } from "pg";
+import { Client, QueryResult } from "pg";
 
 export interface IBcryptHelper {
   hashPassword: (password: string) => Promise<string>;
@@ -20,5 +20,9 @@ export interface IPostgreHelper {
   clientPromise: void | null;
   connect: (uri: string) => Promise<void>;
   disconnect: () => Promise<void>;
-  executeQuery: (query: string, values: any[]) => Promise<any> | undefined;
+  executeQuery: (query: string, values: any[]) => Promise<QueryResult<any>>;
  }
+
+ export interface ICamelCaseHelper {
+  convert: (data: object) => object;
+}

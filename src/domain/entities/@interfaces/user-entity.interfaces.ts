@@ -4,7 +4,8 @@ export interface IUserEntity {
   name: string;
   email: string;
   password: string;
+  level: number;
   bcryptHelper: IBcryptHelper;
-  getArray: () => string[];
+  getArray: () => any[];
   encryptPassword: () => void;
 }

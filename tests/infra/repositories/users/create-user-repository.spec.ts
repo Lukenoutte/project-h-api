@@ -24,6 +24,7 @@ describe("SignUpUserRepository", () => {
 
   it("should execute a query to insert a user", async () => {
     const userEntity: IUserEntity = {
+      level: 1,
       name: "Test User",
       email: "test@example.com",
       password: "password123",
@@ -45,9 +46,9 @@ describe("SignUpUserRepository", () => {
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
       `
       INSERT INTO users
-        (name, email, password, address, city, country)
+        (name, email, password, level)
       VALUES
-        ($1, $2, $3, $4, $5, $6);
+        ($1, $2, $3, $4);
       `,
       userEntity.getArray(),
     );
@@ -55,6 +56,7 @@ describe("SignUpUserRepository", () => {
 
   it("should throw an error if executeQuery fails", async () => {
     const userEntity: IUserEntity = {
+      level: 1,
       name: "Test User",
       email: "test@example.com",
       password: "password123",

@@ -3,7 +3,7 @@ import { ISignUpStoreRepository , IFindStoreBySubdomainRepository} from "infra/r
 
 export interface ISignUpStoreUseCase {
   signUpStoreRepository: ISignUpStoreRepository;
-  execute: (params: IStore) => Promise<object>;
+  execute: (params: IStore) => Promise<void>;
 }
 
 export interface IShowStoreUseCase {

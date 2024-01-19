@@ -5,6 +5,7 @@ interface IUserConstructor {
   name: string;
   email: string;
   password: string;
+  level: number;
   bcryptHelper: IBcryptHelper;
 }
 
@@ -12,12 +13,14 @@ export default class UserEntity implements IUserEntity{
   name: string;
   email: string;
   password: string;
+  level: number;
   bcryptHelper: IBcryptHelper;
 
-  constructor({ name, email, password, bcryptHelper }: IUserConstructor) {
+  constructor({ name, email, password, bcryptHelper, level }: IUserConstructor) {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.level = level;
     this.bcryptHelper = bcryptHelper;
   }
 
@@ -28,11 +31,12 @@ export default class UserEntity implements IUserEntity{
     this.password = encryptedPassword;
   }
 
-  getArray(): string[]  {
+  getArray(): any[]  {
     return [
       this.name,
       this.email,
-      this.password
+      this.password,
+      this.level
     ];
   }
 }

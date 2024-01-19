@@ -4,7 +4,7 @@ import {
   IRequest,
   IRouter,
 } from 'presentation/routers/@interfaces/router.interfaces';
-import SignUpUserRouter from 'presentation/routers/users/signup-user-router';
+import SignUpUserRouter from 'presentation/routers/users/signup-master-router';
 
 describe('SignUpUserRouter', () => {
   let signUpUserRouter: IRouter;

@@ -8,8 +8,9 @@ import {
 
 export default async (req: IRequest, res: IResponse, next: INextFunction) => {
   try {
+    if (req.method === 'OPTIONS') return next();
     const subdomain = getSubdomain(req);
-    if (!subdomain) return next();
+    if (!subdomain || subdomain === 'vendur') return next();
     const isValid = await subdomainIsValid(subdomain)
     if (!isValid) throw new Error('InvalidStoreError');
     req.subdomain = subdomain;

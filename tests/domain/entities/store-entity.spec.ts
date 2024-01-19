@@ -5,20 +5,11 @@ describe('StoreEntity', () => {
     const store = new StoreEntity({
       userId: 1,
       name: 'Store Name',
-      address: 'Store Address',
-      city: 'Store City',
-      country: 'Store Country',
-      phone: '123',
       category: 'TI',
       subdomain: 'mystore',
     });
     const expectedArray = [
-      1,
       'Store Name',
-      'Store Address',
-      'Store City',
-      'Store Country',
-      '123',
       'TI',
       'mystore',
     ];
@@ -29,14 +20,10 @@ describe('StoreEntity', () => {
     const store = new StoreEntity({
       userId: 0,
       name: '',
-      address: '',
-      city: '',
-      country: '',
-      phone: '',
       category: '',
       subdomain: '',
     });
-    const expectedArray = [0, '', '', '', '', '', '', ''];
+    const expectedArray = ['', '', ''];
     expect(store.getArray()).toEqual(expectedArray);
   });
 
@@ -44,20 +31,11 @@ describe('StoreEntity', () => {
     const store = new StoreEntity({
       userId: 1,
       name: 'Store Name',
-      address: '',
-      city: '',
-      country: 'Store Country',
-      phone: '123',
       category: 'TI',
       subdomain: 'mystore',
     });
     const expectedArray = [
-      1,
       'Store Name',
-      '',
-      '',
-      'Store Country',
-      '123',
       'TI',
       'mystore',
     ];

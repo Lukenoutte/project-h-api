@@ -5,13 +5,14 @@ import { ISignUpUserUseCase } from 'domain/usecases/@interfaces/users-usecases.i
 import { IHttpResponse } from 'presentation/helpers/@interfaces/helper.interfaces';
 import { IRequest } from '../@interfaces/router.interfaces';
 
-interface ISignUpUserParams {
+interface ISignUpMasterParams {
   name: string;
   email: string;
+  level: number;
   password: string;
 }
 
-export default class SignUpUserRouter {
+export default class SignUpMasterRouter {
   #signUpUserUseCase;
 
   constructor({
@@ -23,7 +24,7 @@ export default class SignUpUserRouter {
   }
 
   async validate(
-    params: ISignUpUserParams
+    params: ISignUpMasterParams
   ): Promise<{ isValid: boolean; error: object }> {
     try {
       const userSchema = object({
@@ -55,7 +56,10 @@ export default class SignUpUserRouter {
       const body = { ...httpRequest.body };
       const { isValid, error } = await this.validate(body);
       if (!isValid) return HttpResponse.badRequest(error);
-      await this.#signUpUserUseCase.execute(body);
+      await this.#signUpUserUseCase.execute({
+        ...body,
+        level: 1,
+      });
       return HttpResponse.created({});
     } catch (error) {
       logger.error('SignUpUserError', error);

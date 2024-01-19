@@ -14,20 +14,12 @@ describe('SignUpStoreRepository', () => {
     mockStoreEntity = {
       userId: 1,
       name: 'test',
-      address: 'test',
-      city: 'test',
-      country: 'test',
-      phone: '123',
       category: 'TI',
       subdomain: 'mystore',
       getArray: jest
         .fn()
         .mockReturnValue([
           'name',
-          'address',
-          'city',
-          'country',
-          'phone',
           'category',
           'subdomain',
         ]),
@@ -44,9 +36,10 @@ describe('SignUpStoreRepository', () => {
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
       `
       INSERT INTO stores
-        (name, address, city, country, phone, category, subdomain)
+        (name, category, subdomain)
       VALUES
-        ($1, $2, $3, $4, $5, $6, $7);
+        ($1, $2, $3)
+      RETURNING id;
       `,
       mockStoreEntity.getArray()
     );

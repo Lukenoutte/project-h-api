@@ -9,6 +9,7 @@ const mockBcryptHelper: IBcryptHelper = {
 describe("UserEntity", () => {
   it("Should create a user entity", () => {
     const user = new UserEntity({
+      level: 1,
       name: "John Doe",
       email: "john.doe@example.com",
       password: "password123",
@@ -19,6 +20,7 @@ describe("UserEntity", () => {
 
   it("Should encrypt the password", async () => {
     const user = new UserEntity({
+      level: 1,
       name: "John Doe",
       email: "john.doe@example.com",
       password: "password123",
@@ -33,6 +35,7 @@ describe("UserEntity", () => {
 
   it("should return an array of user properties", async () => {
     const user = new UserEntity({
+      level: 1,
       name: "John Doe",
       email: "john.doe@example.com",
       password: "password123",
@@ -44,6 +47,7 @@ describe("UserEntity", () => {
       "John Doe",
       "john.doe@example.com",
       "hashed_password123",
+      1
     ]);
   });
 });

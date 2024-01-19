@@ -4,14 +4,20 @@ import { ISignUpStoreRepository } from "../@interfaces/stores-repository.interfa
 
 export default class SignUpStoreRepository implements ISignUpStoreRepository {
   async execute(storeEntity: IStoreEntity) {
-    await PostgreHelper.executeQuery(
+    const data = await PostgreHelper.executeQuery(
       `
       INSERT INTO stores
-        (name, address, city, country, phone, category, subdomain)
+        (name, category, subdomain)
       VALUES
-        ($1, $2, $3, $4, $5, $6, $7);
+        ($1, $2, $3)
+      RETURNING id;
       `,
       storeEntity.getArray(),
     );
+    if (!data) return 0
+    const { rows } = data
+    const firstItem = rows[0]
+    if (!firstItem) return 0
+    return firstItem.id; 
   }
 }

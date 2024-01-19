@@ -14,6 +14,10 @@ describe('SignUpStoreRouter', () => {
     execute: jest.fn(),
   };
 
+  const setUserStoreRepositoryMock = {
+    execute: jest.fn(),
+  };
+
   const mockRequest = (body: object): Partial<IRequest> => {
     const req: Partial<IRequest> = {
       body,
@@ -26,6 +30,7 @@ describe('SignUpStoreRouter', () => {
   beforeEach(() => {
     const signUpStoreUseCaseMock = new SignUpStoreUseCase({
       signUpStoreRepository: signUpStoreRepositoryMock,
+      setUserStoreRepository: setUserStoreRepositoryMock
     });
 
     signUpStoreRouter = new SignUpStoreRouter({

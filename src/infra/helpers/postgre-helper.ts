@@ -1,4 +1,4 @@
-import { Client } from "pg";
+import { Client, QueryResult } from "pg";
 import { IPostgreHelper } from "./@interfaces/helper.interfaces"; 
 
 const postgreHelper: IPostgreHelper = {
@@ -18,8 +18,8 @@ const postgreHelper: IPostgreHelper = {
     this.clientPromise = null;
   },
 
-  executeQuery(query: string, values: any[]): Promise<any> | undefined {
-    if (!this.client) return;
+  executeQuery(query: string, values: any[]): Promise<QueryResult<any>> {
+    if (!this.client) throw new Error('InvalidClientPgError.')
     return this.client.query(query, values);
   }
 };
