@@ -7,3 +7,7 @@ export interface ISignUpStoreRepository {
 export interface IFindStoreBySubdomainRepository {
   execute: (params: { subdomain: string }) => Promise<IStore>;
 }
+
+export interface IFindStoreByIdRepository {
+  execute: (params: { storeId: number }) => Promise<IStore>;
+}

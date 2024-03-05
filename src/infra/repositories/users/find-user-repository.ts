@@ -2,8 +2,8 @@ import PostgreHelper from 'infra/helpers/postgre-helper';
 import CamelCaseHelper from 'infra/helpers/camel-case-helper'
 import {
   IFindUserRepository,
-  IUser,
 } from '../@interfaces/users-respository.interfaces';
+import { IUser } from 'domain/entities/@interfaces/user-entity.interfaces';
 
 export default class FindUserRepository implements IFindUserRepository {
   async execute({
@@ -24,6 +24,7 @@ export default class FindUserRepository implements IFindUserRepository {
     }
     const { rows } = await PostgreHelper.executeQuery(query, queryParams);
     const camelCaseHelper = new CamelCaseHelper()
-    return camelCaseHelper.convert(rows[0]);
+    const [ firstItem ] = rows
+    return camelCaseHelper.convert(firstItem);
   }
 }

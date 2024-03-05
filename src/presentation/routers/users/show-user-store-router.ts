@@ -2,24 +2,24 @@ import { string, object } from 'yup';
 import logger from 'main/configs/logger';
 import HttpResponse from '../../helpers/http-response';
 import {
-  IShowUserUseCase,
+  IShowUserStoreUseCase,
 } from 'domain/usecases/@interfaces/users-usecases.interfaces';
 import { IHttpResponse } from 'presentation/helpers/@interfaces/helper.interfaces';
 import { IRequest } from '../@interfaces/router.interfaces';
 
-interface IShowUserParams {
+interface IShowUserStoreParams {
   userId: string;
 }
 
-export default class ShowMasterRouter {
-  #showUserUseCase;
+export default class ShowUserStoreRouter {
+  #showUserStoreUseCase;
 
-  constructor({ showUserUseCase }: { showUserUseCase: IShowUserUseCase }) {
-    this.#showUserUseCase = showUserUseCase;
+  constructor({ showUserStoreUseCase }: { showUserStoreUseCase: IShowUserStoreUseCase }) {
+    this.#showUserStoreUseCase = showUserStoreUseCase;
   }
 
   async validate(
-    params: IShowUserParams
+    params: IShowUserStoreParams
   ): Promise<{ isValid: boolean; error: object }> {
     try {
       const userSchema = object({
@@ -49,16 +49,16 @@ export default class ShowMasterRouter {
       const body = { userId: httpRequest.userId };
       const { isValid, error } = await this.validate(body);
       if (!isValid) return HttpResponse.badRequest(error);
-      const user = await this.#showUserUseCase.execute(body);
-      return HttpResponse.ok(user);
+      const store = await this.#showUserStoreUseCase.execute(body);
+      return HttpResponse.ok(store);
     } catch (error) {
-      logger.error('ShowUserError', error);
+      logger.error('ShowUserStoreError', error);
       if (error instanceof Error) {
         if (error.name === 'AlreadyExistsError')
           return HttpResponse.conflict(error);
         return HttpResponse.serverError(error.message);
       }
-      return HttpResponse.serverError('ShowUserError');
+      return HttpResponse.serverError('ShowUserStoreError');
     }
   }
 }

@@ -9,3 +9,10 @@ export interface IUserEntity {
   getArray: () => any[];
   encryptPassword: () => void;
 }
+
+export interface IUser {
+  email: string;
+  password?: string;
+  id: string;
+  storeId: number;
+}

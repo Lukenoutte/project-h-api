@@ -5,6 +5,7 @@ import showStoreRoute from './stores/show-store-route';
 // Users
 import signUpMasterRoute from './users/signup-master-route';
 import showUserRoute from './users/show-user-route';
+import showUserStoreRoute from './users/show-user-store-route';
 
 // Authentication
 import signInRoute from './authentication/signin-route';
@@ -17,6 +18,7 @@ export default [
   signUpStoreRoute,
   signUpMasterRoute,
   showUserRoute,
+  showUserStoreRoute,
   signInRoute,
   signOutRoute,
   refreshTokenRoute,

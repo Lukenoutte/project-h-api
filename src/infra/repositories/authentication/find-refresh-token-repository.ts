@@ -13,6 +13,7 @@ export default class FindRefreshTokenRepository implements IFindRefreshTokenRepo
       queryParams = [token];
     }
     const { rows } = await PostgreHelper.executeQuery(query, queryParams);
-    return rows[0];
+    const [ firstItem ] = rows
+    return firstItem;
   }
 }

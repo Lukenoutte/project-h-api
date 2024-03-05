@@ -3,6 +3,7 @@ import {
   ISignUpUserRepository,
 } from 'infra/repositories/@interfaces/users-respository.interfaces';
 import { IBcryptHelper } from 'infra/helpers/@interfaces/helper.interfaces';
+import { IFindStoreByIdRepository } from 'infra/repositories/@interfaces/stores-repository.interfaces';
 
 export interface ISignUpUserExecuteParams {
   name: string;
@@ -21,6 +22,12 @@ export interface ISignUpUserUseCase {
 
 export interface IShowUserUseCase {
   findUserRepository: IFindUserRepository;
+  execute: (params: IShowUserExecuteParams) => Promise<Object>;
+}
+
+export interface IShowUserStoreUseCase {
+  findUserRepository: IFindUserRepository;
+  findStoreByIdRepository: IFindStoreByIdRepository;
   execute: (params: IShowUserExecuteParams) => Promise<Object>;
 }
 

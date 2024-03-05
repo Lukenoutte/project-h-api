@@ -16,7 +16,7 @@ export default class SignUpStoreRepository implements ISignUpStoreRepository {
     );
     if (!data) return 0
     const { rows } = data
-    const firstItem = rows[0]
+    const [ firstItem ] = rows
     if (!firstItem) return 0
     return firstItem.id; 
   }

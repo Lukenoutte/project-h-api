@@ -12,6 +12,7 @@ export default class FindStoreBySubdomainRepository
       `,
       [subdomain]
     );
-    return rows[0];
+    const [ firstItem ] = rows
+    return firstItem;
   }
 }
