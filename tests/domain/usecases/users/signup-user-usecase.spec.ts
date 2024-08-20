@@ -30,7 +30,7 @@ describe("SignUpUserUseCase", () => {
       execute: jest.fn().mockResolvedValue({}),
     };
     const signUpUserUseCase = new SignUpUserUseCase({
-      findUserRepository: findUserRepositoryMock,
+      findUserByEmailRepository: findUserRepositoryMock,
       signUpUserRepository: signUpUserRepositoryMock,
       bcryptHelper: mockBcryptHelper,
       alreadyExistsError: AlreadyExistsErrorMock(),
@@ -46,7 +46,7 @@ describe("SignUpUserUseCase", () => {
     };
 
     const signUpUserUseCase = new SignUpUserUseCase({
-      findUserRepository: findUserRepositoryMock,
+      findUserByEmailRepository: findUserRepositoryMock,
       signUpUserRepository: signUpUserRepositoryMock,
       bcryptHelper: mockBcryptHelper,
       alreadyExistsError: AlreadyExistsErrorMock(),

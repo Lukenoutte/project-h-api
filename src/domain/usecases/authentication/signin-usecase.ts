@@ -1,4 +1,4 @@
-import { IFindUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
+import { IFindUserByEmailRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
 import { 
   ICreateRefreshTokenRepository, 
   IFindRefreshTokenRepository,
@@ -8,7 +8,7 @@ import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.inte
 import { ISignInUseCase } from "../@interfaces/authentication-usecases.interfaces";
 
 export default class SignInUseCase implements ISignInUseCase {
-  findUserRepository: IFindUserRepository;
+  findUserByEmailRepository: IFindUserByEmailRepository;
   bcryptHelper: IBcryptHelper;
   wrongCredentialsError: Error;
   jwtHelperAccessToken: IJwtHelper;
@@ -18,7 +18,7 @@ export default class SignInUseCase implements ISignInUseCase {
   updateRefreshTokenRepository: IUpdateRefreshTokenRepository;
   
   constructor({
-    findUserRepository,
+    findUserByEmailRepository,
     bcryptHelper,
     wrongCredentialsError,
     jwtHelperAccessToken,
@@ -27,7 +27,7 @@ export default class SignInUseCase implements ISignInUseCase {
     findRefreshTokenRepository,
     updateRefreshTokenRepository,
   }: ISignInUseCaseConstructor) {
-    this.findUserRepository = findUserRepository;
+    this.findUserByEmailRepository = findUserByEmailRepository;
     this.bcryptHelper = bcryptHelper;
     this.wrongCredentialsError = wrongCredentialsError;
     this.jwtHelperAccessToken = jwtHelperAccessToken;
@@ -38,7 +38,7 @@ export default class SignInUseCase implements ISignInUseCase {
   }
 
   async execute(params: { email: string, password: string }): Promise<object> {
-    const userOnDatabase = await this.findUserRepository.execute(params);
+    const userOnDatabase = await this.findUserByEmailRepository.execute(params);
     if (!userOnDatabase) throw this.wrongCredentialsError;
     const isPassCorrect = await this.bcryptHelper.comparePassword(
       params.password,
@@ -73,7 +73,7 @@ export default class SignInUseCase implements ISignInUseCase {
 }
 
 interface ISignInUseCaseConstructor {
-  findUserRepository: IFindUserRepository,
+  findUserByEmailRepository: IFindUserByEmailRepository,
   bcryptHelper: IBcryptHelper,
   wrongCredentialsError: Error,
   jwtHelperAccessToken: IJwtHelper,

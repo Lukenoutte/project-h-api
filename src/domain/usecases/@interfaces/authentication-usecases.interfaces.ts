@@ -1,5 +1,5 @@
 import { IJwtHelper, IBcryptHelper } from "infra/helpers/@interfaces/helper.interfaces";
-import { IFindUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
+import { IFindUserByEmailRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
 import { 
   ICreateRefreshTokenRepository, 
   IFindRefreshTokenRepository,
@@ -16,7 +16,7 @@ export interface IRefreshTokenUseCase {
 }
 
 export interface ISignInUseCase {
-  findUserRepository: IFindUserRepository;
+  findUserByEmailRepository: IFindUserByEmailRepository;
   bcryptHelper: IBcryptHelper;
   wrongCredentialsError: Error;
   jwtHelperAccessToken: IJwtHelper;

@@ -1,9 +1,9 @@
 import PostgreHelper from "infra/helpers/postgre-helper";
-import FindUserRepository from "infra/repositories/users/find-user-repository";
+import FindUserByEmailRepository from "infra/repositories/users/find-user-by-email-repository";
 
 jest.mock("infra/helpers/postgre-helper");
 
-describe("FindUserRepository", () => {
+describe("FindUserByEmailRepository", () => {
   const email = "test@example.com";
   const user = { id: 1, email: "test@example.com", name: "Test User" };
 
@@ -14,7 +14,7 @@ describe("FindUserRepository", () => {
   it("Should execute a query with the provided email", async () => {
     (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue({ rows: [user] });
 
-    const repository = new FindUserRepository();
+    const repository = new FindUserByEmailRepository();
     const result = await repository.execute({ email });
 
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
@@ -29,7 +29,7 @@ describe("FindUserRepository", () => {
   it("Should return null if no user is found", async () => {
     (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue({ rows: [] });
 
-    const repository = new FindUserRepository();
+    const repository = new FindUserByEmailRepository();
     const result = await repository.execute({ email });
 
     expect(result).toBeFalsy();
@@ -39,7 +39,7 @@ describe("FindUserRepository", () => {
     const error = new Error("Query execution failed");
     (PostgreHelper.executeQuery as jest.Mock).mockRejectedValue(error);
 
-    const repository = new FindUserRepository();
+    const repository = new FindUserByEmailRepository();
 
     await expect(repository.execute({ email })).rejects.toThrow(error);
   });

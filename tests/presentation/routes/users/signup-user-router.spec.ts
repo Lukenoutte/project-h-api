@@ -39,7 +39,7 @@ describe("SignUpUserRouter", () => {
   
   beforeEach(() => {
     signUpUserUseCaseMock = new SignUpUserUseCase({
-      findUserRepository: findUserRepositoryMock,
+      findUserByEmailRepository: findUserRepositoryMock,
       signUpUserRepository: signUpUserRepositoryMock,
       bcryptHelper: mockBcryptHelper,
       alreadyExistsError: AlreadyExistsErrorMock(),

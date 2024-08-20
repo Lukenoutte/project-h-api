@@ -7,9 +7,9 @@ export default class SignUpUserRepository implements ISignUpUserRepository{
     await PostgreHelper.executeQuery(
       `
       INSERT INTO users
-        (name, email, password, address, city, country)
+        (name, email, password)
       VALUES
-        ($1, $2, $3, $4, $5, $6);
+        ($1, $2, $3);
       `,
       userEntity.getArray(),
     );

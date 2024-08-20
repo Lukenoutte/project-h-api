@@ -2,14 +2,14 @@ import SignInRouter from "presentation/routers/authentication/signin-router";
 import { WrongCredentialsError } from "presentation/errors";
 import { ISignInUseCase } from 'domain/usecases/@interfaces/authentication-usecases.interfaces';
 import { Request } from 'express';
-import { IFindUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
+import { IFindUserByEmailRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
 import { IBcryptHelper, IJwtHelper } from "infra/helpers/@interfaces/helper.interfaces";
 import { ICreateRefreshTokenRepository, IFindRefreshTokenRepository, IUpdateRefreshTokenRepository } from "infra/repositories/@interfaces/authentication-repository.interfaces";
 
 describe('SignInRouter', () => {
   let signInRouter: SignInRouter;
   let signInUseCaseMock: ISignInUseCase;
-  const findUserRepositoryMock: IFindUserRepository = {
+  const findUserRepositoryMock: IFindUserByEmailRepository = {
     execute: jest.fn()
   };
   const bcryptHelperMock: IBcryptHelper = {
@@ -36,7 +36,7 @@ describe('SignInRouter', () => {
   };
   beforeEach(() => {
     signInUseCaseMock = {
-      findUserRepository: findUserRepositoryMock,
+      findUserByEmailRepository: findUserRepositoryMock,
       bcryptHelper: bcryptHelperMock,
       wrongCredentialsError: wrongCredentialsErrorMock,
       jwtHelperAccessToken: jwtHelperAccessTokenMock,

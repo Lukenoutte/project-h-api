@@ -28,7 +28,7 @@ describe("SignInUseCase", () => {
     execute: jest.fn(),
   };
   const sut = new SignInUseCase({
-    findUserRepository: findUserRepositoryMock,
+    findUserByEmailRepository: findUserRepositoryMock,
     bcryptHelper: bcryptHelperMock,
     wrongCredentialsError: wrongCredentialsErrorMock,
     jwtHelperAccessToken: jwtHelperAccessTokenMock,

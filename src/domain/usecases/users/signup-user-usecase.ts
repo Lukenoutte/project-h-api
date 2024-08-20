@@ -1,28 +1,28 @@
 import UserEntity from "domain/entities/user-entity";
-import { IFindUserRepository, ISignUpUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
+import { IFindUserByEmailRepository, ISignUpUserRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
 import { IBcryptHelper } from "infra/helpers/@interfaces/helper.interfaces";
 import { ISignUpUserUseCase } from "../@interfaces/users-usecases.interfaces";
 
 export default class SignUpUserUseCase implements ISignUpUserUseCase {
   signUpUserRepository: ISignUpUserRepository;
   bcryptHelper: IBcryptHelper;
-  findUserRepository: IFindUserRepository;
+  findUserByEmailRepository: IFindUserByEmailRepository;
   alreadyExistsError: Error;
 
   constructor({
     signUpUserRepository,
     bcryptHelper,
-    findUserRepository,
+    findUserByEmailRepository,
     alreadyExistsError,
   }: ISignUpUserConstructor) {
     this.signUpUserRepository = signUpUserRepository;
     this.bcryptHelper = bcryptHelper;
-    this.findUserRepository = findUserRepository;
+    this.findUserByEmailRepository = findUserByEmailRepository;
     this.alreadyExistsError = alreadyExistsError;
   }
 
   async execute(params: ISignUpUserExecuteParams) {
-    const userOnDatabase = await this.findUserRepository.execute(params);
+    const userOnDatabase = await this.findUserByEmailRepository.execute(params);
     if (userOnDatabase) throw this.alreadyExistsError;
     const userEntity = new UserEntity({
       ...params,
@@ -36,7 +36,7 @@ export default class SignUpUserUseCase implements ISignUpUserUseCase {
 interface ISignUpUserConstructor {
   signUpUserRepository: ISignUpUserRepository,
   bcryptHelper: IBcryptHelper,
-  findUserRepository: IFindUserRepository,
+  findUserByEmailRepository: IFindUserByEmailRepository,
   alreadyExistsError: Error
 }
 

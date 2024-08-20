@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(xss());
 app.use(authorization);
 app.use(subdomain);
-app.use(cors({ origin: "http://dikarts.ventur.com/" }));
+app.use(cors({ origin: "http://localhost:3001/" }));
 
 setupRoutes(app);
 

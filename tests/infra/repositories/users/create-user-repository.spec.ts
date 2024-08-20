@@ -45,9 +45,9 @@ describe("SignUpUserRepository", () => {
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
       `
       INSERT INTO users
-        (name, email, password, address, city, country)
+        (name, email, password)
       VALUES
-        ($1, $2, $3, $4, $5, $6);
+        ($1, $2, $3);
       `,
       userEntity.getArray(),
     );

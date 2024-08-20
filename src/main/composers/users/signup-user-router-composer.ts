@@ -2,18 +2,18 @@ import SignUpUserUseCase from "domain/usecases/users/signup-user-usecase";
 import SignUpUserRouter from "presentation/routers/users/signup-user-router";
 import SignUpUserRepository from "infra/repositories/users/signup-user-repository";
 import BcryptHelper from "infra/helpers/bcrypt-helper";
-import FindUserRepository from "infra/repositories/users/find-user-repository";
+import FindUserByEmailRepository from "infra/repositories/users/find-user-by-email-repository";
 import { AlreadyExistsError } from "presentation/errors";
 
 export default class SignUpUserRouterComposer {
   static compose() {
     const bcryptHelper = new BcryptHelper();
-    const findUserRepository = new FindUserRepository();
+    const findUserByEmailRepository = new FindUserByEmailRepository();
     const alreadyExistsError = new AlreadyExistsError();
     const signUpUserUseCase = new SignUpUserUseCase({
       signUpUserRepository: new SignUpUserRepository(),
       bcryptHelper,
-      findUserRepository,
+      findUserByEmailRepository,
       alreadyExistsError,
     });
     return new SignUpUserRouter({ signUpUserUseCase });
