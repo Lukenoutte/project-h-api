@@ -12,12 +12,9 @@ describe("SignUpStoreUseCase", () => {
   test("Should create a new store and return it", async () => {
     const params = {
       name: "Store Name",
-      address: "Store Address",
-      city: "Store City",
-      country: "Store Country",
-      phone: '123',
       category: 'TI',
       subdomain: 'mystore',
+      masterId: '1'
     };
     const storeEntity = new StoreEntity(params);
     const result = await sut.execute(params);

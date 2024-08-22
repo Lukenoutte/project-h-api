@@ -14,9 +14,7 @@ exports.up = (pgm) => {
         name: { type: 'varchar(100)', notNull: true },
         email: { type: 'varchar(100)', unique: true, notNull: true },
         password: { type: 'varchar(255)', notNull: true },
-        address: { type: 'text' },
-        city: { type: 'varchar(100)' },
-        country: { type: 'varchar(100)' }
+        // level: { type: integer, notNull: true }
     });
 };
 

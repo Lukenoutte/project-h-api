@@ -17,12 +17,9 @@ export default class SignUpStoreRouter {
     try {
       const storeSchema = object({
         name: string().required(),
-        address: string().required(),
-        city: string().required(),
-        country: string().required(),
-        phone: string().required(),
         category: string().required(),
         subdomain: string().required(),
+        masterId: string().required()
       });
       await storeSchema.validate(params);
       return { isValid: true, error: {} };
@@ -43,10 +40,10 @@ export default class SignUpStoreRouter {
   async route(httpRequest: Request): Promise<IHttpResponse> {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
-      const body = { ...httpRequest.body };
-      const { isValid, error } = await this.validate(body);
+      const params = { ...httpRequest.body, masterId: httpRequest.userId };
+      const { isValid, error } = await this.validate(params);
       if (!isValid) return HttpResponse.badRequest(error);
-      const result = await this.#signUpStoreUseCase.execute(body);
+      const result = await this.#signUpStoreUseCase.execute(params);
       return HttpResponse.created(result);
     } catch (error) {
       logger.error("SignUpStoreError", error);

@@ -1,12 +1,12 @@
-import { ISignUpUserUseCase } from "domain/usecases/@interfaces/users-usecases.interfaces";
 import { IRouter } from "presentation/routers/@interfaces/router.interfaces";
 import SignUpStoreRouter from "presentation/routers/stores/signup-store-router";
 import SignUpStoreUseCase from "domain/usecases/stores/signup-store-usecase";
 import { Request } from "express";
+import { ISignUpStoreUseCase } from "domain/usecases/@interfaces/stores-usecases.interfaces";
 
 describe("SignUpStoreRouter", () => {
   let signUpStoreRouter: IRouter;
-  let signUpStoreUseCaseMock: ISignUpUserUseCase;
+  let signUpStoreUseCaseMock: ISignUpStoreUseCase;
 
   const signUpStoreRepositoryMock = {
     execute: jest.fn(),
@@ -22,7 +22,7 @@ describe("SignUpStoreRouter", () => {
   };
 
   beforeEach(() => {
-    const signUpStoreUseCaseMock = new SignUpStoreUseCase({
+    signUpStoreUseCaseMock = new SignUpStoreUseCase({
       signUpStoreRepository: signUpStoreRepositoryMock,
     });
 
@@ -35,12 +35,9 @@ describe("SignUpStoreRouter", () => {
     it("should return isValid true if validation passes", async () => {
       const body = {
         name: "Store Name",
-        address: "123 Main Street",
-        city: "Cityville",
-        country: "Countryland",
-        phone: '123',
         category: 'TI',
         subdomain: 'mystore',
+        masterId: '1'
       };
       if (signUpStoreRouter.validate) {
         const result = await signUpStoreRouter.validate(body);
@@ -51,12 +48,9 @@ describe("SignUpStoreRouter", () => {
     it("should return isValid false and error details if validation fails", async () => {
       const body = {
         name: "Store Name",
-        address: "123 Main Street",
-        city: null, // Invalid, as it's required
-        country: "Countryland",
-        phone: '123',
-        category: 'TI',
+        category: null,
         subdomain: 'mystore',
+        masterId: '1'
       };
       if (signUpStoreRouter.validate) {
         const result = await signUpStoreRouter.validate(body);
@@ -70,12 +64,9 @@ describe("SignUpStoreRouter", () => {
     it("should return 400 Bad Request if validation fails", async () => {
       const body = {
         name: "Store Name",
-        address: "123 Main Street",
-        city: null, // Invalid, as it's required
-        country: "Countryland",
-        phone: '123',
-        category: 'TI',
+        category: null,
         subdomain: 'mystore',
+        masterId: '1'
       }
       const req = mockRequest(body) as Request
       const response = await signUpStoreRouter.route(req);

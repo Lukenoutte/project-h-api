@@ -9,16 +9,12 @@ exports.shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-    pgm.createTable('stores', {
-        id: 'id',
-        name: { type: 'varchar(100)', notNull: true },
-        category: { type: 'varchar(50)' },
-        subdomain: { type: 'varchar(100)', unique: true },
-        master_id: {
-            type: 'integer',
-            notNull: true,
-            references: 'users',
-            onDelete: 'CASCADE'
+    pgm.addColumn('users', {
+        store_id: {
+          type: 'integer',
+          references: 'stores',
+          notNull: false,
+          onDelete: 'CASCADE'
         }
       });
 };
@@ -29,5 +25,5 @@ exports.up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 exports.down = (pgm) => {
-    pgm.dropTable('stores');
+    pgm.dropColumn('users', 'store_id');
 };
