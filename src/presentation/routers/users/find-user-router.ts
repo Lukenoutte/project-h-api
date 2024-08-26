@@ -43,7 +43,9 @@ export default class FindUserRouter {
       const { userId } = { ...httpRequest };
       const { isValid, error } = await this.validate({ userId });
       if (!isValid) return HttpResponse.badRequest(error);
-      const user = await this.#findUserUseCase.execute({ userId });
+      const user = await this.#findUserUseCase.execute(
+        { userId:  parseInt(userId) }
+      );
       return HttpResponse.ok(user);
     } catch (error) {
       logger.error("FindUserError", error);

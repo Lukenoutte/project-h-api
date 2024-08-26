@@ -12,7 +12,7 @@ export interface IRefreshTokenUseCase {
   jwtHelperRefreshToken: IJwtHelper;
   jwtHelperAccessToken: IJwtHelper;
   unauthorizedError: Error;
-  execute: ({ refreshToken, userId }: { refreshToken: string, userId: string}) => Promise<string>;
+  execute: ({ refreshToken, userId }: { refreshToken: string, userId: number}) => Promise<string>;
 }
 
 export interface ISignInUseCase {
@@ -25,10 +25,10 @@ export interface ISignInUseCase {
   findRefreshTokenRepository: IFindRefreshTokenRepository;
   updateRefreshTokenRepository: IUpdateRefreshTokenRepository;
   execute: (params: { email: string, password: string }) => Promise<object>;
-  handleRefreshToken: ({ userId }: { userId: string }) => Promise<string>
+  handleRefreshToken: ({ userId }: { userId: number }) => Promise<string>
 }
 
 export interface ISignOutUseCase {
   deleteRefreshTokenRepository: IDeleteRefreshTokenRepository;
-  execute: ({ userId }: { userId: string }) => Promise<void>;
+  execute: ({ userId }: { userId: number }) => Promise<void>;
 }

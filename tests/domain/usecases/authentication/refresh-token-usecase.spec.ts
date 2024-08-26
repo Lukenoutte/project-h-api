@@ -24,7 +24,7 @@ describe("RefreshTokenUseCase", () => {
 
   test("Should throw UnauthorizedError if refreshToken doesnt exist", async () => {
     findRefreshTokenRepositoryMock.execute.mockResolvedValueOnce(null);
-    const params = { refreshToken: "any_refresh_token", userId: "any_id" };
+    const params = { refreshToken: "any_refresh_token", userId: 1 };
     const promise = sut.execute(params);
     await expect(promise).rejects.toThrow(unauthorizedErrorMock);
   });
@@ -34,14 +34,14 @@ describe("RefreshTokenUseCase", () => {
       "any_refresh_token",
     );
     (jwtHelperRefreshTokenMock.verifyToken as jest.Mock).mockReturnValueOnce(false);
-    const params = { refreshToken: "any_refresh_token", userId: "any_id" };
+    const params = { refreshToken: "any_refresh_token", userId: 1 };
     const promise = sut.execute(params);
     await expect(promise).rejects.toThrow(unauthorizedErrorMock);
   });
 
   test("Should return new accessToken if refreshToken exists and is valid", async () => {
     const refreshToken = "any_refresh_token";
-    const userId = "any_id";
+    const userId = 1;
     findRefreshTokenRepositoryMock.execute.mockResolvedValueOnce(refreshToken);
     (jwtHelperRefreshTokenMock.verifyToken as jest.Mock).mockReturnValueOnce(true);
     (jwtHelperAccessTokenMock.generateToken as jest.Mock).mockReturnValueOnce(

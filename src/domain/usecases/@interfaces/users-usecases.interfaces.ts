@@ -18,6 +18,6 @@ export interface ISignUpUserUseCase {
 
 export interface IFindUserUseCase {
   findUserByIdRepository: IFindUserByIdRepository;
-  execute: (params: { userId: string }) => Promise<IUserResponse>;
+  execute: (params: { userId: number }) => Promise<IUserResponse>;
 }
 

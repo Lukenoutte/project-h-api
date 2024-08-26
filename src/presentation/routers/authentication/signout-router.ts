@@ -16,7 +16,7 @@ export default class SignOutRouter implements IRouterNoValidation {
     try {
       if (!httpRequest || !httpRequest.body) throw new Error("Invalid Request");
       await this.#signOutUseCase.execute({
-        userId: httpRequest.userId,
+        userId: parseInt(httpRequest.userId),
       });
       return HttpResponse.ok({});
     } catch (error) {

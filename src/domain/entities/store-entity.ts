@@ -4,7 +4,7 @@ export default class StoreEntity implements IStoreEntity {
   name: string;
   category: string;
   subdomain: string;
-  masterId: string;
+  masterId: number;
 
   constructor({
     name,
@@ -18,7 +18,7 @@ export default class StoreEntity implements IStoreEntity {
     this.masterId = masterId;
   }
 
-  getArray(): string[] {
+  getArray(): any[] {
     return [
       this.name,
       this.category,

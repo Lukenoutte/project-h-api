@@ -27,10 +27,9 @@ export default class RefreshTokenUseCase implements IRefreshTokenUseCase {
     this.unauthorizedError = unauthorizedError;
   }
 
-  async execute({ refreshToken, userId }: { refreshToken: string, userId: string}): Promise<string> {
+  async execute({ refreshToken, userId }: { refreshToken: string, userId: number}): Promise<string> {
     const refreshTokenExist = await this.findRefreshTokenRepository.execute({
-      token: refreshToken,
-      userId: ""
+      token: refreshToken
     });
     if (!refreshTokenExist) throw this.unauthorizedError;
     const isValidRefreshToken =

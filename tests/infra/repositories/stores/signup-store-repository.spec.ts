@@ -15,7 +15,7 @@ describe('SignUpStoreRepository', () => {
       name: 'test',
       category: 'TI',
       subdomain: 'mystore',
-      masterId: '1',
+      masterId: 1,
       getArray: jest
         .fn()
         .mockReturnValue([
@@ -31,7 +31,8 @@ describe('SignUpStoreRepository', () => {
     jest.resetAllMocks();
   });
 
-  it('Should execute a query to insert a new store', async () => {
+  it('should execute a query to insert a new store', async () => {
+    (PostgreHelper.executeQuery as jest.Mock).mockResolvedValue({ rows: [{ id: 1 }] });
     await signUpStoreRepository.execute(mockStoreEntity);
 
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
@@ -39,7 +40,8 @@ describe('SignUpStoreRepository', () => {
       INSERT INTO stores
         (name, category, subdomain, master_id)
       VALUES
-        ($1, $2, $3, $4);
+        ($1, $2, $3, $4)
+      RETURNING id;
       `,
       mockStoreEntity.getArray()
     );

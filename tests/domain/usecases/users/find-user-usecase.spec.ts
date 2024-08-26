@@ -9,7 +9,7 @@ describe('FindUserUseCase', () => {
 
   beforeEach(() => {
     findUserByIdRepository = {
-      execute: jest.fn(async (params: { userId: string }): Promise<IUserResponse> => {
+      execute: jest.fn(async (params: { userId: number }): Promise<IUserResponse> => {
         return {
           name: 'John Doe',
           email: 'john.doe@example.com',
@@ -21,7 +21,7 @@ describe('FindUserUseCase', () => {
 
   describe('execute', () => {
     it('should return user response without password', async () => {
-      const params = { userId: 'valid-user-id' };
+      const params = { userId: 1 };
       const userFromRepository: IUserResponse = {
         name: 'John Doe',
         email: 'john.doe@example.com',
@@ -39,7 +39,7 @@ describe('FindUserUseCase', () => {
     });
 
     it('should throw an error when something goes wrong', async () => {
-      const params = { userId: 'invalid-user-id' };
+      const params = { userId: 1 };
       jest.spyOn(findUserByIdRepository, 'execute').mockRejectedValueOnce(new Error('Something went wrong!'));
 
       await expect(findUserUseCase.execute(params)).rejects.toThrow('Something went wrong!');

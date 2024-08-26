@@ -7,14 +7,14 @@ describe("CreateRefreshTokenRepository", () => {
   const sut = new CreateRefreshTokenRepository();
 
   it("should call PostgreHelper.executeQuery once", async () => {
-    const userId = "any_id";
+    const userId = 1;
     const token = "any_token";
     await sut.execute({ userId, token });
     expect(PostgreHelper.executeQuery).toHaveBeenCalledTimes(1);
   });
 
   it("should call PostgreHelper.executeQuery with correct query", async () => {
-    const userId = "any_id";
+    const userId = 1
     const token = "any_token";
 
     PostgreHelper.executeQuery = jest.fn();

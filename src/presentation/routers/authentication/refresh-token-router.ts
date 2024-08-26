@@ -21,6 +21,7 @@ export default class RefreshTokenRouter implements IRouter {
     try {
       const tokenSchema = object({
         refreshToken: string().required(),
+        userId: string().required()
       });
       await tokenSchema.validate(params);
       return { isValid: true, error: {} };
@@ -44,10 +45,12 @@ export default class RefreshTokenRouter implements IRouter {
         return HttpResponse.badRequest(new Error('InvalidRequestError'));
       }
       const body = { ...httpRequest.body };
-      const { isValid, error } = await this.validate(body);
+      const { isValid, error } = await this.validate(
+        {...body, userId: httpRequest.userId }
+      );
       if (!isValid) return HttpResponse.badRequest(error);
       const accessToken = await this.#refreshTokenUseCase.execute({
-        userId: httpRequest.userId,
+        userId: parseInt(httpRequest.userId),
         refreshToken: body.refreshToken,
       });
       return HttpResponse.ok({ accessToken });

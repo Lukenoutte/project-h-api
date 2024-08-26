@@ -10,11 +10,11 @@ describe("FindRefreshTokenRepository", () => {
   const repository = new FindRefreshTokenRepository();
 
   it("should return the first row of the query result when userId is provided", async () => {
-    const userId = "testUserId";
-    const mockRow = { user_id: userId, token: "testToken" };
+    const userId = 0;
+    const mockRow = { user_id: userId };
     (mockExecuteQuery as jest.Mock).mockResolvedValueOnce({ rows: [mockRow] });
 
-    const result = await repository.execute({ userId, token: '' });
+    const result = await repository.execute({ userId });
 
     expect(result).toEqual(mockRow);
     expect(mockExecuteQuery).toHaveBeenCalledWith(
@@ -25,10 +25,10 @@ describe("FindRefreshTokenRepository", () => {
 
   it("should return the first row of the query result when token is provided", async () => {
     const token = "testToken";
-    const mockRow = { user_id: "testUserId", token };
+    const mockRow = { token };
     (mockExecuteQuery as jest.Mock).mockResolvedValueOnce({ rows: [mockRow] });
 
-    const result = await repository.execute({ token, userId: '' });
+    const result = await repository.execute({ token });
 
     expect(result).toEqual(mockRow);
     expect(mockExecuteQuery).toHaveBeenCalledWith(
@@ -40,7 +40,7 @@ describe("FindRefreshTokenRepository", () => {
   it("should return null when no userId or token is provided", async () => {
     (mockExecuteQuery as jest.Mock).mockResolvedValueOnce({ rows: [] });
 
-    const result = await repository.execute({ token: '', userId: ''});
+    const result = await repository.execute({});
 
     expect(result).toBeFalsy();
   });

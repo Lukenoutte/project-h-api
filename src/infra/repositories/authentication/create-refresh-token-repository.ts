@@ -2,7 +2,7 @@ import PostgreHelper from "infra/helpers/postgre-helper";
 import { ICreateRefreshTokenRepository } from "../@interfaces/authentication-repository.interfaces"
 
 export default class CreateRefreshTokenRepository implements ICreateRefreshTokenRepository {
-  async execute({ userId, token }: { userId: string, token: string }) {
+  async execute({ userId, token }: { userId: number, token: string }) {
     await PostgreHelper.executeQuery(
       `
       INSERT INTO refresh_tokens

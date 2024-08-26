@@ -10,7 +10,7 @@ export default class FindUserUseCase implements IFindUserUseCase {
     this.findUserByIdRepository = findUserByIdRepository;
   }
 
-  async execute(params: { userId: string }) {
+  async execute(params: { userId: number }) {
     const userOnDatabase = await this.findUserByIdRepository.execute(params);
     delete userOnDatabase.password;
     return userOnDatabase

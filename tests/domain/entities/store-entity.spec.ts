@@ -6,13 +6,13 @@ describe('StoreEntity', () => {
       name: 'Store Name',
       category: 'TI',
       subdomain: 'mystore',
-      masterId: '1'
+      masterId: 1
     });
     const expectedArray = [
       'Store Name',
       'TI',
       'mystore',
-      '1'
+      1
     ];
     expect(store.getArray()).toEqual(expectedArray);
   });
@@ -22,9 +22,9 @@ describe('StoreEntity', () => {
       name: '',
       category: '',
       subdomain: '',
-      masterId: ''
+      masterId: 0
     });
-    const expectedArray = ['', '', '', ''];
+    const expectedArray = ['', '', '', 0];
     expect(store.getArray()).toEqual(expectedArray);
   });
 
@@ -33,13 +33,13 @@ describe('StoreEntity', () => {
       name: 'Store Name',
       category: 'TI',
       subdomain: 'mystore',
-      masterId: '1'
+      masterId: 1
     });
     const expectedArray = [
       'Store Name',
       'TI',
       'mystore',
-      '1'
+      1
     ];
     expect(store.getArray()).toEqual(expectedArray);
   });

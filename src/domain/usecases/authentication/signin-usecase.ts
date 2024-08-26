@@ -51,10 +51,9 @@ export default class SignInUseCase implements ISignInUseCase {
     return { refreshToken, accessToken };
   }
 
-  async handleRefreshToken({ userId }: { userId: string }): Promise<string> {
+  async handleRefreshToken({ userId }: { userId: number }): Promise<string> {
     const existTokenRefresh = await this.findRefreshTokenRepository.execute({
-      userId,
-      token: ""
+      userId
     });
     const refreshToken = this.jwtHelperRefreshToken.generateToken({ userId });
     if (existTokenRefresh) {

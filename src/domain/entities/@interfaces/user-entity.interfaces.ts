@@ -15,4 +15,4 @@ export interface IUserResponse {
   password?: string
 }
 
-export interface IUser { email: string, password: string, id: string }
+export interface IUser { email: string, password: string, id: number }

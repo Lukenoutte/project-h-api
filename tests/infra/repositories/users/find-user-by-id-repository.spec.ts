@@ -4,7 +4,7 @@ import FindUserByIdRepository from "infra/repositories/users/find-user-by-id-rep
 jest.mock("infra/helpers/postgre-helper");
 
 describe("FindUserByIdRepository", () => {
-  const userId = "1";
+  const userId = 1;
   const user = { id: 1, email: "test@example.com", name: "Test User" };
 
   beforeEach(() => {

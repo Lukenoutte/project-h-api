@@ -8,7 +8,7 @@ export default class SignOutUseCase implements ISignOutUseCase{
     this.deleteRefreshTokenRepository = deleteRefreshTokenRepository;
   }
 
-  async execute({ userId }: { userId: string }) {
+  async execute({ userId }: { userId: number }) {
     await this.deleteRefreshTokenRepository.execute({ userId });
   }
 }

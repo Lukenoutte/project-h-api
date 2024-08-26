@@ -9,7 +9,7 @@ describe("SignOutUseCase", () => {
   });
 
   test("Should call deleteRefreshTokenRepository with correct userId", async () => {
-    const userId = "any_id";
+    const userId = 0;
     await sut.execute({ userId });
     expect(deleteRefreshTokenRepositoryMock.execute).toHaveBeenCalledWith({
       userId,
@@ -17,7 +17,7 @@ describe("SignOutUseCase", () => {
   });
 
   test("Should not return anything", async () => {
-    const userId = "any_id";
+    const userId = 0;
     const result = await sut.execute({ userId });
     expect(result).toBeUndefined();
   });

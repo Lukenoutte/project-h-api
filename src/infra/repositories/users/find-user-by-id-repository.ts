@@ -3,7 +3,7 @@ import { IFindUserByIdRepository } from "../@interfaces/users-respository.interf
 import { IUserResponse } from "domain/entities/@interfaces/user-entity.interfaces";
 
 export default class FindUserByIdRepository implements IFindUserByIdRepository {
-  async execute({ userId }: { userId: string }): Promise<IUserResponse> {
+  async execute({ userId }: { userId: number }): Promise<IUserResponse> {
     const { rows } = await PostgreHelper.executeQuery(
       `
       SELECT * FROM users WHERE id = $1;

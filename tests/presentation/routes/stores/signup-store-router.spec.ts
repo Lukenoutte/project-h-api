@@ -3,6 +3,7 @@ import SignUpStoreRouter from "presentation/routers/stores/signup-store-router";
 import SignUpStoreUseCase from "domain/usecases/stores/signup-store-usecase";
 import { Request } from "express";
 import { ISignUpStoreUseCase } from "domain/usecases/@interfaces/stores-usecases.interfaces";
+import SetUserStoreRepository from "infra/repositories/users/set-user-store-repository";
 
 describe("SignUpStoreRouter", () => {
   let signUpStoreRouter: IRouter;
@@ -24,6 +25,7 @@ describe("SignUpStoreRouter", () => {
   beforeEach(() => {
     signUpStoreUseCaseMock = new SignUpStoreUseCase({
       signUpStoreRepository: signUpStoreRepositoryMock,
+      setUserStoreRepository: new SetUserStoreRepository()
     });
 
     signUpStoreRouter = new SignUpStoreRouter({

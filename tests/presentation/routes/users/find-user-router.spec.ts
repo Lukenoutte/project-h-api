@@ -10,7 +10,7 @@ describe('FindUserRouter', () => {
   beforeEach(() => {
     findUserUseCase = {
       findUserByIdRepository: { execute: jest.fn() },
-      execute: jest.fn(async (params: { userId: string }): Promise<IUserResponse> => {
+      execute: jest.fn(async (params: { userId: number }): Promise<IUserResponse> => {
         return {
           name: 'John Doe',
           email: 'john.doe@example.com',
