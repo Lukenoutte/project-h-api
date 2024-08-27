@@ -3,6 +3,19 @@
 This is an API using Node and Express for a simplified e-commerce project. The idea is to remove barriers and make it easier for users to set up a simple e-commerce 
 store, with their own customized URL and an administration dashboard.
 
+## Install
+
+1. Install the dependencies. For this, you will need node ">=20.0.0".
+
+```bash
+npm install
+```
+
+2. Create a ".env" file following the template of the [".env.example"](.env.exemple) file.
+
+Replace the variables ACCESS_TOKEN_SECRET and REFRESH_TOKEN_SECRET with SHA256 tokens.
+
+
 ## Architecture
 
 Clean Architecture: A Structural Overview
