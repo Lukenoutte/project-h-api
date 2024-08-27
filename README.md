@@ -13,8 +13,20 @@ npm install
 
 2. Create a ".env" file following the template of the [".env.example"](.env.exemple) file.
 
-Replace the variables ACCESS_TOKEN_SECRET and REFRESH_TOKEN_SECRET with SHA256 tokens.
+Replace the variables **ACCESS_TOKEN_SECRET** and **REFRESH_TOKEN_SECRET** with SHA256 tokens.
 
+3. You'll need a Postgres database; create one and replace the **DATABASE_URL** variable.
+
+4. Run the migrations to create the tables in the database.
+
+```bash
+npm run migrate:up
+```
+5. Run the project.
+
+```bash
+npm run dev
+```
 
 ## Architecture
 
