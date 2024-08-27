@@ -4,7 +4,7 @@ import { Router } from "express";
 
 export default (router: Router) => {
   router.post(
-    "/signup/user",
+    "/user/signup",
     ExpressRouterAdapter.adapt(SignUpUserRouterComposer.compose()),
   );
 };

@@ -27,7 +27,7 @@ describe("Logger", () => {
     jest.resetAllMocks();
   });
 
-  it("Should create logger correctly", () => {
+  it("should create logger correctly", () => {
     const info = {
       timestamp: 123,
       level: "info",

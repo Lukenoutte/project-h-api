@@ -3,8 +3,8 @@ import SignUpStoreRouterComposer from "../../composers/stores/signup-store-route
 import { Router } from "express";
 
 export default (router: Router) => {
-  router.post(
-    "/store/signup",
+  router.get(
+    "/store",
     ExpressRouterAdapter.adapt(SignUpStoreRouterComposer.compose()),
   );
 };

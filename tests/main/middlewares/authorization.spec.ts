@@ -33,13 +33,13 @@ describe("Middleware authentication", () => {
   };
   const res = mockResponse() as Response;
 
-  it("Should return 401 when token is invalid", async () => {
+  it("should return 401 when token is invalid", async () => {
     const reqWithInvalidToken = mockRequest("Bearer invalidToken") as Request;
     await authorization(reqWithInvalidToken, res, next);
     expect(res.status).toHaveBeenCalledWith(401);
   });
 
-  it("Should allow when token is valid", async () => {
+  it("should allow when token is valid", async () => {
     const token = `Bearer ${new JwtHelper(accessTokenSecret).generateToken({ userId: "123", })}`
     const req = mockRequest(token) as Request;
     await authorization(req, res, next);

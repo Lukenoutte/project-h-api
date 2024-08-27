@@ -46,7 +46,7 @@ describe("HttpResponse", () => {
     expect(response).toEqual({ statusCode: 500, body: { error: serverError } });
   });
 
-  it("Should return an unauthorized error response", () => {
+  it("should return an unauthorized error response", () => {
     const error = { error: "test" };
     const response = HttpResponse.unauthorizedError(error);
     expect(response).toEqual({ statusCode: 401, body: { error } });

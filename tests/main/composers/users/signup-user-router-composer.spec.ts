@@ -14,7 +14,7 @@ jest.mock("infra/repositories/users/find-user-by-email-repository");
 jest.mock("presentation/errors");
 
 describe("SignUpUserRouterComposer", () => {
-  it("Should compose a create user router", () => {
+  it("should compose a create user router", () => {
     const bcryptHelper = new BcryptHelper();
     const findUserByEmailRepository = new FindUserByEmailRepository();
     const alreadyExistsError = new AlreadyExistsError();

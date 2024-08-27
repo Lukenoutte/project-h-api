@@ -17,7 +17,7 @@ describe("DeleteUserRepository", () => {
     jest.clearAllMocks();
   });
 
-  it("Should call executeQuery with correct parameters", async () => {
+  it("should call executeQuery with correct parameters", async () => {
     await deleteUserRepository.execute({ email });
     expect(PostgreHelper.executeQuery).toHaveBeenCalledWith(
       `
@@ -28,7 +28,7 @@ describe("DeleteUserRepository", () => {
     );
   });
 
-  it("Should throw error if executeQuery throws an error", async () => {
+  it("should throw error if executeQuery throws an error", async () => {
     const error = new Error("Test error");
     (PostgreHelper.executeQuery as jest.Mock).mockRejectedValue(error);
     await expect(deleteUserRepository.execute({ email })).rejects.toThrow(

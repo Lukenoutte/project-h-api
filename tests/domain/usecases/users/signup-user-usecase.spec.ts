@@ -25,7 +25,7 @@ describe("SignUpUserUseCase", () => {
     country: "Countryland",
   });
 
-  it("Should throw an error if user already exists", async () => {
+  it("should throw an error if user already exists", async () => {
     const findUserRepositoryMock = {
       execute: jest.fn().mockResolvedValue({}),
     };
@@ -35,12 +35,12 @@ describe("SignUpUserUseCase", () => {
       bcryptHelper: mockBcryptHelper,
       alreadyExistsError: AlreadyExistsErrorMock(),
     });
-    await expect(signUpUserUseCase.execute(fakeUser())).rejects.toThrowError(
+    await expect(signUpUserUseCase.execute(fakeUser())).rejects.toThrow(
       AlreadyExistsErrorMock(),
     );
   });
 
-  it("Should create a new user", async () => {
+  it("should create a new user", async () => {
     const findUserRepositoryMock = {
       execute: jest.fn().mockResolvedValue(null),
     };

@@ -2,7 +2,7 @@ import PostgreHelper from "infra/helpers/postgre-helper";
 import { IFindStoreBySubdomainRepository } from "../@interfaces/stores-repository.interfaces";
 import { IStore } from "domain/entities/@interfaces/store-entity.interfaces";
 
-export default class IFindStoreBySubdomain implements IFindStoreBySubdomainRepository {
+export default class FindStoreBySubdomainRepository implements IFindStoreBySubdomainRepository {
   async execute({ subdomain }: { subdomain: string }): Promise<IStore> {
     const { rows } = await PostgreHelper.executeQuery(
       `

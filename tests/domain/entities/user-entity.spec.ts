@@ -7,7 +7,7 @@ const mockBcryptHelper: IBcryptHelper = {
 };
 
 describe("UserEntity", () => {
-  it("Should create a user entity", () => {
+  it("should create a user entity", () => {
     const user = new UserEntity({
       name: "John Doe",
       email: "john.doe@example.com",
@@ -17,7 +17,7 @@ describe("UserEntity", () => {
     expect(user).toBeInstanceOf(UserEntity);
   });
 
-  it("Should encrypt the password", async () => {
+  it("should encrypt the password", async () => {
     const user = new UserEntity({
       name: "John Doe",
       email: "john.doe@example.com",

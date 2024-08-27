@@ -32,7 +32,7 @@ const sut = new RefreshTokenUseCase({
 
 
 describe("RefreshTokenRouter", () => {
-  it("Should execute the refresh token use case and return a ok response", async () => {
+  it("should execute the refresh token use case and return a ok response", async () => {
     const refreshTokenRouter = new RefreshTokenRouter({ refreshTokenUseCase: sut });
     const httpRequest = { userId: "123", body: { refreshToken: "test" } } as Request;
     sut.execute = jest.fn().mockResolvedValue("testToken");
@@ -40,7 +40,7 @@ describe("RefreshTokenRouter", () => {
     expect(response).toEqual(HttpResponse.ok({ accessToken: "testToken" }));
   });
 
-  it("Should log an error and return a server error response when an error occurs", async () => {
+  it("should log an error and return a server error response when an error occurs", async () => {
     const refreshTokenUseCase = sut;
     const refreshTokenRouter = new RefreshTokenRouter({ refreshTokenUseCase });
     const httpRequest = { userId: "123", body: { refreshToken: "test" } } as Request;
@@ -51,7 +51,7 @@ describe("RefreshTokenRouter", () => {
     expect(response).toEqual(HttpResponse.serverError(error.name));
   });
 
-  it("Should return a bad request response when a required field is missing", async () => {
+  it("should return a bad request response when a required field is missing", async () => {
     const refreshTokenUseCase = sut;
     const refreshTokenRouter = new RefreshTokenRouter({ refreshTokenUseCase });
     const httpRequest = { userId: "123" } as Request;

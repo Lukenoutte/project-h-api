@@ -38,14 +38,14 @@ describe("SignInUseCase", () => {
     updateRefreshTokenRepository: updateRefreshTokenRepositoryMock,
   });
 
-  test("Should throw WrongCredentialsError if user is not found", async () => {
+  test("should throw WrongCredentialsError if user is not found", async () => {
     findUserRepositoryMock.execute.mockResolvedValueOnce(null);
     const params = { email: "any_email", password: "any_password" };
     const promise = sut.execute(params);
     await expect(promise).rejects.toThrow(wrongCredentialsErrorMock);
   });
 
-  test("Should throw WrongCredentialsError if password is incorrect", async () => {
+  test("should throw WrongCredentialsError if password is incorrect", async () => {
     findUserRepositoryMock.execute.mockResolvedValueOnce({
       password: "hashed_password",
     });
@@ -55,7 +55,7 @@ describe("SignInUseCase", () => {
     await expect(promise).rejects.toThrow(wrongCredentialsErrorMock);
   });
 
-  test("Should return tokens if user is found and password is correct", async () => {
+  test("should return tokens if user is found and password is correct", async () => {
     const user = { id: "any_id", password: "hashed_password" };
     findUserRepositoryMock.execute.mockResolvedValueOnce(user);
     bcryptHelperMock.comparePassword.mockResolvedValueOnce(true);

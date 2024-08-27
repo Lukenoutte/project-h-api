@@ -10,7 +10,7 @@ jest.mock(
 );
 
 describe("SignOutRouterComposer", () => {
-  it("Should compose a signOut router", () => {
+  it("should compose a signOut router", () => {
     const deleteRefreshTokenRepository = new DeleteRefreshTokenRepository();
     const signOutUseCase = new SignOutUseCase({
       deleteRefreshTokenRepository,

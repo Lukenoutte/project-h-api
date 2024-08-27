@@ -22,7 +22,7 @@ describe("ExpressRouterAdapter", () => {
   
   const req = mockRequest() as Request;
   const res = mockResponse() as Response;
-  it("Adapt should call the correct methods with the correct arguments", async () => {
+  it("adapt should call the correct methods with the correct arguments", async () => {
     const router = {
       route: jest.fn().mockResolvedValue({
         statusCode: 200,
@@ -45,7 +45,7 @@ describe("ExpressRouterAdapter", () => {
     expect(res.json).toHaveBeenCalledWith("body");
   });
 
-  it("Adapt should handle non-200 status codes", async () => {
+  it("adapt should handle non-200 status codes", async () => {
     const router = {
       route: jest.fn().mockResolvedValue({
         statusCode: 404,
@@ -61,7 +61,7 @@ describe("ExpressRouterAdapter", () => {
     expect(res.json).toHaveBeenCalledWith("Not found");
   });
 
-  it("Adapt should handle rejected promise from router.route", async () => {
+  it("adapt should handle rejected promise from router.route", async () => {
     const router = {
       route: jest.fn().mockRejectedValue(new Error("Network error")),
       validate: jest.fn()
@@ -78,7 +78,7 @@ describe("ExpressRouterAdapter", () => {
     });
   });
 
-  it("Adapt should handle 500 status codes", async () => {
+  it("adapt should handle 500 status codes", async () => {
     const router = {
       route: jest.fn().mockResolvedValue({
         statusCode: 500,

@@ -11,7 +11,7 @@ jest.mock("infra/repositories/users/find-user-by-email-repository");
 jest.mock("presentation/errors");
 
 describe("FindUserRouterComposer", () => {
-  it("Should compose a create user router", () => {
+  it("should compose a create user router", () => {
     const findUserByIdRepository = new FindUserByIdRepository();
     const findUserUseCase = new FindUserUseCase({
         findUserByIdRepository

@@ -27,7 +27,7 @@ jest.mock("presentation/errors");
 jest.mock("infra/helpers/jwt-helper");
 
 describe("SignInRouterComposer", () => {
-  it("Should compose a Sign in router", () => {
+  it("should compose a Sign in router", () => {
     const bcryptHelper = new BcryptHelper();
     const findUserByEmailRepository = new FindUserByEmailRepository();
     const createRefreshTokenRepository = new CreateRefreshTokenRepository();

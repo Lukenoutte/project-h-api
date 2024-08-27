@@ -7,3 +7,7 @@ export interface ISignUpStoreRepository {
 export interface IFindStoreBySubdomainRepository {
   execute: (storeEntity: IStoreEntity) => Promise<IStore>;
 }
+
+export interface IFindStoreByMasterIdRespository {
+  execute: (masterId: number) => Promise<IStore>;
+}

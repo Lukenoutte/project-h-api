@@ -9,7 +9,7 @@ jest.mock("presentation/routers/stores/signup-store-router");
 jest.mock("infra/repositories/stores/signup-store-repository");
 
 describe("SignUpStoreRouterComposer", () => {
-  it("Should compose a create store router", () => {
+  it("should compose a create store router", () => {
     const signUpStoreUseCase = new SignUpStoreUseCase({
       signUpStoreRepository: new SignUpStoreRepository(),
       setUserStoreRepository: new SetUserStoreRepository()

@@ -15,7 +15,7 @@ jest.mock("infra/helpers/jwt-helper");
 jest.mock("presentation/errors");
 
 describe("RefreshTokenRouterComposer", () => {
-  it("Should compose a refresh token router", () => {
+  it("should compose a refresh token router", () => {
     const findRefreshTokenRepository = new FindRefreshTokenRepository();
     const jwtHelperAccessToken = new JwtHelper(accessTokenSecret);
     const jwtHelperRefreshToken = new JwtHelper(refreshTokenSecret);
