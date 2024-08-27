@@ -1,3 +1,4 @@
+import { MigrationBuilder } from 'node-pg-migrate';
 /**
  * @type {import('node-pg-migrate').ColumnDefinitions | undefined}
  */
@@ -8,7 +9,7 @@ exports.shorthands = undefined;
  * @param run {() => void | undefined}
  * @returns {Promise<void> | void}
  */
-exports.up = (pgm) => {
+exports.up = (pgm: MigrationBuilder) => {
     pgm.createTable('refresh_tokens', {
         user_id: {
           type: 'integer',
@@ -28,6 +29,6 @@ exports.up = (pgm) => {
  * @param run {() => void | undefined}
  * @returns {Promise<void> | void}
  */
-exports.down = (pgm) => {
+exports.down = (pgm: MigrationBuilder) => {
     pgm.dropTable('refresh_tokens');
 };
