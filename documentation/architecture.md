@@ -4,13 +4,13 @@ Clean Architecture is a software design philosophy that separates concerns into 
 This approach organizes code into concentric circles, with the innermost circles representing the corebusiness logic and the outermost circles dealing with
 external concerns.
 
-1. The **Presentation** Folder manages user interface and interactions.
+1. The **Presentation** Layer manages user interface and interactions.
 
-2. The **Domain** Folder contains essential entities and business rules.
+2. The **Domain** Layer contains essential entities and business rules.
 
-3. The **Infrastructure** Folder deals with technical details like databases, APIs, and external services.
+3. The **Infrastructure** Layer deals with technical details like databases, APIs, and external services.
 
-4. The **Main** Folder serves as the entry point of the application, coordinating the initialization and configuration of all components, including dependency injection, application settings, and the startup process.
+4. The **Application** (Main) Layer serves as the entry point of the application, coordinating the initialization and configuration of all components, including dependency injection, application settings, and the startup process.
 
 ## Layers
 
