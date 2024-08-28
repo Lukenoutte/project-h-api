@@ -4,6 +4,7 @@ This is an API using Node and Express for a simplified e-commerce project. The i
 store, with their own customized URL and an administration dashboard.
 
 [**1. Architecture**](documentation/architecture.md)
+
 [**2. Routes**](documentation/routes/routes.md)
 
 ## Install and Run
