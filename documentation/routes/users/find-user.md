@@ -8,7 +8,7 @@ This route uses the user ID from the token to return information about the user.
 
 **Return:** { 
     
-  name: string,
-  email: string
+    name: string,
+    email: string
     
 }
