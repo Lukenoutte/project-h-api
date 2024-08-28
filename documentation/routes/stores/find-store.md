@@ -5,3 +5,12 @@ This route retrieves the store associated with the user, using the user ID from 
 **Rote:** GET - /store
 
 **Visibility:** Private (You need the access key)
+
+**Return:** { 
+    
+    name: string,
+    category: string,
+    subdomain: string,
+    masterId: number
+    
+}

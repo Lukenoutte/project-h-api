@@ -12,3 +12,12 @@ This route will check if a user with the provided email exists in the "users" ta
     password: string
     
 }
+
+
+**Return:** { 
+    
+    accessToken: string,
+    refreshToken: string
+    
+}
+

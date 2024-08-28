@@ -13,3 +13,12 @@ This route will create a new store in the "stores" table and then associate it w
     subdomain: string
     
 }
+
+**Return:** { 
+    
+    name: string,
+    category: string,
+    subdomain: string,
+    masterId: number
+    
+}

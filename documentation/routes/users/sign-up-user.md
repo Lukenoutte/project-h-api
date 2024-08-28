@@ -13,3 +13,10 @@ This route creates a new user in the "users" table.
     password: string
     
 }
+
+**Return:** { 
+    
+  name: string,
+  email: string
+    
+}

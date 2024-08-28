@@ -11,3 +11,10 @@ This route queries the "refresh_tokens" table to check if the provided "refreshT
     refreshToken: string
     
 }
+
+**Return:** { 
+    
+    accessToken: string
+    
+}
+
