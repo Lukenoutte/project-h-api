@@ -1,3 +1,15 @@
 # Sign Up Store
 
-Work in progress...
+This route will create a new store in the "stores" table and then associate it with the Master user.
+
+**Rote:** POST - /store/signup
+
+**Visibility:** Private (You need the access key)
+
+**Body:** { 
+    
+    name: string,
+    category: string,
+    subdomain: string
+    
+}
