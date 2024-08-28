@@ -1,4 +1,4 @@
-# sign Up User
+# Sign Up User
 
 This route creates a new user in the "users" table.
 
