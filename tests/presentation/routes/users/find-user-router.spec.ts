@@ -12,6 +12,7 @@ describe('FindUserRouter', () => {
       findUserByIdRepository: { execute: jest.fn() },
       execute: jest.fn(async (params: { userId: number }): Promise<IUserResponse> => {
         return {
+          id: 1,
           name: 'John Doe',
           email: 'john.doe@example.com',
         };
@@ -43,9 +44,9 @@ describe('FindUserRouter', () => {
     it('should return ok response when request is valid', async () => {
       const httpRequest = { body: { userId: 'valid-user-id' } };
       jest.spyOn(findUserRouter, 'validate').mockResolvedValueOnce({ isValid: true, error: {} });
-      jest.spyOn(findUserUseCase, 'execute').mockResolvedValueOnce({ name: 'John Doe', email: 'john.doe@example.com' });
+      jest.spyOn(findUserUseCase, 'execute').mockResolvedValueOnce({ id: 1, name: 'John Doe', email: 'john.doe@example.com' });
       const response = await findUserRouter.route(httpRequest as any);
-      expect(response).toEqual(HttpResponse.ok({ name: 'John Doe', email: 'john.doe@example.com' }));
+      expect(response).toEqual(HttpResponse.ok({ id: 1, name: 'John Doe', email: 'john.doe@example.com' }));
     });
 
     it('should return bad request response when request is invalid', async () => {

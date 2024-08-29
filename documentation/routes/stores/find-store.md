@@ -8,6 +8,7 @@ This route retrieves the store associated with the user, using the user ID from 
 
 **Return:** { 
     
+    id: number,
     name: string,
     category: string,
     subdomain: string,

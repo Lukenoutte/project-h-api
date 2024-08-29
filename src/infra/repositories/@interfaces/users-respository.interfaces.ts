@@ -1,11 +1,11 @@
-import { IUser, IUserEntity, IUserResponse } from "../../../domain/entities/@interfaces/user-entity.interfaces";
+import { IUserEntity, IUserResponse, IUserResponseWithPass } from "../../../domain/entities/@interfaces/user-entity.interfaces";
 
 export interface IDeleteUserRepository {
   execute: ({ email }: { email: string }) => Promise<void>;
 }
 
 export interface IFindUserByEmailRepository {
-  execute: ({ email }: { email: string }) => Promise<IUser>;
+  execute: ({ email }: { email: string }) => Promise<IUserResponseWithPass>;
 }
 
 export interface IFindUserByIdRepository {

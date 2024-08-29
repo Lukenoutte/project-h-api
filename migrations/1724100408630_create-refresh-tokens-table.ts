@@ -11,6 +11,7 @@ exports.shorthands = undefined;
  */
 exports.up = (pgm: MigrationBuilder) => {
     pgm.createTable('refresh_tokens', {
+        id: 'id',
         user_id: {
           type: 'integer',
           notNull: true,

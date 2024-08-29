@@ -20,7 +20,10 @@ describe("SignUpStoreUseCase", () => {
     };
     const storeEntity = new StoreEntity(params);
     const result = await sut.execute(params);
-    expect(result).toEqual(storeEntity);
+    expect(result).toEqual({
+      id: 1,
+      ...storeEntity,
+    });
     expect(signUpStoreRepositoryMock.execute).toHaveBeenCalledWith(storeEntity);
   });
   test("should throw an error if store creation fails", async () => {

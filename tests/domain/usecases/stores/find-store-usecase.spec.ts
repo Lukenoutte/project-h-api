@@ -17,7 +17,7 @@ describe('FindStoreUseCase', () => {
   it('should return the store when found by masterId', async () => {
     const masterId = 1;
     const mockStore = {
-      id: 'storeId',
+      id: 1,
       name: 'Test Store',
       subdomain: 'test',
       category: 'test',

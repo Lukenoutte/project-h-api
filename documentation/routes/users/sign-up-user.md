@@ -16,6 +16,7 @@ This route creates a new user in the "users" table.
 
 **Return:** { 
     
+    id: number,
     name: string,
     email: string
     

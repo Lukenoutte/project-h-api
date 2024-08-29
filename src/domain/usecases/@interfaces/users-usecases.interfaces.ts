@@ -3,9 +3,9 @@ import { IBcryptHelper } from "infra/helpers/@interfaces/helper.interfaces";
 import { IUserResponse } from "domain/entities/@interfaces/user-entity.interfaces";
 
 interface ISignUpUserExecuteParams {
-  name: string,
-  email: string,
-  password: string
+  name: string;
+  email: string;
+  password: string;
 }
 
 export interface ISignUpUserUseCase {

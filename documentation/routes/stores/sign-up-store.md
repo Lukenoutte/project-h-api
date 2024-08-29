@@ -16,6 +16,7 @@ This route will create a new store in the "stores" table and then associate it w
 
 **Return:** { 
     
+    id: number,
     name: string,
     category: string,
     subdomain: string,

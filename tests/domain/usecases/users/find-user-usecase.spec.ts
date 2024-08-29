@@ -11,6 +11,7 @@ describe('FindUserUseCase', () => {
     findUserByIdRepository = {
       execute: jest.fn(async (params: { userId: number }): Promise<IUserResponse> => {
         return {
+          id: 1,
           name: 'John Doe',
           email: 'john.doe@example.com',
         };
@@ -23,6 +24,7 @@ describe('FindUserUseCase', () => {
     it('should return user response without password', async () => {
       const params = { userId: 1 };
       const userFromRepository: IUserResponse = {
+        id: 1,
         name: 'John Doe',
         email: 'john.doe@example.com',
         password: 'hashed-password',
@@ -33,6 +35,7 @@ describe('FindUserUseCase', () => {
 
       expect(findUserByIdRepository.execute).toHaveBeenCalledWith(params);
       expect(userResponse).toEqual({
+        id: 1,
         name: 'John Doe',
         email: 'john.doe@example.com',
       });
