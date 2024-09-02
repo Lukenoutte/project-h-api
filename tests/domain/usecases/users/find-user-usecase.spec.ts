@@ -2,10 +2,12 @@ import { jest } from '@jest/globals';
 import { IFindUserByIdRepository } from 'infra/repositories/@interfaces/users-respository.interfaces';
 import { IUserResponse } from 'domain/entities/@interfaces/user-entity.interfaces';
 import FindUserUseCase from 'domain/usecases/users/find-user-usecase';
+import { IKeyCaseHelper } from 'infra/helpers/@interfaces/helper.interfaces';
 
 describe('FindUserUseCase', () => {
   let findUserByIdRepository: IFindUserByIdRepository;
   let findUserUseCase: FindUserUseCase;
+  let keyCaseHelper: IKeyCaseHelper;
 
   beforeEach(() => {
     findUserByIdRepository = {
@@ -17,7 +19,13 @@ describe('FindUserUseCase', () => {
         };
       }),
     };
-    findUserUseCase = new FindUserUseCase({ findUserByIdRepository });
+    keyCaseHelper = {
+      snakeCaseToCamelCase: jest.fn((data: object | any[]) => data)
+    }
+    findUserUseCase = new FindUserUseCase({ 
+      findUserByIdRepository,
+      keyCaseHelper
+     });
   });
 
   describe('execute', () => {

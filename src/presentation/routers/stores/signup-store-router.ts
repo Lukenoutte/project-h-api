@@ -43,8 +43,8 @@ export default class SignUpStoreRouter {
       const params = { ...httpRequest.body, masterId: httpRequest.userId };
       const { isValid, error } = await this.validate(params);
       if (!isValid) return HttpResponse.badRequest(error);
-      const result = await this.#signUpStoreUseCase.execute(params);
-      return HttpResponse.created(result);
+      await this.#signUpStoreUseCase.execute(params);
+      return HttpResponse.created({});
     } catch (error) {
       logger.error("SignUpStoreError", error);
       if (error instanceof Error) return HttpResponse.serverError(error.message);

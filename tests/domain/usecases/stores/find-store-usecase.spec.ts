@@ -1,16 +1,22 @@
 import FindStoreUseCase from 'domain/usecases/stores/find-store-usecase';
+import { IKeyCaseHelper } from 'infra/helpers/@interfaces/helper.interfaces';
 import { IFindStoreByMasterIdRespository } from 'infra/repositories/@interfaces/stores-repository.interfaces';
 
 describe('FindStoreUseCase', () => {
   let findStoreUseCase: FindStoreUseCase;
   let findStoreByMasterIdRespository: jest.Mocked<IFindStoreByMasterIdRespository>;
-
+  let keyCaseHelper: IKeyCaseHelper;
+  
   beforeEach(() => {
     findStoreByMasterIdRespository = {
       execute: jest.fn(),
     };
+    keyCaseHelper = {
+      snakeCaseToCamelCase: jest.fn((data: object | any[]) => data)
+    }
     findStoreUseCase = new FindStoreUseCase({
       findStoreByMasterIdRespository,
+      keyCaseHelper
     });
   });
 

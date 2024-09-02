@@ -23,6 +23,5 @@ export default class SignUpStoreUseCase {
       userId: params.masterId,
       storeId
     })
-    return { id: storeId, ...storeEntity }; 
   }
 }

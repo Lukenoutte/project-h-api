@@ -22,3 +22,7 @@ export interface IPostgreHelper {
   disconnect: () => Promise<void>;
   executeQuery: (query: string, values: any[]) => Promise<any> | undefined;
  }
+
+ export interface IKeyCaseHelper {
+  snakeCaseToCamelCase: (data: object | Array<any>) => Object | Array<any>;
+}

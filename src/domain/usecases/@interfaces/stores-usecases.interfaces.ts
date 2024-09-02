@@ -4,7 +4,7 @@ import { IFindStoreByMasterIdRespository, ISignUpStoreRepository } from "infra/r
 
 export interface ISignUpStoreUseCase {
   signUpStoreRepository: ISignUpStoreRepository;
-  execute: (params: IStore) => Promise<IStoreResponse>;
+  execute: (params: IStore) => Promise<void>;
 }
 
 export interface IFindStoreUseCase {

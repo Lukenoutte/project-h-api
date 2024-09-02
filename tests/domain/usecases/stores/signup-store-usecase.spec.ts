@@ -1,17 +1,22 @@
 import StoreEntity from "domain/entities/store-entity";
 import SignUpStoreUseCase from "domain/usecases/stores/signup-store-usecase";
+import { ISetUserStoreRepository } from "infra/repositories/@interfaces/users-respository.interfaces";
 import SetUserStoreRepository from "infra/repositories/users/set-user-store-repository";
 
 describe("SignUpStoreUseCase", () => {
-  const signUpStoreRepositoryMock = {
+  const signUpStoreRepository = {
     execute: jest.fn().mockResolvedValue(1),
   };
+  let setUserStoreRepository = {
+    execute: jest.fn(),
+  };
+
   const sut = new SignUpStoreUseCase({
-    signUpStoreRepository: signUpStoreRepositoryMock,
-    setUserStoreRepository: new SetUserStoreRepository()
+    signUpStoreRepository,
+    setUserStoreRepository  
   });
 
-  test("should create a new store and return it", async () => {
+  test("should create a new store", async () => {
     const params = {
       name: "Store Name",
       category: 'TI',
@@ -19,15 +24,12 @@ describe("SignUpStoreUseCase", () => {
       masterId: 1
     };
     const storeEntity = new StoreEntity(params);
-    const result = await sut.execute(params);
-    expect(result).toEqual({
-      id: 1,
-      ...storeEntity,
-    });
-    expect(signUpStoreRepositoryMock.execute).toHaveBeenCalledWith(storeEntity);
+    await sut.execute(params);
+    expect(signUpStoreRepository.execute).toHaveBeenCalledWith(storeEntity);
+    expect(setUserStoreRepository.execute).toHaveBeenCalled();
   });
   test("should throw an error if store creation fails", async () => {
-    signUpStoreRepositoryMock.execute.mockReturnValueOnce(undefined);
+    signUpStoreRepository.execute.mockReturnValueOnce(undefined);
     const params = {
       name: "Store Name",
       category: 'TI',

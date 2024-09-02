@@ -3,11 +3,13 @@ import FindStoreRouter from "presentation/routers/stores/find-store-router";
 import FindStoreUseCase from "domain/usecases/stores/find-store-usecase";
 import { Request } from "express";
 import { IFindStoreUseCase } from "domain/usecases/@interfaces/stores-usecases.interfaces";
+import { IKeyCaseHelper } from "infra/helpers/@interfaces/helper.interfaces";
 
 describe("FindStoreRouter", () => {
   let findStoreRouter: IRouter;
   let findStoreUseCaseMock: IFindStoreUseCase;
-
+  let keyCaseHelper: IKeyCaseHelper;
+  
   const findStoreByMasterIdRespositoryMock = {
     execute: jest.fn(),
   };
@@ -22,8 +24,12 @@ describe("FindStoreRouter", () => {
   };
 
   beforeEach(() => {
+    keyCaseHelper = {
+      snakeCaseToCamelCase: jest.fn((data: object | any[]) => data)
+    }
     findStoreUseCaseMock = new FindStoreUseCase({
         findStoreByMasterIdRespository: findStoreByMasterIdRespositoryMock,
+        keyCaseHelper
     });
 
     findStoreRouter = new FindStoreRouter({
