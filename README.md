@@ -15,7 +15,7 @@ store, with their own customized URL and an administration dashboard.
 npm install
 ```
 
-**2. Create a ".env" file following the template of the [".env.example"](.env.exemple) file.**
+**2. Create a ".env" file following the template of the [".env.example"](.env.example) file.**
 
 Replace the variables "ACCESS_TOKEN_SECRET" and "REFRESH_TOKEN_SECRET" with SHA256 tokens.
 
